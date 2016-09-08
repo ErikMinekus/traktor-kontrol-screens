@@ -479,12 +479,16 @@ QtObject {
     // Fuchsia - #ff0032
     { low1:  rgba (255,   0,  50, 150),  low2:  rgba (255,  30,  60, 170),
       mid1:  rgba (255, 110, 110, 130),  mid2:  rgba (255, 125, 125, 160),
-      high1: rgba (255, 210, 220, 140),  high2: rgba (255, 220, 230, 160) }
+      high1: rgba (255, 210, 220, 140),  high2: rgba (255, 220, 230, 160) },
+    // Spectrum
+    { low1:  rgba (200,   0,   0, 100),  low2:  rgba (200, 100,   0, 250),
+      mid1:  rgba (60,  120, 240, 100),  mid2:  rgba (80,  160, 240, 250),
+      high1: rgba (100, 200, 240, 100),  high2: rgba (120, 240, 240, 250) }
   ]
 
   function getDefaultWaveformColors()
   {
-    return waveformColorsMap[0];
+    return waveformColorsMap[17];
   }
 
   function getWaveformColors(colorId)

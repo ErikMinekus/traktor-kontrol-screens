@@ -60,7 +60,7 @@ Rectangle {
 
   Timer {
     id: sortingOverlayTimer
-    interval: 800  // duration of the scrollbar opacity
+    interval: 1000  // duration of the scrollbar opacity
     repeat:   false
 
     onTriggered: overlayState.value = Overlay.none;

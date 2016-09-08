@@ -56,12 +56,12 @@ Item {
   // NOTE: For now, we set fix states in the DeckHeader! But we wanna be able to
   //       change the states.
   property int topLeftState:      0                                 // headerSettingTopLeft.value
-  property int topMiddleState:    hasTrackStyleHeader(deckType) ? 12 : 30 // headerSettingTopMid.value
-  property int topRightState:     23                                // headerSettingTopRight.value
+  property int topMiddleState:    hasTrackStyleHeader(deckType) ? 13 : 29 // headerSettingTopMid.value
+  property int topRightState:     16                                // headerSettingTopRight.value
 
   property int bottomLeftState:   1                                 // headerSettingMidLeft.value
-  property int bottomMiddleState: hasTrackStyleHeader(deckType) ? 11 : 29 // headerSettingMidMid.value
-  property int bottomRightState:  25                                // headerSettingMidRight.value
+  property int bottomMiddleState: hasTrackStyleHeader(deckType) ? 12 : 30 // headerSettingMidMid.value
+  property int bottomRightState:  15                                // headerSettingMidRight.value
 
   height: largeHeaderHeight
   clip: false //true

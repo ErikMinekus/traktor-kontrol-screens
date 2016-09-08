@@ -57,7 +57,7 @@ Item {
     deckId: view.deckId
     followsPlayhead: !slicer.enabled && !beatgrid.editEnabled
     waveformPos:     beatgrid.editEnabled ? beatgrid.posOnEdit   : (slicer.enabled ? slicer_pos_to_waveform_pos() : (playheadPos -  0.5 * view.sampleWidth ))
-    sampleWidth:     beatgrid.editEnabled ? beatgrid.widthOnEdit : (slicer.enabled ? slicer_zoom_width()          : view.sampleWidth)
+    sampleWidth:     beatgrid.editEnabled ? beatgrid.widthOnEdit : (slicer.enabled ? slicer_zoom_width()          : view.sampleWidth / 0.75)
     viewWidth:       singleWaveform.width
 
     Behavior on sampleWidth { PropertyAnimation { duration: 150; easing.type: Easing.OutCubic } }

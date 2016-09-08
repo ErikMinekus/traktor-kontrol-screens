@@ -121,7 +121,8 @@ Mapping
     } 
     onRelease:
     {
-      if (triggerDeckFocusSwitch) deck.deckFocus = !deck.deckFocus;
+      if (deck.shift) decksAssignment.value = (decksAssignment.value == DecksAssignment.AC) ? DecksAssignment.BD : DecksAssignment.AC;
+      else if (triggerDeckFocusSwitch) deck.deckFocus = !deck.deckFocus;
       isInDecksAssignmentMode = false;
     }
     brightness: 1.0; 
