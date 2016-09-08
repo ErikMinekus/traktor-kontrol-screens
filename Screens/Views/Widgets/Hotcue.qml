@@ -15,13 +15,13 @@ Item {
   property color  hotcueColor:  "transparent" 
   property int    hotcueId:     0
   property int    hotcueLength: 0
-  property int    topMargin:    6
+  property int    topMargin:    0
 
 
   readonly property double borderWidth:       2
   readonly property bool   useAntialiasing:   true
   readonly property int    smallCueHeight:    hotcue.height + 3
-  readonly property int    smallCueTopMargin: -4 
+  readonly property int    smallCueTopMargin: -8
   readonly property int    largeCueHeight:    hotcue.height 
   readonly property var    hotcueMarkerTypes: { 0: "hotcue", 1: "fadeIn", 2: "fadeOut", 3: "load", 4: "grid", 5: "loop" }
   readonly property string hotcueState:       ( exists.value && type.value != -1) ? hotcueMarkerTypes[type.value] : "off"
@@ -78,7 +78,7 @@ Item {
       anchors.top:        cueLoader.top
       anchors.left:       cueLoader.horizontalCenter
       anchors.topMargin:  hotcue.smallCueTopMargin
-      anchors.leftMargin: -8
+      anchors.leftMargin: -6
 
       antialiasing:       useAntialiasing
 
@@ -86,23 +86,20 @@ Item {
       border.width:       borderWidth
       border.color:       colors.colorBlack50
 
-      points: [ Qt.point(0 , 10)
+      points: [ Qt.point(0 , 9)
               , Qt.point(0 , 0)
-              , Qt.point(13, 0) 
-              , Qt.point(13, 10)
-              , Qt.point(7 , 14)
-              , Qt.point(7 , hotcue.smallCueHeight)
-              , Qt.point(6 , hotcue.smallCueHeight)
-              , Qt.point(6 , 14)
+              , Qt.point(10, 0) 
+              , Qt.point(10, 9)
+              , Qt.point(5 , 12)
               ]
       Text { 
         anchors.top:        parent.top
         anchors.left:       parent.left
-        anchors.leftMargin: 4
+        anchors.leftMargin: 3
         anchors.topMargin: -1
         color:              colors.colorBlack
         text:               hotcue.hotcueId
-        font.pixelSize:     fonts.smallFontSize
+        font.pixelSize:     fonts.miniFontSize
       }
     }
   }
@@ -154,21 +151,19 @@ Item {
       border.width:       borderWidth
       border.color:       colors.colorBlack50
       points: [ Qt.point(0 , 0)
-              , Qt.point(12, 0)
-              , Qt.point(15, 5.5)
-              , Qt.point(12, 11)
-              , Qt.point(1 , 11)
-              , Qt.point(1 , hotcue.smallCueHeight)
-              , Qt.point(0 , hotcue.smallCueHeight) 
+              , Qt.point(10, 0)
+              , Qt.point(13, 4.5)
+              , Qt.point(10, 9)
+              , Qt.point(0 , 9)
               ]
       Text {
         anchors.top:        parent.top; 
         anchors.left:       parent.left; 
-        anchors.leftMargin: 4
+        anchors.leftMargin: 3
         anchors.topMargin:  -1
         color:              colors.colorBlack; 
         text:               hotcue.hotcueId; 
-        font.pixelSize:     fonts.smallFontSize
+        font.pixelSize:     fonts.miniFontSize
       }
     }
   }
@@ -212,28 +207,26 @@ Item {
       anchors.top:         cueLoader.top
       anchors.right:       cueLoader.right 
       anchors.topMargin:   hotcue.smallCueTopMargin
-      anchors.rightMargin: -1
+      anchors.rightMargin: -7
       antialiasing:        useAntialiasing
 
       color:               hotcue.hotcueColor   
       border.width:        borderWidth
       border.color:        colors.colorBlack50
-      points: [ Qt.point(-0.4, 11)
-              , Qt.point(5 , 0)
-              , Qt.point(17, 0) 
-              , Qt.point(17, hotcue.smallCueHeight)
-              , Qt.point(16, hotcue.smallCueHeight)
-              , Qt.point(16, 11)
+      points: [ Qt.point(-0.4, 9)
+              , Qt.point(3 , 0)
+              , Qt.point(13, 0) 
+              , Qt.point(13, 9)
               ]
 
       Text {
         anchors.top:        parent.top
         anchors.left:       parent.left
         anchors.topMargin:  -1
-        anchors.leftMargin: borderWidth + 6
+        anchors.leftMargin: borderWidth + 4
         color:              colors.colorBlack 
         text:               hotcue.hotcueId; 
-        font.pixelSize:     fonts.smallFontSize
+        font.pixelSize:     fonts.miniFontSize
       }
     }
   }
@@ -284,20 +277,18 @@ Item {
       border.width:       borderWidth
       border.color:       colors.colorBlack50
       points: [ Qt.point(0, 0)
-              , Qt.point(12, 0)
-              , Qt.point(17, 11)
-              , Qt.point(1, 11)
-              , Qt.point(1, hotcue.smallCueHeight)
-              , Qt.point(0, hotcue.smallCueHeight)
+              , Qt.point(10, 0)
+              , Qt.point(13, 9)
+              , Qt.point(0, 9)
               ]
       Text { 
         anchors.top:        parent.top
         anchors.left:       parent.left
-        anchors.leftMargin: 4.5
+        anchors.leftMargin: 3.5
         anchors.topMargin:  -1
         color:              colors.colorBlack; 
         text:               hotcue.hotcueId; 
-        font.pixelSize:     fonts.smallFontSize
+        font.pixelSize:     fonts.miniFontSize
       }
     }
   }
@@ -342,16 +333,6 @@ Item {
       anchors.horizontalCenter:  cueLoader.horizontalCenter
       clip:               false
 
-      // pole border
-      Rectangle {
-        anchors.top:              circle.bottom
-        anchors.horizontalCenter: circle.horizontalCenter
-        anchors.leftMargin:       4
-        width:                    3
-        height:                   18
-        color:                    colors.colorBlack50
-      }
-      
       // round head
       Rectangle {
         id: circle
@@ -359,7 +340,7 @@ Item {
         anchors.horizontalCenter:  parent.horizontalCenter
         anchors.topMargin:         -1
         color:                     hotcue.hotcueColor
-        width:                     15 
+        width:                     13
         height:                    width
         radius:                    0.5*width
         border.width:              1
@@ -368,22 +349,12 @@ Item {
         Text {
           anchors.top:        parent.top
           anchors.left:       parent.left
-          anchors.leftMargin: 4
+          anchors.leftMargin: 3
           anchors.topMargin:  0
           color:              colors.colorBlack 
           text:               hotcue.hotcueId
-          font.pixelSize:     fonts.smallFontSize
+          font.pixelSize:     fonts.miniFontSize
         }
-      }
-            // pole
-      Rectangle {
-        anchors.top:              circle.bottom
-        anchors.horizontalCenter: circle.horizontalCenter
-        anchors.leftMargin:       5
-        anchors.topMargin:        -1
-        width:                    1
-        height:                   18
-        color:                    hotcue.hotcueColor
       }
 
     }
@@ -458,27 +429,25 @@ Item {
       Traktor.Polygon {
         anchors.top:        parent.top
         anchors.left:       parent.horizontalCenter
-        anchors.leftMargin: -15 
+        anchors.leftMargin: -9
         antialiasing: true
         color:             hotcue.hotcueColor   
         border.width:       borderWidth
         border.color:       colors.colorBlack50
-        points: [ Qt.point(0 , 11)
+        points: [ Qt.point(0 , 9)
                 , Qt.point(0 , 0)
-                , Qt.point(14, 0)
-                , Qt.point(14, hotcue.smallCueHeight)
-                , Qt.point(13, hotcue.smallCueHeight)
-                , Qt.point(13, 11)
+                , Qt.point(10, 0)
+                , Qt.point(10, 9)
                 ]
 
         Text { 
           anchors.top:        parent.top
           anchors.left:       parent.left
-          anchors.leftMargin: 4
+          anchors.leftMargin: 3
           anchors.topMargin: -1
           color:              colors.colorBlack
           text:               hotcue.hotcueId
-          font.pixelSize:     fonts.smallFontSize
+          font.pixelSize:     fonts.miniFontSize
         }
       }
 
@@ -493,11 +462,9 @@ Item {
         border.width:       borderWidth
         border.color:       colors.colorBlack50
         points: [ Qt.point(0, 0)
-                , Qt.point(14, 0)
-                , Qt.point(14, 11)
-                , Qt.point(1, 11)
-                , Qt.point(1, hotcue.smallCueHeight) 
-                , Qt.point(0, hotcue.smallCueHeight)
+                , Qt.point(10, 0)
+                , Qt.point(10, 9)
+                , Qt.point(0, 9)
                 ]
       }
     }

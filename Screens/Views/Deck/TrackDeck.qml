@@ -12,7 +12,7 @@ Item {
   property color  deckColor:       colors.colorBgEmpty // transparent blue not possible for logo due to low bit depth of displays. was: // (deckId < 2) ? colors.colorDeckBlueBright12Full : colors.colorBgEmpty
   property bool   trackIsLoaded:   (primaryKey.value > 0)
   
-  readonly property int waveformHeight: (deckSizeState == "small") ? 0 : ( parent ? ( (deckSizeState == "medium") ? (parent.height-43) : (parent.height-53) ) : 0 )
+  readonly property int waveformHeight: (deckSizeState == "small") ? 0 : ( parent ? ( (deckSizeState == "medium") ? (parent.height-41) : (parent.height-78) ) : 0 )
 
   property bool showLoopSize: false
   property int  zoomLevel:    1
@@ -62,28 +62,6 @@ Item {
   // Stripe
   //--------------------------------------------------------------------------------------------------------------------
 
-  Rectangle {
-    id: stripeGapFillerLeft
-    anchors.left:   parent.left
-    anchors.right:  stripe.left
-    anchors.bottom: stripe.bottom
-    height:         stripe.height
-    color:          colors.colorBgEmpty
-    visible:        trackDeck.trackIsLoaded && deckSizeState != "small"
-  }
-
-  Rectangle {
-    id: stripeGapFillerRight
-    anchors.left:   stripe.right
-    anchors.right:  parent.right
-    anchors.bottom: stripe.bottom
-    height:         stripe.height
-    color:          colors.colorBgEmpty
-    visible:        trackDeck.trackIsLoaded && deckSizeState != "small"
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-
   WF.Stripe {
     id: stripe
 
@@ -94,9 +72,9 @@ Item {
     anchors.left:           trackDeck.left
     anchors.right:          trackDeck.right
     anchors.bottom:         trackDeck.bottom
-    anchors.bottomMargin:   (deckSizeState == "large") ? largeDeckBottomMargin : smallDeckBottomMargin
-    anchors.leftMargin:     9
-    anchors.rightMargin:    9
+    anchors.bottomMargin:   3 // (deckSizeState == "large") ? largeDeckBottomMargin : smallDeckBottomMargin
+    anchors.leftMargin:     6
+    anchors.rightMargin:    6
     height:                 28
     opacity:                trackDeck.trackIsLoaded ? 1 : 0
 

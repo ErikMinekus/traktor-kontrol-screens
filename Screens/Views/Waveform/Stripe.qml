@@ -20,7 +20,7 @@ Traktor.Stripe {
   colorMatrix.mid2 : waveformColors.mid2
   colorMatrix.low1 : waveformColors.low1
   colorMatrix.low2 : waveformColors.low2
-  colorMatrix.background: colors.colorBgEmpty
+  colorMatrix.background: "transparent"
 
   //--------------------------------------------------------------------------------------------------------------------
 
@@ -118,8 +118,8 @@ Traktor.Stripe {
     width:             Math.max (parent.indicatorBoxWidth - (1 - parent.indicatorBoxWidth%2) , 5) // 
     
     radius:            1
-    color:             colors.colorRedPlaymarker06 
-    border.color:      colors.colorRedPlaymarker75
+    color:             colors.colorWhite06
+    border.color:      colors.colorWhite75
     border.width:      1
     antialiasing:      false
 
@@ -141,7 +141,7 @@ Traktor.Stripe {
       anchors.bottomMargin:     2
       antialiasing:             false
 
-      color: colors.colorRedPlaymarker
+      color: colors.colorWhite
       width: 1      
     }
   }

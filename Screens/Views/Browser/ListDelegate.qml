@@ -20,13 +20,13 @@ Item {
   property color         textColor :            ListView.isCurrentItem ? deckColor : colors.colorFontsListBrowser
   property bool          isCurrentItem :        ListView.isCurrentItem
   property string        prepIconColorPostfix:  (screenFocus < 2 && ListView.isCurrentItem) ? "Blue" : ((screenFocus > 1 && ListView.isCurrentItem) ? "White" : "Grey")
-  readonly property int  textTopMargin:         7 // centers text vertically
+  readonly property int  textTopMargin:         5 // centers text vertically
   readonly property bool isLoaded:              (model.dataType == BrowserDataType.Track) ? model.loadedInDeck.length > 0 : false
   // visible: !ListView.isCurrentItem
   readonly property variant keyText:            ["8B", "3B", "10B", "5B", "12B", "7B", "2B", "9B", "4B", "11B", "6B", "1B",
                                                  "5A", "12A", "7A", "2A", "9A", "4A", "11A", "6A", "1A", "8A", "3A", "10A"]
 
-  height: 33
+  height: 26
   anchors.left: parent.left
   anchors.right: parent.right
 
@@ -36,8 +36,8 @@ Item {
     color:  (index%2 == 0) ? colors.colorGrey08 : "transparent" 
     anchors.left: parent.left
     anchors.right: parent.right
-    anchors.leftMargin: 3
-    anchors.rightMargin: 3
+    anchors.leftMargin: 1
+    anchors.rightMargin: 1
     height: parent.height  
 
     // track name, toggles with folder name
@@ -46,26 +46,26 @@ Item {
       anchors.left: parent.left //listImage.right
       anchors.top: parent.top
       anchors.topMargin: contactDelegate.textTopMargin
-      anchors.leftMargin: 37
-      width: 190
+      anchors.leftMargin: 30
+      width: 203
       visible: (model.dataType == BrowserDataType.Track)
 
       //! Dummy text to measure maximum text lenght dynamically and adjust icons behind it.
       Text {
         id: textLengthDummy
         visible: false
-        font.pixelSize: fonts.middleFontSize
+        font.pixelSize: fonts.smallFontSize
         text: (model.dataType == BrowserDataType.Track) ? model.trackName  : ( (model.dataType == BrowserDataType.Folder) ? model.nodeName : "")
       }
 
       Text {
         id: firstFieldText
-        width: (textLengthDummy.width) > 175 ? 175 : textLengthDummy.width
+        width: (textLengthDummy.width) > 200 ? 200 : textLengthDummy.width
         // visible: false
         elide: Text.ElideRight
         text: textLengthDummy.text
-        font.pixelSize: fonts.middleFontSize
-        color: textColor
+        font.pixelSize: fonts.smallFontSize
+        color: qmlBrowser.listItemTextColor(model, textColor)
       }
 
       Image {
@@ -85,31 +85,31 @@ Item {
     Text {
       id: firstFieldFolder
       anchors.left: parent.left
+      anchors.right: parent.right
       anchors.top: parent.top
       anchors.topMargin: contactDelegate.textTopMargin
-      anchors.leftMargin: 37
+      anchors.leftMargin: 30
       color: textColor
       clip: true
       text: (model.dataType == BrowserDataType.Folder) ? model.nodeName : ""
-      font.pixelSize: fonts.middleFontSize
+      font.pixelSize: fonts.smallFontSize
       elide: Text.ElideRight
       visible: (model.dataType != BrowserDataType.Track)
-      width: 190
     }
     
 
     // artist name
     Text {
       id: trackTitleField
-      anchors.leftMargin: 9
+      anchors.leftMargin: 7
       anchors.left: (model.dataType == BrowserDataType.Track) ? firstFieldTrack.right : firstFieldFolder.right
       anchors.top: parent.top
       anchors.topMargin: contactDelegate.textTopMargin
-      width: 130
-      color: textColor
+      width: 145
+      color: qmlBrowser.listItemTextColor(model, textColor)
       clip: true
       text: (model.dataType == BrowserDataType.Track) ? model.artistName: ""
-      font.pixelSize: fonts.middleFontSize
+      font.pixelSize: fonts.smallFontSize
       elide: Text.ElideRight
     }  
 
@@ -120,11 +120,11 @@ Item {
       anchors.top: parent.top
       anchors.topMargin: contactDelegate.textTopMargin
       horizontalAlignment: Text.AlignRight
-      width: 36
+      width: 30
       color: textColor
       clip: true
       text: (model.dataType == BrowserDataType.Track) ? model.bpm.toFixed(0) : ""
-      font.pixelSize: fonts.middleFontSize
+      font.pixelSize: fonts.smallFontSize
     }  
 
     function colorForKey(keyIndex) {
@@ -140,10 +140,10 @@ Item {
       horizontalAlignment: Text.AlignRight
 
       color: (model.dataType == BrowserDataType.Track && qmlBrowser.isNearMasterKey(model.key)) ? parent.colorForKey(model.keyIndex) : textColor
-      width: 36
+      width: 30
       clip: true
       text: (model.dataType == BrowserDataType.Track) ? (((model.key == "none") || (model.key == "None")) ? "n.a." : keyText[model.keyIndex]) : ""
-      font.pixelSize: fonts.middleFontSize
+      font.pixelSize: fonts.smallFontSize
     }
 
     // track rating
@@ -165,7 +165,7 @@ Item {
     ListHighlight {
       anchors.fill: parent
       visible: contactDelegate.isCurrentItem
-      anchors.leftMargin: (model.dataType == BrowserDataType.Track) ? 34 : 0
+      anchors.leftMargin: (model.dataType == BrowserDataType.Track) ? 27 : 0
       anchors.rightMargin: 0 
     }
   }
@@ -174,9 +174,9 @@ Item {
     id: trackImage 
     anchors.top: parent.top
     anchors.left: parent.left
-    anchors.leftMargin: 3              
-    width: 33
-    height: 33
+    anchors.leftMargin: 0              
+    width: 26
+    height: 26
     color: (model.coverUrl != "") ? "transparent" : ((contactDelegate.screenFocus < 2) ? colors.colorDeckBlueBright50Full : colors.colorGrey128 )
     visible: (model.dataType == BrowserDataType.Track)
 
@@ -208,17 +208,9 @@ Item {
             {
               return colors.colorBlack88;
             }
-            else if (!isCurrentItem)
-            {
-              return colors.colorBlack81;
-            }
-            else if (isCurrentItem)
-            {
-              return "transparent";
-            }
             else
             {
-              return colors.colorBlack60;
+              return "transparent";
             }
           }
         }
@@ -235,8 +227,8 @@ Item {
 
     Image {
       anchors.centerIn: trackImage
-      width: 17
-      height: 17
+      width: 13
+      height: 13
       source: "./../images/PreviewIcon_Big.png"
       fillMode: Image.Pad
       clip: true
@@ -248,8 +240,8 @@ Item {
 
     Image {
       anchors.centerIn: trackImage
-      width: 17
-      height: 17
+      width: 13
+      height: 13
       source: "./../images/PreviouslyPlayed_Icon.png"
       fillMode: Image.Pad
       clip: true
@@ -264,8 +256,8 @@ Item {
       source: "./../images/LoadedDeckA.png"
       anchors.top: parent.top
       anchors.left: parent.left
-      sourceSize.width: 11
-      sourceSize.height: 11
+      sourceSize.width: 9
+      sourceSize.height: 9
       visible: (model.dataType == BrowserDataType.Track && parent.isLoadedInDeck("A"))
     }
 
@@ -274,8 +266,8 @@ Item {
       source: "./../images/LoadedDeckB.png"
       anchors.top: parent.top
       anchors.right: parent.right
-      sourceSize.width: 11
-      sourceSize.height: 11
+      sourceSize.width: 9
+      sourceSize.height: 9
       visible: (model.dataType == BrowserDataType.Track && parent.isLoadedInDeck("B"))
     }
 
@@ -284,8 +276,8 @@ Item {
       source: "./../images/LoadedDeckC.png"
       anchors.bottom: parent.bottom
       anchors.left: parent.left
-      sourceSize.width: 11
-      sourceSize.height: 11
+      sourceSize.width: 9
+      sourceSize.height: 9
       visible: (model.dataType == BrowserDataType.Track && parent.isLoadedInDeck("C"))
     }
 
@@ -294,8 +286,8 @@ Item {
       source: "./../images/LoadedDeckD.png"
       anchors.bottom: parent.bottom
       anchors.right: parent.right
-      sourceSize.width: 11
-      sourceSize.height: 11
+      sourceSize.width: 9
+      sourceSize.height: 9
       visible: (model.dataType == BrowserDataType.Track && parent.isLoadedInDeck("D"))
     }
 
@@ -309,8 +301,8 @@ Item {
   Image {
     id:       folderIcon
     source:   (model.dataType == BrowserDataType.Folder) ? ("image://icons/" + model.nodeIconId ) : ""
-    width:    33
-    height:   33
+    width:    26
+    height:   26
     fillMode: Image.PreserveAspectFit
     anchors.top: parent.top
     anchors.left: parent.left

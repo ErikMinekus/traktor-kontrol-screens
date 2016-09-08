@@ -193,6 +193,17 @@ Item {
     deck_Id:       view.deckId
   }
 
+  // DECK FOOTER  -------------------------------------------------------------------------------------------------------
+
+  DeckTypes.DeckFooter {
+    id: deckFooter
+    anchors.bottom: view.bottom
+    anchors.bottomMargin: 37 // stripe.height + stripe.bottomMargin + 6
+    anchors.left:   view.left
+    anchors.right:  view.right
+    deck_Id:        view.deckId
+  }
+
   //--------------------------------------------------------------------------------------------------------------------
   //  STATES FOR THE DIFFERENT HEADER SIZES
   //--------------------------------------------------------------------------------------------------------------------
@@ -202,16 +213,19 @@ Item {
     State {
       name: "small";
       PropertyChanges { target: deckHeader; headerState: "small"; }
+      PropertyChanges { target: deckFooter; footerState: "small"; }
       PropertyChanges { target: flipable;    anchors.topMargin: -3; }
     },
     State {
       name: "medium";
-      PropertyChanges { target: deckHeader; headerState: "large"; }
+      PropertyChanges { target: deckHeader; headerState: "medium"; }
+      PropertyChanges { target: deckFooter; footerState: "medium"; }
       PropertyChanges { target: flipable;    anchors.topMargin: 0; }
     },
     State {
       name: "large";
       PropertyChanges { target: deckHeader; headerState: "large"; }
+      PropertyChanges { target: deckFooter; footerState: "large"; }
       PropertyChanges { target: flipable;    anchors.topMargin: 0; }
     }
   ]

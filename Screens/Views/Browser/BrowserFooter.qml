@@ -201,31 +201,6 @@ Rectangle {
     }
   }
 
-  //--------------------------------------------------------------------------------------------------------------------  
-  // black border & shadow
-  //--------------------------------------------------------------------------------------------------------------------  
-
-  Rectangle {    
-    id: browserHeaderBottomGradient
-    height:         3
-    anchors.left:   parent.left
-    anchors.right:  parent.right
-    anchors.bottom: browserHeaderBlackBottomLine.top
-    gradient: Gradient {
-      GradientStop { position: 0.0; color: colors.colorBlack0 }
-      GradientStop { position: 1.0; color: colors.colorBlack38 }
-    }
-  }
-
-  Rectangle {
-    id: browserHeaderBlackBottomLine
-    height:         2
-    color:          colors.colorBlack
-    anchors.left:   parent.left
-    anchors.right:  parent.right
-    anchors.bottom: browserFooterBg.top
-  }
-
   //------------------------------------------------------------------------------------------------------------------
 
   state: "show"  

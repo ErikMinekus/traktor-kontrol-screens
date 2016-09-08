@@ -20,9 +20,11 @@ Item {
   property string         pathStrings:    ""      // the complete path in one string given by QBrowser with separator " | "
   property var            stringList:    [""]     // list of separated path elements (calculated in "updateStringList")
   property int            stringListModelSize: 0  // nr of entries which can be displayed in the header ( calc in updateStringList)
-  readonly property int   maxTextWidth:   150    // if a single text path block is bigger than this: ElideMiddle
+  readonly property int   maxTextWidth:   280    // if a single text path block is bigger than this: ElideMiddle
   readonly property int   arrowContainerWidth: 18 // width of the graphical separator arrow. includes left / right spacing
   readonly property int   fontSize: fonts.smallFontSize
+
+  property string         nodeName:       ""
 
   clip:          true
   anchors.left:  parent.left
@@ -50,7 +52,13 @@ Item {
     var sum   = 0
     var count = 0
 
-    stringList = pathStrings.split(" | ")
+    nodeName   = ""
+    stringList = pathStrings.split(" | ").slice(1)
+
+    if (stringList.length > 0) {
+      nodeName = stringList[0]
+      stringList[0] = ""
+    }
 
     for (var i = 0; i < stringList.length; ++i) {
       dummy.text = header.stringList[stringList.length - i - 1]
@@ -80,14 +88,29 @@ Item {
 
   //--------------------------------------------------------------------------------------------------------------------
 
+  Image {
+    id:                 browserIcon
+    anchors.top:        parent.top
+    anchors.topMargin:  (nodeName == "Track Collection") ? -1 : 0
+    anchors.left:       parent.left
+    anchors.leftMargin: (nodeName == "Track Collection") ? 0 : 1
+    width:              26
+    height:             16
+    source:             "./../images/BrowserIcons/Browser_Icon_" + nodeName.replace(" ", "") + ".png"
+    fillMode:           Image.PreserveAspectCrop
+    clip:               false
+    cache:              false
+    visible:            stringList.length > 0
+  }
+
   Item {
    id: textContainter
     readonly property int spaceToDeckLetter: 20
     anchors.top:         parent.top
     anchors.bottom:      parent.bottom
-    anchors.left:        parent.left
+    anchors.left:        browserIcon.right
     anchors.right:       deckLetter.left
-    anchors.leftMargin:   3
+    anchors.leftMargin:  (nodeName == "Track Collection") ? -4 : -5
     anchors.rightMargin: spaceToDeckLetter
     clip:                true
 
@@ -96,7 +119,7 @@ Item {
       id: dots
       anchors.left:       parent.left
       anchors.top:        parent.top
-      anchors.leftMargin: (stringListModelSize < stringList.length) ? 0 : -width
+      anchors.leftMargin: (stringListModelSize < stringList.length) ? 5 : -width
       visible:            (stringListModelSize < stringList.length)
       width:              30
 
@@ -178,30 +201,6 @@ Item {
     font.capitalization: Font.AllUppercase
     font.pixelSize:      header.fontSize
     color:               (header.currentDeck < 2) ? colors.colorDeckBlueBright : colors.colorWhite
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  // black border & shadow
-
-  Rectangle {
-    id: browserHeaderBlackBottomLine
-    anchors.left:  parent.left
-    anchors.right: parent.right
-    anchors.top:   browserHeaderBg.bottom 
-    height:        2
-    color:         colors.colorBlack
-  }
-
-   Rectangle {    
-    id: browserHeaderBottomGradient
-    anchors.left:  parent.left
-    anchors.right: parent.right
-    anchors.top:   browserHeaderBlackBottomLine.bottom 
-    height:  3
-    gradient: Gradient {
-      GradientStop { position: 0.0; color: colors.colorBlack38 }
-      GradientStop { position: 1.0; color: colors.colorBlack0 }
-    }
   }
 
  //--------------------------------------------------------------------------------------------------------------------

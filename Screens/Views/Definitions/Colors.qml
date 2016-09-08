@@ -56,7 +56,7 @@ QtObject {
   property variant colorWhite16:                rgba (255, 255, 255, 41) // from 15 - 17%
   property variant colorWhite12:                rgba (255, 255, 255, 31) // from 11 - 13%
   property variant colorWhite09:                rgba (255, 255, 255, 23) // from 8 - 10%
-  // property variant colorWhite06:                rgba (255, 255, 255, 15) // from 5 - 7%
+  property variant colorWhite06:                rgba (255, 255, 255, 15) // from 5 - 7%
   // property variant colorWhite03:                rgba (255, 255, 255, 8) // from 2 - 4%
 
   property variant colorGrey232:                rgba (232, 232, 232, 255)

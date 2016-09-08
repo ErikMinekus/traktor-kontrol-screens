@@ -24,10 +24,10 @@ Templates.View {
   property color focusColor:    (screen.focusDeckId < 2) ? colors.colorDeckBlueBright : "white" 
   property int   speed:         150
   property real  sortingKnobValue:  0
-  property int   pageSize:          7
-  property int   fastScrollCenter:  3
+  property int   pageSize:          9
+  property int   fastScrollCenter:  4
 
-  readonly property int  maxItemsOnScreen: 8
+  readonly property int  maxItemsOnScreen: 10
 
   // This is used by the footer to change/display the sorting!
   property alias sortingId:         browser.sorting
@@ -145,7 +145,7 @@ Templates.View {
     anchors.topMargin:      contentList.topMargin +  contentList.contentHeight + 1 // +1 = for spacing
     anchors.right:          parent.right
     anchors.left:           parent.left
-    anchors.leftMargin:     3
+    anchors.leftMargin:     1
     columns:                1
     spacing:                1  
 
@@ -154,7 +154,7 @@ Templates.View {
       Rectangle { 
         color: ( (contentList.count + index)%2 == 0) ? colors.colorGrey08 : "transparent"
         width: qmlBrowser.width; 
-        height: 33 }
+        height: 26 }
     }
   }
 
@@ -168,12 +168,12 @@ Templates.View {
     // and keep the list delegates in the same position always.
 
     // the commented out margins caused browser anchor problems leading to a disappearing browser! check later !?
-    anchors.topMargin:       17 // ( (contentList.count <  qmlBrowser.maxItemsOnScreen ) || (currentIndex < 4                     )) ? 17 : 0
-    anchors.bottomMargin:    18 // ( (contentList.count >= qmlBrowser.maxItemsOnScreen) && (currentIndex >= contentList.count - 4)) ? 18 : 0 
+    anchors.topMargin:       15 // ( (contentList.count <  qmlBrowser.maxItemsOnScreen ) || (currentIndex < 4                     )) ? 17 : 0
+    anchors.bottomMargin:    15 // ( (contentList.count >= qmlBrowser.maxItemsOnScreen) && (currentIndex >= contentList.count - 4)) ? 18 : 0 
     clip:                    false
     spacing:                 1
-    preferredHighlightBegin: 119 - 17 // -17 because of the reduced height due to the topMargin
-    preferredHighlightEnd  : 152 - 17 // -17 because of the reduced height due to the topMargin
+    preferredHighlightBegin: 26 * 4 + 4 // -17 because of the reduced height due to the topMargin
+    preferredHighlightEnd  : 26 * 5 + 4 // -17 because of the reduced height due to the topMargin
     highlightRangeMode :     ListView.ApplyRange
     highlightMoveDuration:   0
     delegate:                BrowserView.ListDelegate  {id: listDelegate; screenFocus: screen.focusDeckId; }
@@ -286,6 +286,20 @@ Templates.View {
     }
 
     return false;
+  }
+
+  function listItemTextColor(model, textColor) {
+    if (model.dataType != BrowserDataType.Track) {
+      return textColor;
+    }
+    if (model.prevPlayed && !model.prelisten) {
+      return colors.colorGreen50Full;
+    }
+    if (model.loadedInDeck.length > 0) {
+      return colors.colorGreen;
+    }
+
+    return textColor;
   }
 }
 

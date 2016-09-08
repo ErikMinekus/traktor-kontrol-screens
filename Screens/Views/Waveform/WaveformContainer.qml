@@ -196,7 +196,7 @@ Item {
       y:     -1
       width:  3
       height: (slicer.enabled && !beatgrid.editEnabled ) ? sliceModeHeight : waveformContainer.height + 2
-      color:        colors.colorRedPlaymarker
+      color:        (propFluxState.value > 0) ? "yellow" : colors.colorWhite
       border.color: colors.colorBlack31
       border.width: 1
     }
