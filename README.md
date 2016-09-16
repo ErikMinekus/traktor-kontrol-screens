@@ -26,3 +26,14 @@
   - Make a backup of this folder!
   - Replace the CSI, Defines and Screens folders
   - Restart Traktor
+
+**Windows:**
+
+  - Navigate to C:\Program Files\Native Instruments\Traktor 2\Resources64\qml
+  - Make a backup of this folder!
+  - Replace the CSI, Defines and Screens folders
+  - Restart Traktor
+
+## Screenshot
+
+![Track Deck](https://ErikMinekus.github.io/traktor-kontrol-screens/track-deck.jpg)

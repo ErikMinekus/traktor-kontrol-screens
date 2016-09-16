@@ -57,11 +57,11 @@ Item {
   //       change the states.
   property int topLeftState:      0                                 // headerSettingTopLeft.value
   property int topMiddleState:    hasTrackStyleHeader(deckType) ? 13 : 29 // headerSettingTopMid.value
-  property int topRightState:     16                                // headerSettingTopRight.value
+  property int topRightState:     24                                // headerSettingTopRight.value
 
   property int bottomLeftState:   1                                 // headerSettingMidLeft.value
   property int bottomMiddleState: hasTrackStyleHeader(deckType) ? 12 : 30 // headerSettingMidMid.value
-  property int bottomRightState:  15                                // headerSettingMidRight.value
+  property int bottomRightState:  23                                // headerSettingMidRight.value
 
   height: largeHeaderHeight
   clip: false //true
