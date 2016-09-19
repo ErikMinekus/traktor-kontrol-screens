@@ -65,7 +65,7 @@ Item {
         elide: Text.ElideRight
         text: textLengthDummy.text
         font.pixelSize: fonts.smallFontSize
-        color: qmlBrowser.listItemTextColor(model, textColor)
+        color: getListItemTextColor()
       }
 
       Image {
@@ -106,7 +106,7 @@ Item {
       anchors.top: parent.top
       anchors.topMargin: contactDelegate.textTopMargin
       width: 145
-      color: qmlBrowser.listItemTextColor(model, textColor)
+      color: getListItemTextColor()
       clip: true
       text: (model.dataType == BrowserDataType.Track) ? model.artistName: ""
       font.pixelSize: fonts.smallFontSize
@@ -324,6 +324,20 @@ Item {
       return false
     }
     return true
+  }
+
+  function getListItemTextColor() {
+    if (model.dataType != BrowserDataType.Track) {
+      return textColor;
+    }
+    if (model.prevPlayed && !model.prelisten) {
+      return colors.colorGreen50Full;
+    }
+    if (model.loadedInDeck.length > 0) {
+      return colors.colorGreen;
+    }
+
+    return textColor;
   }
 
   // // cover border

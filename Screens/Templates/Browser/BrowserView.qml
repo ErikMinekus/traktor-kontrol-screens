@@ -287,19 +287,5 @@ Templates.View {
 
     return false;
   }
-
-  function listItemTextColor(model, textColor) {
-    if (model.dataType != BrowserDataType.Track) {
-      return textColor;
-    }
-    if (model.prevPlayed && !model.prelisten) {
-      return colors.colorGreen50Full;
-    }
-    if (model.loadedInDeck.length > 0) {
-      return colors.colorGreen;
-    }
-
-    return textColor;
-  }
 }
 
