@@ -2,7 +2,6 @@
 
 **Changes in appearance:**
 
-  - **[Browser]** Keys are only colored if they match the master deck
   - Camelot keys
   - FX overlay is always large
   - Spectrum waveform colors
@@ -34,6 +33,7 @@
   - Replace the CSI, Defines and Screens folders
   - Restart Traktor
 
-## Screenshot
+## Screenshots
 
 ![Track Deck](https://ErikMinekus.github.io/traktor-kontrol-screens/track-deck.jpg)
+![Browser](https://ErikMinekus.github.io/traktor-kontrol-screens/browser.jpg)

@@ -139,7 +139,7 @@ Item {
       anchors.topMargin: contactDelegate.textTopMargin
       horizontalAlignment: Text.AlignRight
 
-      color: (model.dataType == BrowserDataType.Track && qmlBrowser.isNearMasterKey(model.key)) ? parent.colorForKey(model.keyIndex) : textColor
+      color: (model.dataType == BrowserDataType.Track) ? (((model.key == "none") || (model.key == "None")) ? textColor : parent.colorForKey(model.keyIndex)) : textColor
       width: 36
       clip: true
       text: (model.dataType == BrowserDataType.Track) ? (((model.key == "none") || (model.key == "None")) ? "n.a." : keyText[model.keyIndex]) : ""
