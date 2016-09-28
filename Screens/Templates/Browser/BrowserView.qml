@@ -253,39 +253,5 @@ Templates.View {
 
     return "";
   }
-
-  function isNearMasterKey(trackKey) {
-    var masterKey = getMasterKey();
-    if (masterKey == trackKey) return true;
-
-    switch (masterKey) {
-      case "1m":  return (trackKey == "1d"  || trackKey == "2m"  || trackKey == "12m");
-      case "2m":  return (trackKey == "2d"  || trackKey == "3m"  || trackKey == "1m");
-      case "3m":  return (trackKey == "3d"  || trackKey == "4m"  || trackKey == "2m");
-      case "4m":  return (trackKey == "4d"  || trackKey == "5m"  || trackKey == "3m");
-      case "5m":  return (trackKey == "5d"  || trackKey == "6m"  || trackKey == "4m");
-      case "6m":  return (trackKey == "6d"  || trackKey == "7m"  || trackKey == "5m");
-      case "7m":  return (trackKey == "7d"  || trackKey == "8m"  || trackKey == "6m");
-      case "8m":  return (trackKey == "8d"  || trackKey == "9m"  || trackKey == "7m");
-      case "9m":  return (trackKey == "9d"  || trackKey == "10m" || trackKey == "8m");
-      case "10m": return (trackKey == "10d" || trackKey == "11m" || trackKey == "9m");
-      case "11m": return (trackKey == "11d" || trackKey == "12m" || trackKey == "10m");
-      case "12m": return (trackKey == "12d" || trackKey == "1m"  || trackKey == "11m");
-      case "1d":  return (trackKey == "1m"  || trackKey == "2d"  || trackKey == "12d");
-      case "2d":  return (trackKey == "2m"  || trackKey == "3d"  || trackKey == "1d");
-      case "3d":  return (trackKey == "3m"  || trackKey == "4d"  || trackKey == "2d");
-      case "4d":  return (trackKey == "4m"  || trackKey == "5d"  || trackKey == "3d");
-      case "5d":  return (trackKey == "5m"  || trackKey == "6d"  || trackKey == "4d");
-      case "6d":  return (trackKey == "6m"  || trackKey == "7d"  || trackKey == "5d");
-      case "7d":  return (trackKey == "7m"  || trackKey == "8d"  || trackKey == "6d");
-      case "8d":  return (trackKey == "8m"  || trackKey == "9d"  || trackKey == "7d");
-      case "9d":  return (trackKey == "9m"  || trackKey == "10d" || trackKey == "8d");
-      case "10d": return (trackKey == "10m" || trackKey == "11d" || trackKey == "9d");
-      case "11d": return (trackKey == "11m" || trackKey == "12d" || trackKey == "10d");
-      case "12d": return (trackKey == "12m" || trackKey == "1d"  || trackKey == "11d");
-    }
-
-    return false;
-  }
 }
 

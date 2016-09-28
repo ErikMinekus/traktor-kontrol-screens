@@ -103,32 +103,6 @@ Item {
     Behavior on width { NumberAnimation { duration: 0.5*speed } }
   }
 
-  Rectangle {
-    id: stem_text
-    width:  35; height: 14
-    y: 3
-    x: top_left_text.x + top_left_text.paintedWidth + 5
-
-    color:         colors.colorBgEmpty
-    border.width:  1
-    border.color:  textColors[deck_Id]
-    radius:        3
-    opacity:        0.6
-
-    /* #ifdef ENABLE_STEP_SEQUENCER
-    property string deck_name: sequencerOn ? "STEP" : "STEM"
-    AppProperty { id: sequencerOn;   path: "app.traktor.decks." + (deckId + 1) + ".remix.sequencer.on";  }
-    visible:       (deckType == DeckType.Stem) || sequencerOn.value
-    Text { x: sequencerOn.value ? 5 : 3; y:1; text: sequencerOn.value ? "STEP" : "STEM"; color: textColors[deck_Id]; font.pixelSize:fonts.miniFontSize }
-    #endif */
-    /* #ifndef ENABLE_STEP_SEQUENCER */
-    visible: deckType == DeckType.Stem
-    Text { x: 3; y:1; text:"STEM"; color: textColors[deck_Id]; font.pixelSize:fonts.miniFontSize }
-    /* #endif */
-
-    Behavior on opacity { NumberAnimation { duration: speed } }
-  }
-
   // top_left_text: TITEL
   DeckHeaderText {
     id: top_left_text

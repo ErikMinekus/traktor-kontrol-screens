@@ -139,7 +139,7 @@ Item {
       anchors.topMargin: contactDelegate.textTopMargin
       horizontalAlignment: Text.AlignRight
 
-      color: (model.dataType == BrowserDataType.Track && qmlBrowser.isNearMasterKey(model.key)) ? parent.colorForKey(model.keyIndex) : textColor
+      color: getListItemKeyTextColor() // (model.dataType == BrowserDataType.Track) ? (((model.key == "none") || (model.key == "None")) ? textColor : parent.colorForKey(model.keyIndex)) : textColor
       width: 30
       clip: true
       text: (model.dataType == BrowserDataType.Track) ? (((model.key == "none") || (model.key == "None")) ? "n.a." : keyText[model.keyIndex]) : ""
@@ -324,6 +324,28 @@ Item {
       return false
     }
     return true
+  }
+
+  function getListItemKeyTextColor() {
+    if (model.dataType != BrowserDataType.Track) {
+      return textColor;
+    }
+
+    var keyOffset = utils.getMasterKeyOffset(qmlBrowser.getMasterKey(), model.key);
+    if (keyOffset == 0) {
+      return colors.color04MusicalKey; // Yellow
+    }
+    if (keyOffset == 1 || keyOffset == -1) {
+      return colors.color02MusicalKey; // Orange
+    }
+    if (keyOffset == 2 || keyOffset == 7) {
+      return colors.color07MusicalKey; // Green
+    }
+    if (keyOffset == -2 || keyOffset == -7) {
+      return colors.color10MusicalKey; // Blue
+    }
+
+    return textColor;
   }
 
   function getListItemTextColor() {

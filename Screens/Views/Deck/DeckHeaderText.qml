@@ -85,6 +85,11 @@ Text {
   AppProperty { id: propRemixIsQuantize;  path: "app.traktor.decks." + (deckId+1) + ".remix.quant"; }
   //property string propRemixQuantize: "1/4"
 
+  AppProperty { id: deckAKeyDisplay; path: "app.traktor.decks.1.track.key.key_for_display" }
+  AppProperty { id: deckBKeyDisplay; path: "app.traktor.decks.2.track.key.key_for_display" }
+  AppProperty { id: deckCKeyDisplay; path: "app.traktor.decks.3.track.key.key_for_display" }
+  AppProperty { id: deckDKeyDisplay; path: "app.traktor.decks.4.track.key.key_for_display" }
+
   //--------------------------------------------------------------------------------------------------------------------
   //  MAPPING FROM TRAKTOR ENUM TO QML-STATE!
   //--------------------------------------------------------------------------------------------------------------------
@@ -193,7 +198,7 @@ Text {
     State { 
       name: "key"; 
       PropertyChanges { target: header_text; font.family: fontForNumber;
-                        color:  colors.musicalKeyColors[keyIndex[propKeyDisplay.value]];
+                        color:  getTrackKeyColor(propKeyDisplay.value);
                         text:   (!isLoaded)?"":"♪"+keyText[propKeyDisplay.value]; }
     },
     State { 
@@ -357,4 +362,36 @@ Text {
     return barsStr + "." + beat.toString();
   }
 
+  function getMasterKey() {
+    switch (propSyncMasterDeck.value) {
+      case 0: return deckAKeyDisplay.value;
+      case 1: return deckBKeyDisplay.value;
+      case 2: return deckCKeyDisplay.value;
+      case 3: return deckDKeyDisplay.value;
+    }
+
+    return "";
+  }
+
+  function getTrackKeyColor(trackKey) {
+    if (isMaster) {
+      return parent.textColors[deckId];
+    }
+
+    var keyOffset = utils.getMasterKeyOffset(getMasterKey(), trackKey);
+    if (keyOffset == 0) {
+      return colors.color04MusicalKey; // Yellow
+    }
+    if (keyOffset == 1 || keyOffset == -1) {
+      return colors.color02MusicalKey; // Orange
+    }
+    if (keyOffset == 2 || keyOffset == 7) {
+      return colors.color07MusicalKey; // Green
+    }
+    if (keyOffset == -2 || keyOffset == -7) {
+      return colors.color10MusicalKey; // Blue
+    }
+
+    return parent.textColors[deckId];
+  }
 }

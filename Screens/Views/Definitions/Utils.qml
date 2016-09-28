@@ -28,4 +28,31 @@ QtObject {
   {
     return ((elapsed > length) ? convertToTimeString(0) : convertToTimeString( Math.floor(elapsed) - Math.floor(length)));
   }
+
+  function getKeyOffset(offset) {
+    if (offset <= 0) return offset + 12;
+    if (offset > 12) return offset - 12;
+
+    return offset;
+  }
+
+  function getMasterKeyOffset(masterKey, trackKey) {
+    var masterKeyMatches = masterKey.match(/(\d+)(d|m)/);
+    var trackKeyMatches = trackKey.match(/(\d+)(d|m)/);
+
+    if (!masterKeyMatches || !trackKeyMatches) return null;
+    if (masterKeyMatches[1] == trackKeyMatches[1]) return 0;
+    if (masterKeyMatches[2] != trackKeyMatches[2]) return null;
+
+    switch (+trackKeyMatches[1]) {
+      case getKeyOffset(+masterKeyMatches[1] + 1): return 1;
+      case getKeyOffset(+masterKeyMatches[1] - 1): return -1;
+      case getKeyOffset(+masterKeyMatches[1] + 2): return 2;
+      case getKeyOffset(+masterKeyMatches[1] - 2): return -2;
+      case getKeyOffset(+masterKeyMatches[1] + 7): return 7;
+      case getKeyOffset(+masterKeyMatches[1] - 7): return -7;
+    }
+
+    return null;
+  }
 }
