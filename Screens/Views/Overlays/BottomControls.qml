@@ -16,7 +16,6 @@ Rectangle {
   property int    focusDeckId:           0   // deckId of the deck currently focused on screen 
   property int    fxUnit:                0
   property string propertiesPath:        ""
-  property bool   showPerformanceFooter: true
   property bool   isRemixDeck:           false
   property bool   isStemDeck:            false
   property bool   hasDeckControls:       isRemixDeck || isStemDeck
@@ -30,6 +29,7 @@ Rectangle {
   readonly property int     smallStateHeight: (showPerformanceFooter || isInEditMode || isStemDeck) ? 27 : 0
   readonly property int     bigStateHeight  : 81
 
+  readonly property bool    showPerformanceFooter: (screen.flavor != ScreenFlavor.S5)
   readonly property bool    hasContent: fxUnitsEnabled.value || hasDeckControls || useMIDIControls.value
 
   visible:        (showPerformanceFooter || isInEditMode || isStemDeck)
@@ -48,6 +48,44 @@ Rectangle {
   //--------------------------------------------------------------------------------------------------------------------
 
   Behavior on height { NumberAnimation { duration: durations.overlayTransition } }
+
+  function getColumnIndex(state, columnIdx)
+  {
+    /* #ifdef ENABLE_STEP_SEQUENCER */
+    if (state == "SLOT 1")
+      return 0;
+    if (state == "SLOT 2")
+      return 1;
+    if (state == "SLOT 3")
+      return 2;
+    if (state == "SLOT 4")
+      return 3;
+    /* #endif */
+
+    return columnIdx;
+  }
+
+  function getColumnState(state, columnIdx)
+  {
+    /* #ifdef ENABLE_STEP_SEQUENCER */
+    if (state == "SLOT 1" || state == "SLOT 2" || state == "SLOT 3" || state == "SLOT 4")
+    {
+      switch (columnIdx)
+      {
+        case 0:
+          return "SAMPLE";
+        case 1:
+          return "FILTER";
+        case 2:
+          return "PITCH";
+        case 3:
+          return "FX SEND";
+      }
+    }
+    /* #endif */
+
+    return state;
+  }
   
   // Row containing the progress bars + info texts
   Row { 
@@ -71,12 +109,16 @@ Rectangle {
         midiId:         bottomInfoPanel.midiId + (index + 1)
         markActive:     stemSelected
 
-        column:         index
+        column:         getColumnIndex(bottomInfoPanel.contentState, index)
         levelColor:     bottomInfoPanel.levelColor
         bgColor:        (index==0 && contentState == "FX" && sizeState == "large") ? colors.colorFxHeaderLightBg : bottomInfoPanel.color
 
         sliderHeight:   bottomPanelRow.sliderHeight
-        state:          bottomInfoPanel.contentState
+        /* #ifdef ENABLE_STEP_SEQUENCER */
+        showSampleName: !(bottomInfoPanel.contentState == "SLOT 1" || bottomInfoPanel.contentState == "SLOT 2" ||
+                          bottomInfoPanel.contentState == "SLOT 3" || bottomInfoPanel.contentState == "SLOT 4")
+        /* #endif */
+        state:          getColumnState(bottomInfoPanel.contentState, index)
         
         // If in stem deck on an S5, check if the current stem is selected (usually via the pads)
         MappingProperty { id: stemSelectorMode; path: propertiesPath + ".stem_selector_mode." + (index + 1) }
@@ -93,7 +135,7 @@ Rectangle {
     anchors.top:              parent.top
     anchors.topMargin:        2
     visible:                  bottomInfoPanel.hasContent
-    opacity:                  bottomInfoPanel.hasContent
+    opacity:                  bottomInfoPanel.hasContent ? 1.0 : 0.0
     color:                    bottomInfoPanel.headlineColor
     font.pixelSize:           fonts.scale(11)
   }

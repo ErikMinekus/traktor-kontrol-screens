@@ -22,14 +22,8 @@ Item {
   property bool   isInEditMode: false
   property string propertiesPath: ""
   property int    stemStyle:    StemStyle.track
-
-  /* #ifdef ENABLE_STEP_SEQUENCER
-  property string deckContentState:  sequencerOn.value ? "Sequencer" : deckType.description
-  AppProperty { id: sequencerOn;   path: "app.traktor.decks." + (deckId + 1) + ".remix.sequencer.on" }
-  #endif */
-  /* #ifndef ENABLE_STEP_SEQUENCER */
   property string deckContentState:  deckType.description
-  /* #endif */
+
   // -------------------------------------------------------------------------------------------------------------------
   AppProperty { id: deckType;      path: "app.traktor.decks." + (deckId + 1) + ".type" }
   AppProperty { id: directThruID;  path: "app.traktor.decks." + (deckId + 1) + ".direct_thru" }
@@ -102,9 +96,6 @@ Item {
         showLoopSize: view.showLoopSize
         height:    0
         visible:   true
-        /* #ifdef ENABLE_STEP_SEQUENCER
-        sequencerMode: sequencerOn.value
-        #endif */
       }
     }
 
