@@ -13,7 +13,16 @@ Rectangle {
   property string remixDeckPropertyPath: "app.traktor.decks." + (deckId + 1) + ".remix." 
 
   property int    midiId: 0
+  property bool showSampleName: true
+
+  /* #ifndef ENABLE_STEP_SEQUENCER
   property string samplePath: remixDeckPropertyPath + "cell.columns."   + (column + 1) + ".rows." + (activePlayerRow.value + 1)
+  #endif */
+  /* #ifdef ENABLE_STEP_SEQUENCER */
+  AppProperty { id: sequencerOn;  path: "app.traktor.decks." + (deckId + 1) + ".remix.sequencer.on" }
+  AppProperty { id: sequencerPlayerRow;  path: "app.traktor.decks." + (deckId + 1) + ".remix.players." + (column + 1) + ".sequencer.selected_cell" }
+  property string samplePath: remixDeckPropertyPath + "cell.columns."   + (column + 1) + ".rows." + (sequencerOn.value && screen.flavor != ScreenFlavor.S5 ? sequencerPlayerRow.value + 1 : activePlayerRow.value + 1)
+  /* #endif */
 
   property string stemDeckPropertyPath : "app.traktor.decks." + (deckId + 1) + ".stems."
   property string playerPath: isStemDeck ? stemDeckPropertyPath + (column + 1) : remixDeckPropertyPath + "players." + (column + 1)
@@ -57,7 +66,6 @@ Rectangle {
   AppProperty { id: singleMode;      path: fxUnitPath + ".type"                        }
   AppProperty { id: fxSelect1;       path: fxUnitPath + ".select.1"                    }
   AppProperty { id: fxColumnSelect;  path: fxUnitPath + ".select." + column            }
-
 
   Item {
     id: bottomInfoDetailsPanel // prevents text to show up beneath the progress bars on size change animation
@@ -107,18 +115,25 @@ Rectangle {
     }
 
     // value
-    Text {
-      id: valueString
-      text: isEnabled ? ( toPercent ? Math.floor(parameter.description * 100 + 0.1) + "%" : parameter.description ) : ""
-      color: colors.colorWhite
-      font.family: "Pragmatica" // is monospaced
-      font.pixelSize: fonts.largeValueFontSize
+    Item
+    {
       anchors.top: parent.top
       anchors.topMargin: 40
       anchors.left: parent.left
       anchors.leftMargin: 8
-      
-      property bool toPercent: false
+
+      height: 20
+
+      Text {
+        id: valueString
+        anchors.verticalCenter: parent.verticalCenter
+        text: isEnabled ? ( toPercent ? Math.floor(parameter.description * 100 + 0.1) + "%" : parameter.description ) : ""
+        color: colors.colorWhite
+        font.family: "Pragmatica" // is monospaced
+        font.pixelSize: fonts.largeValueFontSize
+       
+        property bool toPercent: false
+      }
     }
 
     // button
@@ -216,6 +231,36 @@ Rectangle {
     drawAsEnabled: indicatorEnabled
   }
 
+  /* #ifdef ENABLE_STEP_SEQUENCER */
+  MappingProperty { id: selectedCellLock; path: screen.propertiesPath + ".sequencer_sample_lock" }
+
+  // locked button
+  Rectangle {
+    id: lockedButton
+    anchors.bottom: parent.bottom
+    anchors.bottomMargin: 3
+    anchors.left: parent.left
+    anchors.leftMargin: 8
+
+    width: 102
+    height: bottomInfoDetails.sliderHeight
+    color: selectedCellLock.value ? parent.levelColor : "black"
+
+    radius: 1
+    visible:       (bottomInfoDetails.state == "SAMPLE")
+
+    Text {
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      font.capitalization: Font.AllUppercase
+      text: "LOCKED"
+      color: selectedCellLock.value ? colors.colorBlack : colors.colorGrey88
+      font.pixelSize: fonts.miniFontSize
+      visible: (sizeState == "large")
+    }
+  }
+  /* #endif */
+
   state: "EMPTY"
   states: [
     State {
@@ -223,6 +268,7 @@ Rectangle {
       PropertyChanges { target: active;                     path:      ""    }
       PropertyChanges { target: parameter;                  path:      ""    }
       PropertyChanges { target: valueString;                toPercent: false }
+      PropertyChanges { target: valueString;                font.pixelSize: fonts.largeValueFontSize }
       PropertyChanges { target: name;                       path:      ""    }
       PropertyChanges { target: bottomInfoSampleName;       labelText: ""    }
       PropertyChanges { target: bottomInfoFilterButtonText; text:      ""    }
@@ -233,6 +279,7 @@ Rectangle {
       PropertyChanges { target: active;                     path:      (column == 0) ? (fxUnitPath + ".enabled") : (fxUnitPath + ".buttons." + column )  }
       PropertyChanges { target: parameter;                  path:      (column == 0) ? (fxUnitPath + ".dry_wet") : (fxUnitPath + ".parameters." + column ) }
       PropertyChanges { target: valueString;                toPercent: false }
+      PropertyChanges { target: valueString;                font.pixelSize: fonts.largeValueFontSize }
       PropertyChanges { target: name;                       path:      (column == 0) ? (fxUnitPath + ".enabled") : (fxUnitPath + ".knobs."      + column + ".name") }
       PropertyChanges { target: bottomInfoSampleName;       labelText: isMacroFx ? finalLabel.substr(1) : finalLabel }
       PropertyChanges { target: bottomInfoFilterButtonText; text:      (column == 0) ? (singleMode.value ? "ON" : "") : fxButtonName.value }
@@ -240,66 +287,72 @@ Rectangle {
     },
     State {
       name: "FILTER"
-      PropertyChanges { target: parameter;                  path:      playerPath + ".filter_value"          }
-      PropertyChanges { target: valueString;                toPercent: false                                 }
-      PropertyChanges { target: active;                     path:      playerPath + ".filter_on"             }
-      PropertyChanges { target: name;                       path:      namePath                              }
-      PropertyChanges { target: bottomInfoSampleName;       labelText: name.description                      }
-      PropertyChanges { target: bottomInfoFilterButtonText; text:      (name.description != "") ? "ON" : ""  }  
-      PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")              }
+      PropertyChanges { target: parameter;                  path:      playerPath + ".filter_value"                  }
+      PropertyChanges { target: valueString;                toPercent: false                                         }
+      PropertyChanges { target: valueString;                font.pixelSize: fonts.largeValueFontSize                 }
+      PropertyChanges { target: active;                     path:      playerPath + ".filter_on"                     }
+      PropertyChanges { target: name;                       path:      namePath                                      }
+      PropertyChanges { target: bottomInfoSampleName;       labelText: showSampleName ? name.description : "FILTER"  }
+      PropertyChanges { target: bottomInfoFilterButtonText; text:      (name.description != "") ? "ON" : ""          } 
+      PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")                      }
     },
     State {
       name: "PITCH"
-      PropertyChanges { target: parameter;                  path:      samplePath + ".pitch"                 }
-      PropertyChanges { target: valueString;                toPercent: false                                 }
-      PropertyChanges { target: active;                     path:      playerPath + ".key_lock"              }
-      PropertyChanges { target: name;                       path:      namePath                              }
-      PropertyChanges { target: bottomInfoSampleName;       labelText: name.description                      }
-      PropertyChanges { target: bottomInfoFilterButtonText; text:      (name.description != "") ? "ON" : ""  }
-      PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")              }
+      PropertyChanges { target: parameter;                  path:      samplePath + ".pitch"                         }
+      PropertyChanges { target: valueString;                toPercent: false                                         }
+      PropertyChanges { target: valueString;                font.pixelSize: fonts.largeValueFontSize                 }
+      PropertyChanges { target: active;                     path:      playerPath + ".key_lock"                      }
+      PropertyChanges { target: name;                       path:      namePath                                      }
+      PropertyChanges { target: bottomInfoSampleName;       labelText: showSampleName ? name.description : "PITCH"   }
+      PropertyChanges { target: bottomInfoFilterButtonText; text:      (name.description != "") ? "ON" : ""          }
+      PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")                      }
     },
     State {
       name: "FX SEND"
-      PropertyChanges { target: parameter;                  path:      playerPath + ".fx_send"               }
-      PropertyChanges { target: valueString;                toPercent: false                                 }
-      PropertyChanges { target: active;                     path:      playerPath + ".fx_send_on"            }
-      PropertyChanges { target: name;                       path:      namePath                              }
-      PropertyChanges { target: bottomInfoSampleName;       labelText: name.description                      }
-      PropertyChanges { target: bottomInfoFilterButtonText; text:      (name.description != "") ? "ON" : ""  }
-      PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")              }
+      PropertyChanges { target: parameter;                  path:      playerPath + ".fx_send"                       }
+      PropertyChanges { target: valueString;                toPercent: false                                         }
+      PropertyChanges { target: valueString;                font.pixelSize: fonts.largeValueFontSize                 }
+      PropertyChanges { target: active;                     path:      playerPath + ".fx_send_on"                    }
+      PropertyChanges { target: name;                       path:      namePath                                      }
+      PropertyChanges { target: bottomInfoSampleName;       labelText: showSampleName ? name.description : "FX SEND" }
+      PropertyChanges { target: bottomInfoFilterButtonText; text:      (name.description != "") ? "ON" : ""          }
+      PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")                      }
     },
     State {
       name: "MIDI"
-      PropertyChanges { target: parameter;                  path:      "app.traktor.midi.knobs."   + midiId  }
-      PropertyChanges { target: valueString;                toPercent: false                                 }
-      PropertyChanges { target: active;                     path:      "app.traktor.midi.buttons." + midiId  }
-      PropertyChanges { target: name;                       path:      ""                                    }
-      PropertyChanges { target: bottomInfoSampleName;       labelText: "MIDI " + midiId                      }
-      PropertyChanges { target: bottomInfoFilterButtonText; text:      "ON"                                  }
-      PropertyChanges { target: bottomInfoDetails;          isEnabled: true                                  }
+      PropertyChanges { target: parameter;                  path:      "app.traktor.midi.knobs."   + midiId          }
+      PropertyChanges { target: valueString;                toPercent: false                                         }
+      PropertyChanges { target: valueString;                font.pixelSize: fonts.largeValueFontSize                 }
+      PropertyChanges { target: active;                     path:      "app.traktor.midi.buttons." + midiId          }
+      PropertyChanges { target: name;                       path:      ""                                            }
+      PropertyChanges { target: bottomInfoSampleName;       labelText: "MIDI " + midiId                              }
+      PropertyChanges { target: bottomInfoFilterButtonText; text:      "ON"                                          }
+      PropertyChanges { target: bottomInfoDetails;          isEnabled: true                                          }
     },
     State {
       name: "VOLUME"
-      PropertyChanges { target: parameter;                  path:      playerPath + ".volume"                }
-      PropertyChanges { target: valueString;                toPercent: true                                  }
-      PropertyChanges { target: active;                     path:      ""                                    }
-      PropertyChanges { target: name;                       path:      namePath                              }
-      PropertyChanges { target: bottomInfoSampleName;       labelText: name.description                      }
-      PropertyChanges { target: bottomInfoFilterButtonText; text:      ""                                    }
-      PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")              }
+      PropertyChanges { target: parameter;                  path:      playerPath + ".volume"                        }
+      PropertyChanges { target: valueString;                toPercent: true                                          }
+      PropertyChanges { target: valueString;                font.pixelSize: fonts.largeValueFontSize                 }
+      PropertyChanges { target: active;                     path:      ""                                            }
+      PropertyChanges { target: name;                       path:      namePath                                      }
+      PropertyChanges { target: bottomInfoSampleName;       labelText: showSampleName ? name.description : "VOLUME"  }
+      PropertyChanges { target: bottomInfoFilterButtonText; text:      ""                                            }
+      PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")                      }
     }
-    /* #ifdef ENABLE_STEP_SEQUENCER
+    /* #ifdef ENABLE_STEP_SEQUENCER */
     , State {
-      name: "SWING"
-      PropertyChanges { target: parameter;                  path:      playerPath + ".sequencer.pattern_swing" }
-      PropertyChanges { target: valueString;                toPercent: true                                    }
-      PropertyChanges { target: active;                     path:      ""                                      }
-      PropertyChanges { target: name;                       path:      namePath                                }
-      PropertyChanges { target: bottomInfoSampleName;       labelText: name.description                        }
-      PropertyChanges { target: bottomInfoFilterButtonText; text:      ""                                      }
-      PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")                }
+      name: "SAMPLE"
+      PropertyChanges { target: parameter;                  path:      playerPath + ".sequencer.selected_cell"       }
+      PropertyChanges { target: valueString;                toPercent: false                                         }
+      PropertyChanges { target: valueString;                font.pixelSize: fonts.middleFontSize                     }
+      PropertyChanges { target: active;                     path:      ""                                            }
+      PropertyChanges { target: name;                       path:      namePath                                      }
+      PropertyChanges { target: bottomInfoSampleName;       labelText: showSampleName ? name.description : "SAMPLE"  }
+      PropertyChanges { target: bottomInfoFilterButtonText; text:      ""                                            }
+      PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")                      }
     }
-    #endif */
+    /* #endif */
   ]
 }
 
