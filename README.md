@@ -10,7 +10,9 @@
 **Changes in functionality:**
 
   - BPM coarse and fine adjustment are flipped
+  - Hold Sync to quickly adjust the BPM
   - **[D2]** Shift + Deck switches between deck A/C and B/D
+  - **[D2]** Shift + Display Button 3 and 4 toggles Snap and Quantize
   - Timings have been improved
   - Use the Browse knob to zoom in and out of the waveform
   - Waveform zooming has been improved so that more beats are visible
