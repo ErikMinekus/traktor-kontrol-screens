@@ -250,4 +250,16 @@ Mapping
       }
     }
   }
+
+  //------------------------------------------------------------------------------------------------------------------
+  // Snap / Quantize
+  //------------------------------------------------------------------------------------------------------------------
+
+  WiresGroup
+  {
+    enabled: deck.shift
+
+    Wire { from: "surface.display.buttons.6"; to: TogglePropertyAdapter { path: "app.traktor.snap" } }
+    Wire { from: "surface.display.buttons.7"; to: TogglePropertyAdapter { path: "app.traktor.quant" } }
+  }
 } //Mapping
