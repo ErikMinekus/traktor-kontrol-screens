@@ -12,7 +12,7 @@ Item {
   property color  deckColor:       colors.colorBgEmpty // transparent blue not possible for logo due to low bit depth of displays. was: // (deckId < 2) ? colors.colorDeckBlueBright12Full : colors.colorBgEmpty
   property bool   trackIsLoaded:   (primaryKey.value > 0)
   
-  readonly property int waveformHeight: (deckSizeState == "small") ? 0 : ( parent ? ( (deckSizeState == "medium") ? (parent.height-41) : (parent.height-78) ) : 0 )
+  readonly property int waveformHeight: (deckSizeState == "small") ? 0 : ( parent ? ( (deckSizeState == "medium") ? (parent.height-78) : (parent.height-78) ) : 0 )
 
   property bool showLoopSize: false
   property int  zoomLevel:    1

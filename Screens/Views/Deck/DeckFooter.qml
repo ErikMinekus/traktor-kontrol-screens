@@ -36,7 +36,7 @@ Item {
   readonly property int    loopSizePos: footerPropertyLoopSize.value
 
   height: 45
-  opacity: (primaryKey.value > 0 && footerState == "large") ? 1 : 0
+  opacity: (primaryKey.value > 0 && footerState != "small") ? 1 : 0
   clip: false //true
   Behavior on opacity { NumberAnimation { duration: speed } }
   

@@ -98,8 +98,8 @@ Item {
     id:top_line;
     anchors.horizontalCenter: parent.horizontalCenter
     width:  deck_header.width // (headerState == "small") ? deck_header.width-18 : deck_header.width
-    height: 17
-    color:  colors.colorFxHeaderLightBg
+    height: 1
+    color:  textColors[deck_Id]
     Behavior on width { NumberAnimation { duration: 0.5*speed } }
   }
 
@@ -210,7 +210,7 @@ Item {
 
   Widgets.PhaseMeter {
     anchors.top: parent.top
-    anchors.topMargin: 23
+    anchors.topMargin: 22
     anchors.left: parent.left
     anchors.leftMargin: 161 // (deck_header.width - phaseMeter.width) / 2
     opacity: (isLoaded && headerState == "large") ? 1 : 0

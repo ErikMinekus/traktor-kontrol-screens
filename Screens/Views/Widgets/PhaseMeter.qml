@@ -49,7 +49,8 @@ Item {
     visible: (propSyncMasterDeck.value > -1 && !isMaster)
 
     Text {
-      anchors.centerIn: parent
+      anchors.fill: parent
+      anchors.topMargin: 1
       color: "black"
       font.pixelSize: fonts.miniFontSize
       font.family: "Pragmatica MediumTT"
