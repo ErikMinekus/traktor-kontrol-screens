@@ -245,12 +245,13 @@ Item {
   Rectangle {
     id: warning_box
     anchors.top:        parent.top
+    anchors.topMargin:  1
     anchors.right:      deck_letter_small.left
     anchors.rightMargin: 3
     anchors.left:       parent.left
     anchors.leftMargin: 3
     height:             17
-    color:              colors.colorFxHeaderLightBg
+    color:              colors.colorBlack
     visible:            deckHeaderWarningActive.value
     
     Behavior on anchors.leftMargin { NumberAnimation { duration: speed } }
@@ -265,7 +266,7 @@ Item {
 
       anchors.top:        parent.top
       anchors.left:       parent.left
-      anchors.topMargin:  0 // set by 'state'
+      anchors.topMargin:  -1 // set by 'state'
       Behavior on anchors.leftMargin { NumberAnimation { duration: speed } }
       Behavior on anchors.topMargin  { NumberAnimation { duration: speed } }
     }

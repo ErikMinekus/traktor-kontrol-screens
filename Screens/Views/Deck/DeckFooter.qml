@@ -57,6 +57,7 @@ Item {
 
   AppProperty { id: directThru;                 path: "app.traktor.decks." + (deck_Id+1) + ".direct_thru"; onValueChanged: { updateFooter() } }
   AppProperty { id: footerPropertyCover;        path: "app.traktor.decks." + (deck_Id+1) + ".content.cover_md5" }
+  AppProperty { id: footerPropertyIsLooping;    path: "app.traktor.decks." + (deck_Id+1) + ".loop.is_in_active_loop"; }
   AppProperty { id: footerPropertyLoopActive;   path: "app.traktor.decks." + (deck_Id+1) + ".loop.active"; }
   AppProperty { id: footerPropertyLoopSize;     path: "app.traktor.decks." + (deck_Id+1) + ".loop.size"; }
 
@@ -89,7 +90,7 @@ Item {
 
   // LOOP SIZE
   Rectangle {
-    width: 25
+    width: 34
     height: 36
     anchors.bottom: parent.bottom
     anchors.right: parent.right
@@ -98,8 +99,17 @@ Item {
 
     Text {
       anchors.top: parent.top
+      anchors.topMargin: -1
       anchors.left: parent.left
-      color: "white"
+      color: footerPropertyLoopActive.value ? colors.colorGreen : "white"
+      font.pixelSize: fonts.scale(9)
+      font.family: "Pragmatica MediumTT"
+      text: "↻"
+    }
+    Text {
+      anchors.top: parent.top
+      anchors.right: parent.right
+      color: footerPropertyLoopActive.value ? colors.colorGreen : "white"
       font.pixelSize: fonts.scale(9)
       font.family: "Pragmatica MediumTT"
       text: "LOOP"
@@ -109,18 +119,20 @@ Item {
       anchors.bottomMargin: 8
       anchors.left: parent.left
       width: parent.width
-      height: 15
-      color: footerPropertyLoopActive.value ? colors.colorGreen : "transparent"
+      height: 16
+      color: footerPropertyIsLooping.value ? colors.colorGreen : "transparent"
       border.color: footerPropertyLoopActive.value ? colors.colorGreen : "gray"
       border.width: 1
       radius: 2
 
       Text {
         anchors.fill: parent
-        color: footerPropertyLoopActive.value ? "black" : "gray"
-        font.pixelSize: fonts.smallFontSize;
+        anchors.topMargin: 1
+        color: footerPropertyIsLooping.value ? "black" : (footerPropertyLoopActive.value ? colors.colorGreen : "gray")
+        font.pixelSize: fonts.scale(13)
         font.family: "Pragmatica MediumTT"
         horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
         text: loopText[loopSizePos]
       }
     }
