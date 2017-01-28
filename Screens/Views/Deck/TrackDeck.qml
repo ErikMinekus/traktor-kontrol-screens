@@ -12,7 +12,7 @@ Item {
   property color  deckColor:       colors.colorBgEmpty // transparent blue not possible for logo due to low bit depth of displays. was: // (deckId < 2) ? colors.colorDeckBlueBright12Full : colors.colorBgEmpty
   property bool   trackIsLoaded:   (primaryKey.value > 0)
   
-  readonly property int waveformHeight: (deckSizeState == "small") ? 0 : ( parent ? ( (deckSizeState == "medium") ? (parent.height-43) : (parent.height-53) ) : 0 )
+  readonly property int waveformHeight: (deckSizeState == "small") ? 0 : ( parent ? ( (deckSizeState == "medium") ? 0 : (parent.height-108) ) : 0 )
 
   property bool showLoopSize: false
   property int  zoomLevel:    1
@@ -48,11 +48,11 @@ Item {
     isInEditMode:         trackDeck.isInEditMode
     stemStyle:            trackDeck.stemStyle
 
-    anchors.topMargin:    -2 
+    anchors.topMargin:    65
 
     // the height of the waveform is defined as the remaining space of deckHeight - stripe.height - spacerWaveStripe.height
     height:  waveformHeight              
-    visible: (trackIsLoaded && deckSizeState != "small") ? 1 : 0
+    visible: (trackIsLoaded && deckSizeState == "large") ? 1 : 0
 
     Behavior on height { PropertyAnimation { duration: durations.deckTransition } }
   }
@@ -68,7 +68,7 @@ Item {
     anchors.right:  stripe.left
     anchors.bottom: stripe.bottom
     height:         stripe.height
-    color:          colors.colorBgEmpty
+    color:          "transparent"
     visible:        trackDeck.trackIsLoaded && deckSizeState != "small"
   }
 
@@ -78,7 +78,7 @@ Item {
     anchors.right:  parent.right
     anchors.bottom: stripe.bottom
     height:         stripe.height
-    color:          colors.colorBgEmpty
+    color:          "transparent"
     visible:        trackDeck.trackIsLoaded && deckSizeState != "small"
   }
 
@@ -94,7 +94,7 @@ Item {
     anchors.left:           trackDeck.left
     anchors.right:          trackDeck.right
     anchors.bottom:         trackDeck.bottom
-    anchors.bottomMargin:   (deckSizeState == "large") ? largeDeckBottomMargin : smallDeckBottomMargin
+    anchors.bottomMargin:   5 // (deckSizeState == "large") ? largeDeckBottomMargin : smallDeckBottomMargin
     anchors.leftMargin:     9
     anchors.rightMargin:    9
     height:                 28

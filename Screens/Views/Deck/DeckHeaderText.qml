@@ -24,6 +24,10 @@ Text {
 
   readonly property string  fontForNumber: "Pragmatica"
   readonly property string  fontForString: "Pragmatica MediumTT"
+  readonly property variant keyIndex:      {"1d": 0, "8d": 1, "3d": 2, "10d": 3, "5d": 4, "12d": 5,
+                                            "7d": 6, "2d": 7, "9d": 8, "4d": 9, "11d": 10, "6d": 11,
+                                            "10m": 12, "5m": 13, "12m": 14, "7m": 15, "2m": 16, "9m": 17,
+                                            "4m": 18, "11m": 19, "6m": 20, "1m": 21, "8m": 22, "3m": 23}
   readonly property variant keyText:       {"1d": "8B", "8d": "3B", "3d": "10B", "10d": "5B", "5d": "12B", "12d": "7B",
                                             "7d": "2B", "2d": "9B", "9d": "4B", "4d": "11B", "11d": "6B", "6d": "1B",
                                             "10m": "5A", "5m": "12A", "12m": "7A", "7m": "2A", "2m": "9A", "9m": "4A",
@@ -71,6 +75,7 @@ Text {
   AppProperty { id: propTempo;            path: "app.traktor.decks." + (deckId+1) + ".tempo.tempo_for_display" } 
   AppProperty { id: propMixerTotalGain;   path: "app.traktor.decks." + (deckId+1) + ".content.total_gain" }
   
+  AppProperty { id: propKeyDisplay;     path: "app.traktor.decks." + (deckId+1) + ".track.key.key_for_display" }
   AppProperty { id: propIsInSync;       path: "app.traktor.decks." + (deckId+1) + ".sync.enabled"; }  
   AppProperty { id: propSyncMasterDeck; path: "app.traktor.masterclock.source_id" }
 
@@ -188,7 +193,8 @@ Text {
     State { 
       name: "key"; 
       PropertyChanges { target: header_text; font.family: fontForNumber;
-                        text:   (!isLoaded)?"":keyText[propMusicalKey.value]; }
+                        color:  colors.musicalKeyColors[keyIndex[propKeyDisplay.value]];
+                        text:   (!isLoaded)?"":keyText[propKeyDisplay.value]; }
     },
     State { 
       name: "keyText"; 
@@ -203,7 +209,7 @@ Text {
     State { 
       name: "bpm"; 
       PropertyChanges { target: header_text; font.family: fontForNumber; 
-                        text:   (!isLoaded)?"":propMixerBpm.value.toFixed(2).toString(); }
+                        text:   (!isLoaded)?"":propMixerBpm.value.toFixed(0).toString(); }
     },
     State { 
       name: "bpmStable"; 

@@ -42,7 +42,7 @@ Item {
 
   //--------------------------------------------------------------------------------------------------------------------
   // Properties defined by the designers
-  readonly property int smallDeckHeight:  58 //Waveform+Header
+  readonly property int smallDeckHeight:  92 //Waveform+Header
   readonly property int mediumDeckHeight: view.height - smallDeckHeight  //view.height-smallDeckHeight
   readonly property int largeDeckHeight:  view.height
   readonly property int speed:            durations.deckTransition

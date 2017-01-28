@@ -37,5 +37,5 @@
 
 ## Screenshots
 
-![Track Deck](https://ErikMinekus.github.io/traktor-kontrol-screens/track-deck.jpg)
+![Track Deck](https://ErikMinekus.github.io/traktor-kontrol-screens/prime/track-deck.jpg)
 ![Browser](https://ErikMinekus.github.io/traktor-kontrol-screens/browser.jpg)

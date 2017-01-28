@@ -56,7 +56,7 @@ QtObject {
   property variant colorWhite16:                rgba (255, 255, 255, 41) // from 15 - 17%
   property variant colorWhite12:                rgba (255, 255, 255, 31) // from 11 - 13%
   property variant colorWhite09:                rgba (255, 255, 255, 23) // from 8 - 10%
-  // property variant colorWhite06:                rgba (255, 255, 255, 15) // from 5 - 7%
+  property variant colorWhite06:                rgba (255, 255, 255, 15) // from 5 - 7%
   // property variant colorWhite03:                rgba (255, 255, 255, 8) // from 2 - 4%
 
   property variant colorGrey232:                rgba (232, 232, 232, 255)
@@ -89,6 +89,10 @@ QtObject {
 
   property variant colorRed:                    rgba(255, 0, 0, 255)
   property variant colorRed70:                  rgba(185, 6, 6, 255)
+
+  property variant colorGreenActive:            rgba( 82, 255, 148, 255)
+  property variant colorGreenInactive:          rgba(  8,  56,  24, 255)
+  property variant colorGreyInactive:           rgba(139, 145, 139, 255)
 
 
   // Playmarker
@@ -481,9 +485,9 @@ QtObject {
       mid1:  rgba (255, 110, 110, 130),  mid2:  rgba (255, 125, 125, 160),
       high1: rgba (255, 210, 220, 140),  high2: rgba (255, 220, 230, 160) },
     // Spectrum
-    { low1:  rgba (200,   0,   0, 100),  low2:  rgba (200, 100,   0, 250),
-      mid1:  rgba (60,  120, 240, 100),  mid2:  rgba (80,  160, 240, 250),
-      high1: rgba (100, 200, 240, 100),  high2: rgba (120, 240, 240, 250) }
+    { low1:  rgba ( 41, 113, 246, 100),  low2:  rgba ( 41, 113, 246, 250),
+      mid1:  rgba ( 98, 234,  82, 100),  mid2:  rgba ( 98, 234,  82, 250),
+      high1: rgba (255, 255, 255, 100),  high2: rgba (255, 255, 255, 250) }
   ]
 
   function getDefaultWaveformColors()

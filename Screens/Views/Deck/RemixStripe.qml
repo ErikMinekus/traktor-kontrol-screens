@@ -60,7 +60,7 @@ Rectangle {
     id: playPositionIndicator
     width:   3
     height:  parent.height + 2 
-    color:   colors.colorRedPlaymarker
+    color:   colors.colorWhite
     visible: trackIsLoaded 
     // calculate the position of the indicator: 'waveform rectangle width' * currentPlayPosition/trackLength
     x:       (trackLength.value != 0) ? waveform.width*(playPosition.value/trackLength.value) -1 : 0  // -1 is a fix for 1px shadow border
