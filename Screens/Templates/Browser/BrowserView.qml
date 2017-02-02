@@ -21,13 +21,13 @@ Templates.View {
   property bool  enterNode:     false
   property bool  exitNode:      false
   property int   increment:     0
-  property color focusColor:    (screen.focusDeckId < 2) ? colors.colorDeckBlueBright : "white" 
+  property color focusColor:    (screen.focusDeckId < 2) ? colors.colorDeckBlueBright : colors.colorGrey232
   property int   speed:         150
   property real  sortingKnobValue:  0
-  property int   pageSize:          7
+  property int   pageSize:          6
   property int   fastScrollCenter:  3
 
-  readonly property int  maxItemsOnScreen: 8
+  readonly property int  maxItemsOnScreen: 7
 
   // This is used by the footer to change/display the sorting!
   property alias sortingId:         browser.sorting
@@ -140,7 +140,7 @@ Templates.View {
     anchors.topMargin:      contentList.topMargin +  contentList.contentHeight + 1 // +1 = for spacing
     anchors.right:          parent.right
     anchors.left:           parent.left
-    anchors.leftMargin:     3
+    anchors.leftMargin:     1
     columns:                1
     spacing:                1  
 
@@ -149,7 +149,7 @@ Templates.View {
       Rectangle { 
         color: ( (contentList.count + index)%2 == 0) ? colors.colorGrey08 : "transparent"
         width: qmlBrowser.width; 
-        height: 33 }
+        height: 39 }
     }
   }
 
@@ -163,12 +163,12 @@ Templates.View {
     // and keep the list delegates in the same position always.
 
     // the commented out margins caused browser anchor problems leading to a disappearing browser! check later !?
-    anchors.topMargin:       17 // ( (contentList.count <  qmlBrowser.maxItemsOnScreen ) || (currentIndex < 4                     )) ? 17 : 0
-    anchors.bottomMargin:    18 // ( (contentList.count >= qmlBrowser.maxItemsOnScreen) && (currentIndex >= contentList.count - 4)) ? 18 : 0 
+    anchors.topMargin:       16 // ( (contentList.count <  qmlBrowser.maxItemsOnScreen ) || (currentIndex < 4                     )) ? 17 : 0
+    anchors.bottomMargin:    17 // ( (contentList.count >= qmlBrowser.maxItemsOnScreen) && (currentIndex >= contentList.count - 4)) ? 18 : 0 
     clip:                    false
     spacing:                 1
-    preferredHighlightBegin: 119 - 17 // -17 because of the reduced height due to the topMargin
-    preferredHighlightEnd  : 152 - 17 // -17 because of the reduced height due to the topMargin
+    preferredHighlightBegin: 2 * 40
+    preferredHighlightEnd  : 3 * 40 - 1
     highlightRangeMode :     ListView.ApplyRange
     highlightMoveDuration:   0
     delegate:                BrowserView.ListDelegate  {id: listDelegate; screenFocus: screen.focusDeckId; }

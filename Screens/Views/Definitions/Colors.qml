@@ -114,7 +114,7 @@ QtObject {
   property variant colorGreenGreyMix:           rgba(139, 240, 139, 82)
 
   // font colors 
-  property variant colorFontsListBrowser:       colorGrey72
+  property variant colorFontsListBrowser:       colorGrey128
   property variant colorFontsListFx:            colorGrey56
   property variant colorFontBrowserHeader:      colorGrey88
   property variant colorFontFxHeader:           colorGrey80 // also for FX header, FX select buttons

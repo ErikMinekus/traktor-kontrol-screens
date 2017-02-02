@@ -18,15 +18,16 @@ Item {
   property int           screenFocus:           0
   property color         deckColor :            qmlBrowser.focusColor
   property color         textColor :            ListView.isCurrentItem ? deckColor : colors.colorFontsListBrowser
+  property color         darkTextColor :        (screenFocus < 2 && ListView.isCurrentItem) ? colors.colorDeckBlueDark : colors.colorGrey72
   property bool          isCurrentItem :        ListView.isCurrentItem
   property string        prepIconColorPostfix:  (screenFocus < 2 && ListView.isCurrentItem) ? "Blue" : ((screenFocus > 1 && ListView.isCurrentItem) ? "White" : "Grey")
-  readonly property int  textTopMargin:         7 // centers text vertically
+  readonly property int  textTopMargin:         8 // centers text vertically
   readonly property bool isLoaded:              (model.dataType == BrowserDataType.Track) ? model.loadedInDeck.length > 0 : false
   // visible: !ListView.isCurrentItem
   readonly property variant keyText:            ["8B", "3B", "10B", "5B", "12B", "7B", "2B", "9B", "4B", "11B", "6B", "1B",
                                                  "5A", "12A", "7A", "2A", "9A", "4A", "11A", "6A", "1A", "8A", "3A", "10A"]
 
-  height: 33
+  height: 39
   anchors.left: parent.left
   anchors.right: parent.right
 
@@ -36,8 +37,8 @@ Item {
     color:  (index%2 == 0) ? colors.colorGrey08 : "transparent" 
     anchors.left: parent.left
     anchors.right: parent.right
-    anchors.leftMargin: 3
-    anchors.rightMargin: 3
+    anchors.leftMargin: 1
+    anchors.rightMargin: 1
     height: parent.height  
 
     // track name, toggles with folder name
@@ -45,9 +46,9 @@ Item {
       id: firstFieldTrack
       anchors.left: parent.left //listImage.right
       anchors.top: parent.top
-      anchors.topMargin: contactDelegate.textTopMargin
-      anchors.leftMargin: 37
-      width: 190
+      anchors.topMargin: 2
+      anchors.leftMargin: 44
+      width: 305
       visible: (model.dataType == BrowserDataType.Track)
 
       //! Dummy text to measure maximum text lenght dynamically and adjust icons behind it.
@@ -60,7 +61,7 @@ Item {
 
       Text {
         id: firstFieldText
-        width: (textLengthDummy.width) > 175 ? 175 : textLengthDummy.width
+        width: (textLengthDummy.width) > 290 ? 290 : textLengthDummy.width
         // visible: false
         elide: Text.ElideRight
         text: textLengthDummy.text
@@ -77,7 +78,7 @@ Item {
         anchors.left: firstFieldText.right 
         anchors.top: parent.top
         anchors.topMargin: 4
-        anchors.leftMargin: 5
+        anchors.leftMargin: (textLengthDummy.width > 290) ? 0 : 5
       }
     }   
 
@@ -85,31 +86,31 @@ Item {
     Text {
       id: firstFieldFolder
       anchors.left: parent.left
+      anchors.right: parent.right
       anchors.top: parent.top
-      anchors.topMargin: contactDelegate.textTopMargin
-      anchors.leftMargin: 37
+      anchors.topMargin: 10
+      anchors.leftMargin: 44
       color: textColor
       clip: true
       text: (model.dataType == BrowserDataType.Folder) ? model.nodeName : ""
       font.pixelSize: fonts.middleFontSize
       elide: Text.ElideRight
       visible: (model.dataType != BrowserDataType.Track)
-      width: 190
     }
     
 
     // artist name
     Text {
       id: trackTitleField
-      anchors.leftMargin: 9
-      anchors.left: (model.dataType == BrowserDataType.Track) ? firstFieldTrack.right : firstFieldFolder.right
+      anchors.leftMargin: 44
+      anchors.left: parent.left // (model.dataType == BrowserDataType.Track) ? firstFieldTrack.right : firstFieldFolder.right
       anchors.top: parent.top
-      anchors.topMargin: contactDelegate.textTopMargin
-      width: 130
-      color: textColor
+      anchors.topMargin: 20
+      width: 305
+      color: darkTextColor
       clip: true
       text: (model.dataType == BrowserDataType.Track) ? model.artistName: ""
-      font.pixelSize: fonts.middleFontSize
+      font.pixelSize: fonts.smallFontSize
       elide: Text.ElideRight
     }  
 
@@ -120,11 +121,11 @@ Item {
       anchors.top: parent.top
       anchors.topMargin: contactDelegate.textTopMargin
       horizontalAlignment: Text.AlignRight
-      width: 36
+      width: 41
       color: textColor
       clip: true
       text: (model.dataType == BrowserDataType.Track) ? model.bpm.toFixed(0) : ""
-      font.pixelSize: fonts.middleFontSize
+      font.pixelSize: fonts.largeFontSize
     }  
 
     function colorForKey(keyIndex) {
@@ -140,10 +141,10 @@ Item {
       horizontalAlignment: Text.AlignRight
 
       color: (model.dataType == BrowserDataType.Track) ? (((model.key == "none") || (model.key == "None")) ? textColor : parent.colorForKey(model.keyIndex)) : textColor
-      width: 36
+      width: 43
       clip: true
       text: (model.dataType == BrowserDataType.Track) ? (((model.key == "none") || (model.key == "None")) ? "n.a." : keyText[model.keyIndex]) : ""
-      font.pixelSize: fonts.middleFontSize
+      font.pixelSize: fonts.largeFontSize
     }
 
     // track rating
@@ -153,9 +154,9 @@ Item {
       rating:      (model.dataType == BrowserDataType.Track) ? ((model.rating == "") ? 0 : model.rating ) : 0
       // rating:      ((model.dataType == BrowserDataType.Track) && (model.rating != "")) ? ratingMap[model.rating] : 0
       anchors.right: parent.right
-      anchors.rightMargin: 2
+      anchors.rightMargin: 10
       anchors.verticalCenter: parent.verticalCenter
-      height: 13
+      height: 16
       width: 20
       bigLineColor:   contactDelegate.isCurrentItem ? ((contactDelegate.screenFocus < 2) ? colors.colorDeckBlueBright       : colors.colorWhite )    : colors.colorGrey64
       smallLineColor: contactDelegate.isCurrentItem ? ((contactDelegate.screenFocus < 2) ? colors.colorDeckBlueBright50Full : colors.colorGrey128 )  : colors.colorGrey32
@@ -174,9 +175,9 @@ Item {
     id: trackImage 
     anchors.top: parent.top
     anchors.left: parent.left
-    anchors.leftMargin: 3              
-    width: 33
-    height: 33
+    anchors.leftMargin: 1              
+    width: 39
+    height: 39
     color: (model.coverUrl != "") ? "transparent" : ((contactDelegate.screenFocus < 2) ? colors.colorDeckBlueBright50Full : colors.colorGrey128 )
     visible: (model.dataType == BrowserDataType.Track)
 
@@ -208,17 +209,9 @@ Item {
             {
               return colors.colorBlack88;
             }
-            else if (!isCurrentItem)
-            {
-              return colors.colorBlack81;
-            }
-            else if (isCurrentItem)
-            {
-              return "transparent";
-            }
             else
             {
-              return colors.colorBlack60;
+              return "transparent";
             }
           }
         }
@@ -313,8 +306,9 @@ Item {
     height:   33
     fillMode: Image.PreserveAspectFit
     anchors.top: parent.top
+    anchors.topMargin: 3
     anchors.left: parent.left
-    anchors.leftMargin: 3
+    anchors.leftMargin: 6
     clip:     true
     cache:    false
     visible:  false

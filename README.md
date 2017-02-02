@@ -38,4 +38,4 @@
 ## Screenshots
 
 ![Track Deck](https://ErikMinekus.github.io/traktor-kontrol-screens/prime/track-deck.jpg)
-![Browser](https://ErikMinekus.github.io/traktor-kontrol-screens/browser.jpg)
+![Browser](https://ErikMinekus.github.io/traktor-kontrol-screens/prime/browser.jpg)

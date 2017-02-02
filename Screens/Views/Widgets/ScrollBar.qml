@@ -11,7 +11,7 @@ Rectangle {
 
   //--------------------------------------------------------------------------------------------------------------------
 
-  readonly property real handlePos: flickable.contentY * handle.maximumY / (flickable.contentHeight - flickable.height)
+  readonly property real handlePos: flickable.visibleArea.yPosition * height // flickable.contentY * handle.maximumY / (flickable.contentHeight - flickable.height)
 
   Definitions.Colors { id: colors}
 
