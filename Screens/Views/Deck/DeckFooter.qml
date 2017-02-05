@@ -35,7 +35,7 @@ Item {
   readonly property int    isMaster:    (propSyncMasterDeck.value == deck_Id) ? 1 : 0
   readonly property int    loopSizePos: footerPropertyLoopSize.value
 
-  height: 45
+  height: 40
   opacity: (primaryKey.value > 0 && footerState != "small") ? 1 : 0
   clip: false //true
   Behavior on opacity { NumberAnimation { duration: speed } }
@@ -91,7 +91,7 @@ Item {
   // LOOP SIZE
   Rectangle {
     width: 34
-    height: 36
+    height: 28
     anchors.bottom: parent.bottom
     anchors.right: parent.right
     anchors.rightMargin: 317
@@ -116,7 +116,6 @@ Item {
     }
     Rectangle {
       anchors.bottom: parent.bottom
-      anchors.bottomMargin: 8
       anchors.left: parent.left
       width: parent.width
       height: 16
@@ -141,7 +140,7 @@ Item {
   // REMAINING TIME
   Rectangle {
     width: 90
-    height: 36
+    height: 28
     anchors.bottom: parent.bottom
     anchors.right: parent.right
     anchors.rightMargin: 195
@@ -161,7 +160,7 @@ Item {
     Text {
       id: time_anchor
       anchors.bottom: parent.bottom
-      anchors.bottomMargin: 6
+      anchors.bottomMargin: -2
       anchors.right: parent.right
       color: "white"
       font.pixelSize: fonts.middleFontSize
@@ -184,7 +183,7 @@ Item {
     // Minutes and Seconds Value
     Text {
       anchors.bottom: parent.bottom
-      anchors.bottomMargin: 5
+      anchors.bottomMargin: -3
       anchors.right: time_anchor.left
       color: "white"
       font.pixelSize: fonts.largeValueFontSize
@@ -224,7 +223,7 @@ Item {
   // TEMPO
   Rectangle {
     width: 70
-    height: 36
+    height: 28
     anchors.bottom: parent.bottom
     anchors.right: parent.right
     anchors.rightMargin: 93
@@ -243,7 +242,7 @@ Item {
     Text {
       id: tempo_anchor
       anchors.bottom: parent.bottom
-      anchors.bottomMargin: 6
+      anchors.bottomMargin: -2
       anchors.right: parent.right
       color: "white"
       font.pixelSize: fonts.smallFontSize
@@ -253,7 +252,7 @@ Item {
     // Value
     Text {
       anchors.bottom: parent.bottom
-      anchors.bottomMargin: 5
+      anchors.bottomMargin: -3
       anchors.right: tempo_anchor.left
       color: "white"
       font.pixelSize: fonts.largeValueFontSize
@@ -282,7 +281,7 @@ Item {
   // BPM
   Rectangle {
     width: 60
-    height: 36
+    height: 28
     anchors.bottom: parent.bottom
     anchors.right: parent.right
     anchors.rightMargin: 1
@@ -311,7 +310,7 @@ Item {
     Text {
       id: bpm_anchor
       anchors.bottom: parent.bottom
-      anchors.bottomMargin: 6
+      anchors.bottomMargin: -2
       anchors.right: parent.right
       color: isMaster ? "orange" : "white"
       font.pixelSize: fonts.middleFontSize
@@ -332,7 +331,7 @@ Item {
     // Whole Number Value
     Text {
       anchors.bottom: parent.bottom
-      anchors.bottomMargin: 5
+      anchors.bottomMargin: -3
       anchors.right: bpm_anchor.left
       color: isMaster ? "orange" : "white"
       font.pixelSize: fonts.largeValueFontSize
@@ -407,7 +406,6 @@ Item {
     id: cover_small
     anchors.bottom: parent.bottom
     anchors.left: parent.left
-    anchors.bottomMargin: 8
     anchors.leftMargin: 1
     width:  42
     height: 42

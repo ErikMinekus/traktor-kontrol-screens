@@ -189,7 +189,7 @@ Item {
   DeckTypes.DeckFooter {
     id: deckFooter
     anchors.bottom: view.bottom
-    anchors.bottomMargin: 37 // stripe.height + stripe.bottomMargin + 6
+    anchors.bottomMargin: 45 // stripe.height + stripe.bottomMargin + 14
     anchors.left:   view.left
     anchors.right:  view.right
     deck_Id:        view.deckId

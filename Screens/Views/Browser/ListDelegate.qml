@@ -76,7 +76,7 @@ Item {
         height: sourceSize.height
         anchors.left: firstFieldText.right 
         anchors.top: parent.top
-        anchors.topMargin: 4
+        anchors.topMargin: 2
         anchors.leftMargin: 5
       }
     }   

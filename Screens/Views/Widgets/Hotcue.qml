@@ -15,7 +15,7 @@ Item {
   property color  hotcueColor:  "transparent" 
   property int    hotcueId:     0
   property int    hotcueLength: 0
-  property int    topMargin:    0
+  property int    topMargin:    6
 
 
   readonly property double borderWidth:       2

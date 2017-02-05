@@ -52,13 +52,9 @@ Item {
     var sum   = 0
     var count = 0
 
-    nodeName   = ""
-    stringList = pathStrings.split(" | ").slice(1)
-
-    if (stringList.length > 0) {
-      nodeName = stringList[0]
-      stringList[0] = ""
-    }
+    var pathList = pathStrings.split(" | ").slice(1)
+    nodeName     = pathList.shift() || ""
+    stringList   = pathList
 
     for (var i = 0; i < stringList.length; ++i) {
       dummy.text = header.stringList[stringList.length - i - 1]
@@ -100,6 +96,16 @@ Item {
     fillMode:           Image.PreserveAspectCrop
     clip:               false
     cache:              false
+    visible:            nodeName != ""
+  }
+
+  Widgets.TextSeparatorArrow {
+    id:                 browserIconArrow
+    anchors.top:        parent.top
+    anchors.topMargin:  4
+    anchors.left:       browserIcon.right
+    anchors.leftMargin: (nodeName == "Track Collection") ? 2 : 1
+    color:              colors.colorGrey80
     visible:            stringList.length > 0
   }
 
@@ -108,9 +114,9 @@ Item {
     readonly property int spaceToDeckLetter: 20
     anchors.top:         parent.top
     anchors.bottom:      parent.bottom
-    anchors.left:        browserIcon.right
+    anchors.left:        browserIconArrow.right
     anchors.right:       deckLetter.left
-    anchors.leftMargin:  (nodeName == "Track Collection") ? -4 : -5
+    anchors.leftMargin:   6
     anchors.rightMargin: spaceToDeckLetter
     clip:                true
 
@@ -119,9 +125,9 @@ Item {
       id: dots
       anchors.left:       parent.left
       anchors.top:        parent.top
-      anchors.leftMargin: (stringListModelSize < stringList.length) ? 5 : -width
+      anchors.leftMargin: (stringListModelSize < stringList.length) ? 0 : -width
       visible:            (stringListModelSize < stringList.length)
-      width:              30
+      width:              32
 
       Text {
         anchors.left:        parent.left

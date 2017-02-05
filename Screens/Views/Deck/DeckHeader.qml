@@ -108,16 +108,16 @@ Item {
     id: top_left_text
     deckId: deck_Id
     explicitName: ""
-    maxTextWidth : (deckType == DeckType.Stem) ? 276 - stem_text.width : 276
+    maxTextWidth : 276 // (deckType == DeckType.Stem) ? 200 - stem_text.width : 200
     textState: topLeftState
     color:     textColors[deck_Id]
     elide:     Text.ElideRight
-    font.pixelSize:     fonts.scale(13) // set in state
-    anchors.top:        top_line.top
+    font.pixelSize:     fonts.scale(13)
+    anchors.top:        top_line.bottom
     anchors.left:       parent.left
 
-    anchors.topMargin:  0  // set by 'state'
-    anchors.leftMargin: 3  // set by 'state'
+    anchors.topMargin:  -1
+    anchors.leftMargin: 3
     Behavior on anchors.leftMargin { NumberAnimation { duration: speed } }
     Behavior on anchors.topMargin  { NumberAnimation { duration: speed } }
   }
@@ -134,9 +134,9 @@ Item {
     elide:      Text.ElideRight
     font.pixelSize: fonts.scale(13)
     horizontalAlignment: Text.AlignRight
-    anchors.top:          top_line.top
+    anchors.top:          top_line.bottom
     anchors.left:         parent.left
-    anchors.topMargin:    2 // set by 'state'
+    anchors.topMargin:    1
     anchors.leftMargin:   299
     Behavior on anchors.topMargin   { NumberAnimation { duration: speed } }
     Behavior on anchors.rightMargin { NumberAnimation { duration: speed } }
@@ -153,9 +153,9 @@ Item {
     color:      textColors[deck_Id]
     elide:      Text.ElideRight
     font.pixelSize: fonts.scale(13)
-    anchors.top:          top_line.top
+    anchors.top:          top_line.bottom
     anchors.left:         parent.left
-    anchors.topMargin:    2 // set by 'state'
+    anchors.topMargin:    1
     anchors.leftMargin:   393
     Behavior on anchors.rightMargin { NumberAnimation { duration: speed } }
     Behavior on anchors.topMargin   { NumberAnimation { duration: speed } }
@@ -227,9 +227,9 @@ Item {
     id: deck_letter_small
     width:               10
     height:              width
-    anchors.top:         top_line.top
+    anchors.top:         top_line.bottom
     anchors.right:       parent.right
-    anchors.topMargin:   0
+    anchors.topMargin:   -1
     anchors.rightMargin: 3
     text:                deckLetters[deck_Id]
     color:               textColors[deck_Id]
@@ -260,13 +260,13 @@ Item {
     Text {
       id: top_warning_text
       color:              isError ? colors.colorRed : colors.colorOrange
-      font.pixelSize:     fonts.scale(13) // set in state
+      font.pixelSize:     fonts.scale(13)
 
       text: deckHeaderWarningShortMessage.value
 
       anchors.top:        parent.top
       anchors.left:       parent.left
-      anchors.topMargin:  -1 // set by 'state'
+      anchors.topMargin:  -1
       Behavior on anchors.leftMargin { NumberAnimation { duration: speed } }
       Behavior on anchors.topMargin  { NumberAnimation { duration: speed } }
     }

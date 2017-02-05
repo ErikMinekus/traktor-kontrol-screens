@@ -172,8 +172,8 @@ Templates.View {
     anchors.bottomMargin:    15 // ( (contentList.count >= qmlBrowser.maxItemsOnScreen) && (currentIndex >= contentList.count - 4)) ? 18 : 0 
     clip:                    false
     spacing:                 1
-    preferredHighlightBegin: 26 * 4 + 4 // -17 because of the reduced height due to the topMargin
-    preferredHighlightEnd  : 26 * 5 + 4 // -17 because of the reduced height due to the topMargin
+    preferredHighlightBegin: 4 * 27
+    preferredHighlightEnd  : 5 * 27 - 1
     highlightRangeMode :     ListView.ApplyRange
     highlightMoveDuration:   0
     delegate:                BrowserView.ListDelegate  {id: listDelegate; screenFocus: screen.focusDeckId; }
