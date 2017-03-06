@@ -139,7 +139,7 @@ Item {
     id: top_left_text
     deckId: deck_Id
     explicitName: ""
-    maxTextWidth : 265 // (deckType == DeckType.Stem) ? 200 - stem_text.width : 200
+    maxTextWidth : 275 // (deckType == DeckType.Stem) ? 200 - stem_text.width : 200
     textState: topLeftState
     color:     colors.colorGrey232
     elide:     Text.ElideRight
@@ -158,7 +158,7 @@ Item {
     id: bottom_left_text
     deckId: deck_Id
     explicitName: ""
-    maxTextWidth : 265 // directThru.value ? 1000 : 200
+    maxTextWidth : 275 // directThru.value ? 1000 : 200
     textState:  bottomLeftState
     color:      colors.colorGrey72
     elide:      Text.ElideRight
@@ -380,12 +380,12 @@ Item {
     color:         (propKeylock.value ? colors.colorGreenActive : colors.colorGreyInactive)
     visible:       isLoaded
 
-    Text { 
+    Text {
       anchors.fill:        parent
-      anchors.topMargin:   1
+      anchors.topMargin:   2
       horizontalAlignment: Text.AlignHCenter
       verticalAlignment:   Text.AlignVCenter
-      text:  "♪"
+      text:  "♩"
       font.pixelSize: fonts.scale(14)
       color: "black"
     }
@@ -407,7 +407,7 @@ Item {
     opacity:       (isLoaded && headerState != "small" && hasTrackStyleHeader(deckType)) ? 1 : 0
     Behavior on opacity { NumberAnimation { duration: speed } }
 
-    Text { 
+    Text {
       anchors.fill:        parent
       anchors.topMargin:   1
       horizontalAlignment: Text.AlignHCenter
@@ -430,7 +430,7 @@ Item {
     opacity:       (isLoaded && headerState != "small" && hasTrackStyleHeader(deckType)) ? 1 : 0
     Behavior on opacity { NumberAnimation { duration: speed } }
 
-    Text { 
+    Text {
       anchors.fill:        parent
       anchors.topMargin:   1
       horizontalAlignment: Text.AlignHCenter

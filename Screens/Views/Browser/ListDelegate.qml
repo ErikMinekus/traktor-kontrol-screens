@@ -166,7 +166,7 @@ Item {
     ListHighlight {
       anchors.fill: parent
       visible: contactDelegate.isCurrentItem
-      anchors.leftMargin: (model.dataType == BrowserDataType.Track) ? 34 : 0
+      anchors.leftMargin: (model.dataType == BrowserDataType.Track) ? 40 : 0
       anchors.rightMargin: 0 
     }
   }

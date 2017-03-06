@@ -48,6 +48,14 @@ Module
   AppProperty { id: masterDeckIdProp; path: "app.traktor.masterclock.source_id" }
   AppProperty { id: isTempoSynced;    path: "app.traktor.decks." + (focusedDeckId) + ".sync.enabled" }
   AppProperty { id: syncPhaseProp;    path: "app.traktor.decks." + (focusedDeckId) + ".tempo.phase"; }
+  AppProperty { id: hotcue1Exists;    path: "app.traktor.decks." + (focusedDeckId) + ".track.cue.hotcues.1.exists"; }
+  AppProperty { id: hotcue2Exists;    path: "app.traktor.decks." + (focusedDeckId) + ".track.cue.hotcues.2.exists"; }
+  AppProperty { id: hotcue3Exists;    path: "app.traktor.decks." + (focusedDeckId) + ".track.cue.hotcues.3.exists"; }
+  AppProperty { id: hotcue4Exists;    path: "app.traktor.decks." + (focusedDeckId) + ".track.cue.hotcues.4.exists"; }
+  AppProperty { id: hotcue5Exists;    path: "app.traktor.decks." + (focusedDeckId) + ".track.cue.hotcues.5.exists"; }
+  AppProperty { id: hotcue6Exists;    path: "app.traktor.decks." + (focusedDeckId) + ".track.cue.hotcues.6.exists"; }
+  AppProperty { id: hotcue7Exists;    path: "app.traktor.decks." + (focusedDeckId) + ".track.cue.hotcues.7.exists"; }
+  AppProperty { id: hotcue8Exists;    path: "app.traktor.decks." + (focusedDeckId) + ".track.cue.hotcues.8.exists"; }
 
   AppProperty { 
     path: "app.traktor.masterclock.tempo"; 
@@ -1927,28 +1935,28 @@ Module
           {
             enabled: !module.shift
 
-            Wire { from: "%surface%.pads.1";   to: "decks.1.hotcues.1.trigger" }
-            Wire { from: "%surface%.pads.2";   to: "decks.1.hotcues.2.trigger" }
-            Wire { from: "%surface%.pads.3";   to: "decks.1.hotcues.3.trigger" }
-            Wire { from: "%surface%.pads.4";   to: "decks.1.hotcues.4.trigger" }
-            Wire { from: "%surface%.pads.5";   to: "decks.1.hotcues.5.trigger" }
-            Wire { from: "%surface%.pads.6";   to: "decks.1.hotcues.6.trigger" }
-            Wire { from: "%surface%.pads.7";   to: "decks.1.hotcues.7.trigger" }
-            Wire { from: "%surface%.pads.8";   to: "decks.1.hotcues.8.trigger" }
+            Wire { from: "%surface%.pads.1.value";   to: "decks.1.hotcues.1.trigger" }
+            Wire { from: "%surface%.pads.2.value";   to: "decks.1.hotcues.2.trigger" }
+            Wire { from: "%surface%.pads.3.value";   to: "decks.1.hotcues.3.trigger" }
+            Wire { from: "%surface%.pads.4.value";   to: "decks.1.hotcues.4.trigger" }
+            Wire { from: "%surface%.pads.5.value";   to: "decks.1.hotcues.5.trigger" }
+            Wire { from: "%surface%.pads.6.value";   to: "decks.1.hotcues.6.trigger" }
+            Wire { from: "%surface%.pads.7.value";   to: "decks.1.hotcues.7.trigger" }
+            Wire { from: "%surface%.pads.8.value";   to: "decks.1.hotcues.8.trigger" }
           }
 
           WiresGroup
           {
             enabled: module.shift
 
-            Wire { from: "%surface%.pads.1";   to: "decks.1.hotcues.1.delete" }
-            Wire { from: "%surface%.pads.2";   to: "decks.1.hotcues.2.delete" }
-            Wire { from: "%surface%.pads.3";   to: "decks.1.hotcues.3.delete" }
-            Wire { from: "%surface%.pads.4";   to: "decks.1.hotcues.4.delete" }
-            Wire { from: "%surface%.pads.5";   to: "decks.1.hotcues.5.delete" }
-            Wire { from: "%surface%.pads.6";   to: "decks.1.hotcues.6.delete" }
-            Wire { from: "%surface%.pads.7";   to: "decks.1.hotcues.7.delete" }
-            Wire { from: "%surface%.pads.8";   to: "decks.1.hotcues.8.delete" }
+            Wire { from: "%surface%.pads.1.value";   to: "decks.1.hotcues.1.delete" }
+            Wire { from: "%surface%.pads.2.value";   to: "decks.1.hotcues.2.delete" }
+            Wire { from: "%surface%.pads.3.value";   to: "decks.1.hotcues.3.delete" }
+            Wire { from: "%surface%.pads.4.value";   to: "decks.1.hotcues.4.delete" }
+            Wire { from: "%surface%.pads.5.value";   to: "decks.1.hotcues.5.delete" }
+            Wire { from: "%surface%.pads.6.value";   to: "decks.1.hotcues.6.delete" }
+            Wire { from: "%surface%.pads.7.value";   to: "decks.1.hotcues.7.delete" }
+            Wire { from: "%surface%.pads.8.value";   to: "decks.1.hotcues.8.delete" }
           }
         }
 
@@ -2100,28 +2108,28 @@ Module
           {
             enabled: !module.shift
 
-            Wire { from: "%surface%.pads.1";   to: "decks.3.hotcues.1.trigger" }
-            Wire { from: "%surface%.pads.2";   to: "decks.3.hotcues.2.trigger" }
-            Wire { from: "%surface%.pads.3";   to: "decks.3.hotcues.3.trigger" }
-            Wire { from: "%surface%.pads.4";   to: "decks.3.hotcues.4.trigger" }
-            Wire { from: "%surface%.pads.5";   to: "decks.3.hotcues.5.trigger" }
-            Wire { from: "%surface%.pads.6";   to: "decks.3.hotcues.6.trigger" }
-            Wire { from: "%surface%.pads.7";   to: "decks.3.hotcues.7.trigger" }
-            Wire { from: "%surface%.pads.8";   to: "decks.3.hotcues.8.trigger" }
+            Wire { from: "%surface%.pads.1.value";   to: "decks.3.hotcues.1.trigger" }
+            Wire { from: "%surface%.pads.2.value";   to: "decks.3.hotcues.2.trigger" }
+            Wire { from: "%surface%.pads.3.value";   to: "decks.3.hotcues.3.trigger" }
+            Wire { from: "%surface%.pads.4.value";   to: "decks.3.hotcues.4.trigger" }
+            Wire { from: "%surface%.pads.5.value";   to: "decks.3.hotcues.5.trigger" }
+            Wire { from: "%surface%.pads.6.value";   to: "decks.3.hotcues.6.trigger" }
+            Wire { from: "%surface%.pads.7.value";   to: "decks.3.hotcues.7.trigger" }
+            Wire { from: "%surface%.pads.8.value";   to: "decks.3.hotcues.8.trigger" }
           }
 
           WiresGroup
           {
             enabled: module.shift
 
-            Wire { from: "%surface%.pads.1";   to: "decks.3.hotcues.1.delete" }
-            Wire { from: "%surface%.pads.2";   to: "decks.3.hotcues.2.delete" }
-            Wire { from: "%surface%.pads.3";   to: "decks.3.hotcues.3.delete" }
-            Wire { from: "%surface%.pads.4";   to: "decks.3.hotcues.4.delete" }
-            Wire { from: "%surface%.pads.5";   to: "decks.3.hotcues.5.delete" }
-            Wire { from: "%surface%.pads.6";   to: "decks.3.hotcues.6.delete" }
-            Wire { from: "%surface%.pads.7";   to: "decks.3.hotcues.7.delete" }
-            Wire { from: "%surface%.pads.8";   to: "decks.3.hotcues.8.delete" }
+            Wire { from: "%surface%.pads.1.value";   to: "decks.3.hotcues.1.delete" }
+            Wire { from: "%surface%.pads.2.value";   to: "decks.3.hotcues.2.delete" }
+            Wire { from: "%surface%.pads.3.value";   to: "decks.3.hotcues.3.delete" }
+            Wire { from: "%surface%.pads.4.value";   to: "decks.3.hotcues.4.delete" }
+            Wire { from: "%surface%.pads.5.value";   to: "decks.3.hotcues.5.delete" }
+            Wire { from: "%surface%.pads.6.value";   to: "decks.3.hotcues.6.delete" }
+            Wire { from: "%surface%.pads.7.value";   to: "decks.3.hotcues.7.delete" }
+            Wire { from: "%surface%.pads.8.value";   to: "decks.3.hotcues.8.delete" }
           }
         }
 
@@ -2273,28 +2281,28 @@ Module
           {
             enabled: !module.shift
 
-            Wire { from: "%surface%.pads.1";    to: "decks.2.hotcues.1.trigger" }
-            Wire { from: "%surface%.pads.2";    to: "decks.2.hotcues.2.trigger" }
-            Wire { from: "%surface%.pads.3";    to: "decks.2.hotcues.3.trigger" }
-            Wire { from: "%surface%.pads.4";    to: "decks.2.hotcues.4.trigger" }
-            Wire { from: "%surface%.pads.5";    to: "decks.2.hotcues.5.trigger" }
-            Wire { from: "%surface%.pads.6";    to: "decks.2.hotcues.6.trigger" }
-            Wire { from: "%surface%.pads.7";    to: "decks.2.hotcues.7.trigger" }
-            Wire { from: "%surface%.pads.8";    to: "decks.2.hotcues.8.trigger" }
+            Wire { from: "%surface%.pads.1.value";    to: "decks.2.hotcues.1.trigger" }
+            Wire { from: "%surface%.pads.2.value";    to: "decks.2.hotcues.2.trigger" }
+            Wire { from: "%surface%.pads.3.value";    to: "decks.2.hotcues.3.trigger" }
+            Wire { from: "%surface%.pads.4.value";    to: "decks.2.hotcues.4.trigger" }
+            Wire { from: "%surface%.pads.5.value";    to: "decks.2.hotcues.5.trigger" }
+            Wire { from: "%surface%.pads.6.value";    to: "decks.2.hotcues.6.trigger" }
+            Wire { from: "%surface%.pads.7.value";    to: "decks.2.hotcues.7.trigger" }
+            Wire { from: "%surface%.pads.8.value";    to: "decks.2.hotcues.8.trigger" }
           }
 
           WiresGroup
           {
             enabled: module.shift
 
-            Wire { from: "%surface%.pads.1";    to: "decks.2.hotcues.1.delete" }
-            Wire { from: "%surface%.pads.2";    to: "decks.2.hotcues.2.delete" }
-            Wire { from: "%surface%.pads.3";    to: "decks.2.hotcues.3.delete" }
-            Wire { from: "%surface%.pads.4";    to: "decks.2.hotcues.4.delete" }
-            Wire { from: "%surface%.pads.5";    to: "decks.2.hotcues.5.delete" }
-            Wire { from: "%surface%.pads.6";    to: "decks.2.hotcues.6.delete" }
-            Wire { from: "%surface%.pads.7";    to: "decks.2.hotcues.7.delete" }
-            Wire { from: "%surface%.pads.8";    to: "decks.2.hotcues.8.delete" }
+            Wire { from: "%surface%.pads.1.value";    to: "decks.2.hotcues.1.delete" }
+            Wire { from: "%surface%.pads.2.value";    to: "decks.2.hotcues.2.delete" }
+            Wire { from: "%surface%.pads.3.value";    to: "decks.2.hotcues.3.delete" }
+            Wire { from: "%surface%.pads.4.value";    to: "decks.2.hotcues.4.delete" }
+            Wire { from: "%surface%.pads.5.value";    to: "decks.2.hotcues.5.delete" }
+            Wire { from: "%surface%.pads.6.value";    to: "decks.2.hotcues.6.delete" }
+            Wire { from: "%surface%.pads.7.value";    to: "decks.2.hotcues.7.delete" }
+            Wire { from: "%surface%.pads.8.value";    to: "decks.2.hotcues.8.delete" }
           }
         }
 
@@ -2445,28 +2453,28 @@ Module
           {
             enabled: !module.shift
 
-            Wire { from: "%surface%.pads.1";    to: "decks.4.hotcues.1.trigger" }
-            Wire { from: "%surface%.pads.2";    to: "decks.4.hotcues.2.trigger" }
-            Wire { from: "%surface%.pads.3";    to: "decks.4.hotcues.3.trigger" }
-            Wire { from: "%surface%.pads.4";    to: "decks.4.hotcues.4.trigger" }
-            Wire { from: "%surface%.pads.5";    to: "decks.4.hotcues.5.trigger" }
-            Wire { from: "%surface%.pads.6";    to: "decks.4.hotcues.6.trigger" }
-            Wire { from: "%surface%.pads.7";    to: "decks.4.hotcues.7.trigger" }
-            Wire { from: "%surface%.pads.8";    to: "decks.4.hotcues.8.trigger" }
+            Wire { from: "%surface%.pads.1.value";    to: "decks.4.hotcues.1.trigger" }
+            Wire { from: "%surface%.pads.2.value";    to: "decks.4.hotcues.2.trigger" }
+            Wire { from: "%surface%.pads.3.value";    to: "decks.4.hotcues.3.trigger" }
+            Wire { from: "%surface%.pads.4.value";    to: "decks.4.hotcues.4.trigger" }
+            Wire { from: "%surface%.pads.5.value";    to: "decks.4.hotcues.5.trigger" }
+            Wire { from: "%surface%.pads.6.value";    to: "decks.4.hotcues.6.trigger" }
+            Wire { from: "%surface%.pads.7.value";    to: "decks.4.hotcues.7.trigger" }
+            Wire { from: "%surface%.pads.8.value";    to: "decks.4.hotcues.8.trigger" }
           }
 
           WiresGroup
           {
             enabled: module.shift
 
-            Wire { from: "%surface%.pads.1";    to: "decks.4.hotcues.1.delete" }
-            Wire { from: "%surface%.pads.2";    to: "decks.4.hotcues.2.delete" }
-            Wire { from: "%surface%.pads.3";    to: "decks.4.hotcues.3.delete" }
-            Wire { from: "%surface%.pads.4";    to: "decks.4.hotcues.4.delete" }
-            Wire { from: "%surface%.pads.5";    to: "decks.4.hotcues.5.delete" }
-            Wire { from: "%surface%.pads.6";    to: "decks.4.hotcues.6.delete" }
-            Wire { from: "%surface%.pads.7";    to: "decks.4.hotcues.7.delete" }
-            Wire { from: "%surface%.pads.8";    to: "decks.4.hotcues.8.delete" }
+            Wire { from: "%surface%.pads.1.value";    to: "decks.4.hotcues.1.delete" }
+            Wire { from: "%surface%.pads.2.value";    to: "decks.4.hotcues.2.delete" }
+            Wire { from: "%surface%.pads.3.value";    to: "decks.4.hotcues.3.delete" }
+            Wire { from: "%surface%.pads.4.value";    to: "decks.4.hotcues.4.delete" }
+            Wire { from: "%surface%.pads.5.value";    to: "decks.4.hotcues.5.delete" }
+            Wire { from: "%surface%.pads.6.value";    to: "decks.4.hotcues.6.delete" }
+            Wire { from: "%surface%.pads.7.value";    to: "decks.4.hotcues.7.delete" }
+            Wire { from: "%surface%.pads.8.value";    to: "decks.4.hotcues.8.delete" }
           }
         }
 
@@ -2617,6 +2625,21 @@ Module
 
         Wire { from: "%surface%.remix.value";  to: "RemixHoldTimer.input"  }
         Wire { from: "RemixHoldTimer.output";  to: DirectPropertyAdapter { path: propertiesPath + ".remix"; output: false } }
+      }
+
+      // Hotcue colors
+      WiresGroup
+      {
+        enabled: padsMode.value == hotcueMode
+
+        Wire { from: "%surface%.pads.1";   to: ButtonScriptAdapter { color: Color.Red         } enabled: hotcue1Exists.value }
+        Wire { from: "%surface%.pads.2";   to: ButtonScriptAdapter { color: Color.LightOrange } enabled: hotcue2Exists.value }
+        Wire { from: "%surface%.pads.3";   to: ButtonScriptAdapter { color: Color.Yellow      } enabled: hotcue3Exists.value }
+        Wire { from: "%surface%.pads.4";   to: ButtonScriptAdapter { color: Color.Green       } enabled: hotcue4Exists.value }
+        Wire { from: "%surface%.pads.5";   to: ButtonScriptAdapter { color: Color.Turquoise   } enabled: hotcue5Exists.value }
+        Wire { from: "%surface%.pads.6";   to: ButtonScriptAdapter { color: Color.Blue        } enabled: hotcue6Exists.value }
+        Wire { from: "%surface%.pads.7";   to: ButtonScriptAdapter { color: Color.Violet      } enabled: hotcue7Exists.value }
+        Wire { from: "%surface%.pads.8";   to: ButtonScriptAdapter { color: Color.Fuchsia     } enabled: hotcue8Exists.value }
       }
 
       //------------------------------------------------------------------------------------------------------------------

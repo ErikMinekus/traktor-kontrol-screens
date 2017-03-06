@@ -4,6 +4,7 @@ import QtGraphicalEffects 1.0
 
 import '../../../Defines'
 import './../Waveform' as WF
+import './../Widgets' as Widgets
 
 Item {
   id: trackDeck
@@ -80,6 +81,16 @@ Item {
     height:         stripe.height
     color:          "transparent"
     visible:        trackDeck.trackIsLoaded && deckSizeState != "small"
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+
+  Widgets.HotcueRow {
+    anchors.left:   trackDeck.left
+    anchors.bottom: stripe.top
+    anchors.bottomMargin: 10
+    opacity:        (trackDeck.trackIsLoaded && deckSizeState == "medium") ? 1 : 0
+    Behavior on opacity { NumberAnimation { duration: durations.deckTransition } }
   }
 
   //--------------------------------------------------------------------------------------------------------------------

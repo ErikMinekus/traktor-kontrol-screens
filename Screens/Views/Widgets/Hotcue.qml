@@ -12,7 +12,6 @@ Item {
 
   property bool   showHead:     true
   property bool   smallHead:    true 
-  property color  hotcueColor:  "transparent" 
   property int    hotcueId:     0
   property int    hotcueLength: 0
   property int    topMargin:    6
@@ -20,11 +19,12 @@ Item {
 
   readonly property double borderWidth:       2
   readonly property bool   useAntialiasing:   true
-  readonly property int    smallCueHeight:    hotcue.height + 3
-  readonly property int    smallCueTopMargin: -4 
+  readonly property int    smallCueHeight:    hotcue.height
+  readonly property int    smallCueTopMargin: -1
   readonly property int    largeCueHeight:    hotcue.height 
   readonly property var    hotcueMarkerTypes: { 0: "hotcue", 1: "fadeIn", 2: "fadeOut", 3: "load", 4: "grid", 5: "loop" }
   readonly property string hotcueState:       ( exists.value && type.value != -1) ? hotcueMarkerTypes[type.value] : "off"
+  readonly property color  hotcueColor:       colors.hotcueColors[hotcue.hotcueId]
   
   AppProperty { id: type;   path: "app.traktor.decks." + (parent.deckId+1) + ".track.cue.hotcues." + hotcue.hotcueId + ".type"   }
   AppProperty { id: active; path: "app.traktor.decks." + (parent.deckId+1) + ".track.cue.hotcues." + hotcue.hotcueId + ".active" }
@@ -147,29 +147,19 @@ Item {
       anchors.top:        cueLoader.top
       anchors.left:       cueLoader.horizontalCenter
       anchors.topMargin:  hotcue.smallCueTopMargin
-      anchors.leftMargin: -2
+      anchors.leftMargin: -8
       antialiasing:       useAntialiasing
 
       color:              hotcue.hotcueColor
       border.width:       borderWidth
       border.color:       colors.colorBlack50
       points: [ Qt.point(0 , 0)
-              , Qt.point(12, 0)
-              , Qt.point(15, 5.5)
-              , Qt.point(12, 11)
-              , Qt.point(1 , 11)
-              , Qt.point(1 , hotcue.smallCueHeight)
-              , Qt.point(0 , hotcue.smallCueHeight) 
+              , Qt.point(5 , 7)
+              , Qt.point(5 , hotcue.smallCueHeight)
+              , Qt.point(6 , hotcue.smallCueHeight)
+              , Qt.point(6 , 7)
+              , Qt.point(11, 0)
               ]
-      Text {
-        anchors.top:        parent.top; 
-        anchors.left:       parent.left; 
-        anchors.leftMargin: 4
-        anchors.topMargin:  -1
-        color:              colors.colorBlack; 
-        text:               hotcue.hotcueId; 
-        font.pixelSize:     fonts.smallFontSize
-      }
     }
   }
 
@@ -178,29 +168,20 @@ Item {
     Traktor.Polygon {
       anchors.top:        cueLoader.top
       anchors.left:       cueLoader.horizontalCenter
-      anchors.leftMargin: -3
+      anchors.leftMargin: -10
       anchors.topMargin:  -1
       antialiasing:       useAntialiasing
 
-      color:              colors.colorDeckBlueBright 
+      color:              hotcue.hotcueColor
       border.width:       borderWidth
       border.color:       colors.colorBlack50
       points: [ Qt.point(0 , 0)
-              , Qt.point(14, 0)
-              , Qt.point(19, 6.5)
-              , Qt.point(14, 13)
-              , Qt.point(1 , 13)
-              , Qt.point(1 , hotcue.largeCueHeight) 
-              , Qt.point(0 , hotcue.largeCueHeight) 
+              , Qt.point(6 , 8)
+              , Qt.point(6 , hotcue.largeCueHeight)
+              , Qt.point(7 , hotcue.largeCueHeight)
+              , Qt.point(7 , 8)
+              , Qt.point(13, 0)
               ]
-      Text {
-        anchors.top:        parent.top;         
-        anchors.left:       parent.left; 
-        anchors.leftMargin: 5
-        color:              colors.colorBlack; 
-        text:               hotcue.hotcueId; 
-        font.pixelSize:     fonts.smallFontSize
-      }
     }
   }
 
@@ -458,28 +439,18 @@ Item {
       Traktor.Polygon {
         anchors.top:        parent.top
         anchors.left:       parent.horizontalCenter
-        anchors.leftMargin: -15 
+        anchors.leftMargin: -8
         antialiasing: true
         color:             hotcue.hotcueColor   
         border.width:       borderWidth
         border.color:       colors.colorBlack50
-        points: [ Qt.point(0 , 11)
-                , Qt.point(0 , 0)
-                , Qt.point(14, 0)
-                , Qt.point(14, hotcue.smallCueHeight)
-                , Qt.point(13, hotcue.smallCueHeight)
-                , Qt.point(13, 11)
+        points: [ Qt.point(0 , 0)
+                , Qt.point(5 , 7)
+                , Qt.point(5 , hotcue.smallCueHeight)
+                , Qt.point(6 , hotcue.smallCueHeight)
+                , Qt.point(6 , 7)
+                , Qt.point(11, 0)
                 ]
-
-        Text { 
-          anchors.top:        parent.top
-          anchors.left:       parent.left
-          anchors.leftMargin: 4
-          anchors.topMargin: -1
-          color:              colors.colorBlack
-          text:               hotcue.hotcueId
-          font.pixelSize:     fonts.smallFontSize
-        }
       }
 
       Traktor.Polygon {
@@ -493,11 +464,9 @@ Item {
         border.width:       borderWidth
         border.color:       colors.colorBlack50
         points: [ Qt.point(0, 0)
-                , Qt.point(14, 0)
-                , Qt.point(14, 11)
-                , Qt.point(1, 11)
-                , Qt.point(1, hotcue.smallCueHeight) 
                 , Qt.point(0, hotcue.smallCueHeight)
+                , Qt.point(1, hotcue.smallCueHeight)
+                , Qt.point(1, 0)
                 ]
       }
     }
@@ -514,28 +483,19 @@ Item {
       Traktor.Polygon {
         anchors.top:        parent.top
         anchors.left:       parent.horizontalCenter
-        anchors.leftMargin: -17 
+        anchors.leftMargin: -9
         antialiasing:       true
         color:              hotcue.hotcueColor   
         border.width:       borderWidth 
         border.color:       colors.colorBlack50
   
-        points: [ Qt.point(0 , 13)
-                , Qt.point(0 , 0)
-                , Qt.point(16, 0)
-                , Qt.point(16, hotcue.largeCueHeight)
-                , Qt.point(15, hotcue.largeCueHeight)
-                , Qt.point(15, 13)
+        points: [ Qt.point(0 , 0)
+                , Qt.point(6 , 8)
+                , Qt.point(6 , hotcue.largeCueHeight)
+                , Qt.point(7 , hotcue.largeCueHeight)
+                , Qt.point(7 , 8)
+                , Qt.point(13, 0)
                 ]
-
-        Text { 
-          anchors.top:        parent.top
-          anchors.left:       parent.left
-          anchors.leftMargin: 5
-          color:             colors.colorBlack 
-          text:              hotcue.hotcueId
-          font.pixelSize:    fonts.smallFontSize
-        }
       }
 
       Traktor.Polygon {
@@ -548,11 +508,9 @@ Item {
         border.width:       borderWidth
         border.color:       colors.colorBlack50
         points: [ Qt.point(0, 0)
-                , Qt.point(16, 0)
-                , Qt.point(16, 13)
-                , Qt.point(1, 13)
-                , Qt.point(1, hotcue.largeCueHeight)
                 , Qt.point(0, hotcue.largeCueHeight)
+                , Qt.point(1, hotcue.largeCueHeight)
+                , Qt.point(1, 0)
                 ]
       }
     }
@@ -568,37 +526,31 @@ Item {
     },
     State {
       name: "grid";
-      PropertyChanges { target: hotcue;      hotcueColor:     colors.hotcue.grid   }
-      PropertyChanges { target: cueLoader;   sourceComponent: smallHead ? gridComponentSmall : gridComponentLarge }
+      PropertyChanges { target: cueLoader;   sourceComponent: smallHead ? hotcueComponentSmall : hotcueComponentLarge }
       PropertyChanges { target: hotcue;      visible:         true   }
     },
     State {
       name: "hotcue";
-      PropertyChanges { target: hotcue;      hotcueColor:     colors.hotcue.hotcue } 
       PropertyChanges { target: cueLoader;   sourceComponent: smallHead ? hotcueComponentSmall : hotcueComponentLarge  }
       PropertyChanges { target: hotcue;      visible:         true   }
     },
     State {
       name: "fadeIn";
-      PropertyChanges { target: hotcue;      hotcueColor:     colors.hotcue.fade } 
-      PropertyChanges { target: cueLoader;   sourceComponent: smallHead ? fadeInComponentSmall : fadeInComponentLarge }
+      PropertyChanges { target: cueLoader;   sourceComponent: smallHead ? hotcueComponentSmall : hotcueComponentLarge }
       PropertyChanges { target: hotcue;      visible:         true   }
     },
     State {
       name: "fadeOut";
-      PropertyChanges { target: hotcue;      hotcueColor:     colors.hotcue.fade } 
-      PropertyChanges { target: cueLoader;   sourceComponent: smallHead ? fadeOutComponentSmall  : fadeOutComponentLarge }
+      PropertyChanges { target: cueLoader;   sourceComponent: smallHead ? hotcueComponentSmall  : hotcueComponentLarge }
       PropertyChanges { target: hotcue;      visible:         true   }
     },
     State {
       name: "load";
-      PropertyChanges { target: hotcue;      hotcueColor:     colors.hotcue.load } 
-      PropertyChanges { target: cueLoader;   sourceComponent: smallHead ? loadComponentSmall : loadComponentLarge }
+      PropertyChanges { target: cueLoader;   sourceComponent: smallHead ? hotcueComponentSmall : hotcueComponentLarge }
       PropertyChanges { target: hotcue;      visible:         true   }
     },
     State {
        name: "loop";
-      PropertyChanges { target: hotcue;      hotcueColor:     colors.hotcue.loop } 
       PropertyChanges { target: cueLoader;   sourceComponent: smallHead ? loopComponentSmall  : loopComponentLarge }
       PropertyChanges { target: hotcue;      visible:         true   }
     } 

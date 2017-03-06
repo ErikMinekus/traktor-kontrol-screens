@@ -335,6 +335,17 @@ QtObject {
     property color temp:   "grey"
   }
 
+  property variant hotcueColors: {
+    1: color01Bright,
+    2: color03Bright,
+    3: color05Bright,
+    4: color07Bright,
+    5: color09Bright,
+    6: color11Bright,
+    7: color13Bright,
+    8: color15Bright
+  }
+
   //--------------------------------------------------------------------------------------------------------------------
 
   //  Freeze & Slicer
