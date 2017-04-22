@@ -49,13 +49,11 @@ Item {
       x:      index * 38
 
       function getBeatColor(index) {
-        if (isMaster) return colors.colorGrey72;
+        if (propSyncMasterDeck.value == -1 || isMaster) return colors.colorGrey72;
 
         var beats = getBeats(propSyncMasterDeck.value);
-        if (beats == -1) return colors.colorGrey72;
-
-        var beat = parseInt(beats) % 4;
-        if (beat < 0) beat += 4;
+        var beat  = parseInt(Math.abs(beats) % 4);
+        if (beats < 0.0) beat = 3 - beat;
 
         if (beat != index) return colors.colorGrey72;
 
@@ -78,10 +76,8 @@ Item {
 
       function getBeatColor(index) {
         var beats = getBeats(deckId);
-        if (beats == -1) return colors.colorGreenInactive;
-
-        var beat = parseInt(beats) % 4;
-        if (beat < 0) beat += 4;
+        var beat  = parseInt(Math.abs(beats) % 4);
+        if (beats < 0.0) beat = 3 - beat;
 
         if (beat != index) return colors.colorGreenInactive;
 
@@ -104,10 +100,7 @@ Item {
 
     function getMasterBeatsString() {
       var beats = getBeats(propSyncMasterDeck.value);
-      var beat  = parseInt(beats);
-      if (beats < 0.0) beat *= -1;
-
-      var bars = parseInt((beat / 4) + 1);
+      var bars  = parseInt(Math.abs(beats) / 4) + 1;
 
       return ((beats < 0.0) ? "-" : "") + bars.toString() + " BARS";
     }
@@ -126,10 +119,7 @@ Item {
 
     function getBeatsString() {
       var beats = getBeats(deckId);
-      var beat  = parseInt(beats);
-      if (beats < 0.0) beat *= -1;
-
-      var bars = parseInt((beat / 4) + 1);
+      var bars  = parseInt(Math.abs(beats) / 4) + 1;
 
       return ((beats < 0.0) ? "-" : "") + bars.toString() + " BARS";
     }
@@ -148,8 +138,6 @@ Item {
       case 2: return ((propDeckCElapsedTime.value * 1000 - propDeckCGridOffset.value) * propDeckCMixerBpm.value) / 60000.0;
       case 3: return ((propDeckDElapsedTime.value * 1000 - propDeckDGridOffset.value) * propDeckDMixerBpm.value) / 60000.0;
     }
-
-    return -1;
   }
 
   function getBeatsToCue(deck) {
@@ -159,8 +147,6 @@ Item {
       case 2: return ((propDeckCNextCuePoint.value - propDeckCElapsedTime.value * 1000) * propDeckCMixerBpm.value) / 60000.0;
       case 3: return ((propDeckDNextCuePoint.value - propDeckDElapsedTime.value * 1000) * propDeckDMixerBpm.value) / 60000.0;
     }
-
-    return -1;
   }
 
 }
