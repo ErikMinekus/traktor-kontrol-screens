@@ -21,7 +21,7 @@ Item {
   property color         darkTextColor :        (screenFocus < 2 && ListView.isCurrentItem) ? colors.colorDeckBlueDark : colors.colorGrey72
   property bool          isCurrentItem :        ListView.isCurrentItem
   property string        prepIconColorPostfix:  (screenFocus < 2 && ListView.isCurrentItem) ? "Blue" : ((screenFocus > 1 && ListView.isCurrentItem) ? "White" : "Grey")
-  readonly property int  textTopMargin:         8 // centers text vertically
+  readonly property int  textTopMargin:         10 // centers text vertically
   readonly property bool isLoaded:              (model.dataType == BrowserDataType.Track) ? model.loadedInDeck.length > 0 : false
   // visible: !ListView.isCurrentItem
   readonly property variant keyText:            ["8B", "3B", "10B", "5B", "12B", "7B", "2B", "9B", "4B", "11B", "6B", "1B",
@@ -47,7 +47,7 @@ Item {
       anchors.left: parent.left //listImage.right
       anchors.top: parent.top
       anchors.topMargin: 2
-      anchors.leftMargin: 44
+      anchors.leftMargin: 45
       width: 305
       visible: (model.dataType == BrowserDataType.Track)
 
@@ -88,8 +88,8 @@ Item {
       anchors.left: parent.left
       anchors.right: parent.right
       anchors.top: parent.top
-      anchors.topMargin: 10
-      anchors.leftMargin: 44
+      anchors.topMargin: contactDelegate.textTopMargin
+      anchors.leftMargin: 45
       color: textColor
       clip: true
       text: (model.dataType == BrowserDataType.Folder) ? model.nodeName : ""
@@ -102,7 +102,7 @@ Item {
     // artist name
     Text {
       id: trackTitleField
-      anchors.leftMargin: 44
+      anchors.leftMargin: 45
       anchors.left: parent.left // (model.dataType == BrowserDataType.Track) ? firstFieldTrack.right : firstFieldFolder.right
       anchors.top: parent.top
       anchors.topMargin: 20
@@ -119,9 +119,9 @@ Item {
       id: bpmField
       anchors.left: trackTitleField.right    
       anchors.top: parent.top
-      anchors.topMargin: contactDelegate.textTopMargin
+      anchors.topMargin: 8
       horizontalAlignment: Text.AlignRight
-      width: 41
+      width: 44
       color: textColor
       clip: true
       text: (model.dataType == BrowserDataType.Track) ? model.bpm.toFixed(0) : ""
@@ -137,11 +137,11 @@ Item {
       id: keyField
       anchors.left: bpmField.right
       anchors.top: parent.top
-      anchors.topMargin: contactDelegate.textTopMargin
+      anchors.topMargin: 8
       horizontalAlignment: Text.AlignRight
 
       color: (model.dataType == BrowserDataType.Track) ? (((model.key == "none") || (model.key == "None")) ? textColor : parent.colorForKey(model.keyIndex)) : textColor
-      width: 43
+      width: 44
       clip: true
       text: (model.dataType == BrowserDataType.Track) ? (((model.key == "none") || (model.key == "None")) ? "n.a." : keyText[model.keyIndex]) : ""
       font.pixelSize: fonts.largeFontSize
@@ -154,9 +154,9 @@ Item {
       rating:      (model.dataType == BrowserDataType.Track) ? ((model.rating == "") ? 0 : model.rating ) : 0
       // rating:      ((model.dataType == BrowserDataType.Track) && (model.rating != "")) ? ratingMap[model.rating] : 0
       anchors.right: parent.right
-      anchors.rightMargin: 10
+      anchors.rightMargin: 2
       anchors.verticalCenter: parent.verticalCenter
-      height: 16
+      height: 15
       width: 20
       bigLineColor:   contactDelegate.isCurrentItem ? ((contactDelegate.screenFocus < 2) ? colors.colorDeckBlueBright       : colors.colorWhite )    : colors.colorGrey64
       smallLineColor: contactDelegate.isCurrentItem ? ((contactDelegate.screenFocus < 2) ? colors.colorDeckBlueBright50Full : colors.colorGrey128 )  : colors.colorGrey32
@@ -175,7 +175,7 @@ Item {
     id: trackImage 
     anchors.top: parent.top
     anchors.left: parent.left
-    anchors.leftMargin: 1              
+    anchors.leftMargin: 1
     width: 39
     height: 39
     color: (model.coverUrl != "") ? "transparent" : ((contactDelegate.screenFocus < 2) ? colors.colorDeckBlueBright50Full : colors.colorGrey128 )

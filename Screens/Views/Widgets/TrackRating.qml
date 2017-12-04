@@ -48,7 +48,7 @@ Item {
     id: smallLineContainer
     anchors.right:          parent.right
     anchors.verticalCenter: parent.verticalCenter
-    height:                 parent.height  - 6
+    height:                 5 // parent.height  - 8
     width:                  rowSmall.width + 2
     color:                  colors.colorBlack28
     visible:                ratingMap[trackRating.rating] < nrRatings
