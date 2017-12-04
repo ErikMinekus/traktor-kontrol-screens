@@ -1148,7 +1148,7 @@ Module
   SwitchTimer
   {
     name: "BrowserLeaveTimer"
-    resetTimeout: 3000
+    resetTimeout: 2000
 
     onSet:
     {

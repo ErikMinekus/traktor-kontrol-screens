@@ -2,20 +2,21 @@
 
 **Changes in appearance:**
 
+  - Added minute markers
   - Camelot keys
   - FX overlay is always large
+  - Improved spacing
+  - Improved waveform zooming so that more beats are visible
   - Spectrum waveform colors
-  - Track deck header displays beats, remaining time, tempo and BPM
+  - Track deck header displays beats, remaining time, BPM and tempo
 
 **Changes in functionality:**
 
-  - BPM coarse and fine adjustment are flipped
+  - Added sorting by Genre and Release
   - Hold Sync to quickly adjust the BPM
-  - **[D2]** Shift + Deck switches between deck A/C and B/D
-  - **[D2]** Shift + Display Button 3 and 4 toggles Snap and Quantize
-  - Timings have been improved
+  - Improved timings
+  - Switched BPM coarse and fine adjustment
   - Use the Browse knob to zoom in and out of the waveform
-  - Waveform zooming has been improved so that more beats are visible
 
 ## How to install
 

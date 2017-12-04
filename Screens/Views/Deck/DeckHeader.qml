@@ -35,8 +35,8 @@ Item {
 
   // these variables can not be changed from outside
   readonly property int speed: 40  // Transition speed
-  readonly property int smallHeaderHeight: 17
-  readonly property int largeHeaderHeight: 45
+  readonly property int smallHeaderHeight: 20
+  readonly property int largeHeaderHeight: 40
 
   readonly property int rightMargin_middleText_large: 110
   readonly property int rightMargin_rightText_large:  38
@@ -57,11 +57,11 @@ Item {
   //       change the states.
   property int topLeftState:      0                                 // headerSettingTopLeft.value
   property int topMiddleState:    hasTrackStyleHeader(deckType) ? 13 : 29 // headerSettingTopMid.value
-  property int topRightState:     24                                // headerSettingTopRight.value
+  property int topRightState:     23                                // headerSettingTopRight.value
 
   property int bottomLeftState:   1                                 // headerSettingMidLeft.value
   property int bottomMiddleState: hasTrackStyleHeader(deckType) ? 12 : 30 // headerSettingMidMid.value
-  property int bottomRightState:  23                                // headerSettingMidRight.value
+  property int bottomRightState:  24                                // headerSettingMidRight.value
 
   height: largeHeaderHeight
   clip: false //true
@@ -72,6 +72,7 @@ Item {
   readonly property int warningTypeError:   2
 
   property bool isError:   (deckHeaderWarningType.value == warningTypeError)
+  property int  leftTextMaxWidth: (headerState == "small") ? 300 : 210
   
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -165,7 +166,7 @@ Item {
   Rectangle {
     id:top_line;
     anchors.horizontalCenter: parent.horizontalCenter
-    width:  (headerState == "small") ? deck_header.width-18 : deck_header.width
+    width:  deck_header.width // (headerState == "small") ? deck_header.width-18 : deck_header.width
     height: 1
     color:  textColors[deck_Id]
     Behavior on width { NumberAnimation { duration: 0.5*speed } }
@@ -200,7 +201,7 @@ Item {
     id: top_left_text
     deckId: deck_Id
     explicitName: ""
-    maxTextWidth : (deckType == DeckType.Stem) ? 200 - stem_text.width : 200
+    maxTextWidth : (deckType == DeckType.Stem) ? leftTextMaxWidth - stem_text.width : leftTextMaxWidth
     textState: topLeftState
     color:     textColors[deck_Id]
     elide:     Text.ElideRight
@@ -219,7 +220,7 @@ Item {
     id: bottom_left_text
     deckId: deck_Id
     explicitName: ""
-    maxTextWidth : directThru.value ? 1000 : 200
+    maxTextWidth : directThru.value ? 1000 : leftTextMaxWidth
     textState:  bottomLeftState
     color:      darkerTextColors[deck_Id]
     elide:      Text.ElideRight
@@ -383,7 +384,7 @@ Item {
     if (headerState == "small" || deckType == DeckType.Live || directThru.value) {
       cover_small.opacity       = 0;
       cover_small.width         = 0;
-      cover_small.height        = 17;
+      cover_small.height        = 13;
       cover_innerBorder.opacity = 0;
     } else {
       cover_small.opacity       = 1;
@@ -556,7 +557,7 @@ Item {
     anchors.top:         top_line.bottom
     anchors.right:       parent.right
     anchors.topMargin:   -1
-    anchors.rightMargin: 6
+    anchors.rightMargin: 1
     text:                deckLetters[deck_Id]
     color:               textColors[deck_Id]
     font.pixelSize:      fonts.middleFontSize
@@ -574,7 +575,6 @@ Item {
     anchors.topMargin:  20
     anchors.right:      deck_letter_large.left
     anchors.left:       cover_small.right
-    anchors.leftMargin: 5
     height:             parent.height -1
     color:              colors.colorBlack
     visible:            deckHeaderWarningActive.value
@@ -608,6 +608,7 @@ Item {
       anchors.top:        parent.top
       anchors.left:       parent.left
       anchors.topMargin:  18
+      anchors.leftMargin: 5
       Behavior on anchors.leftMargin { NumberAnimation { duration: speed } }
       Behavior on anchors.topMargin  { NumberAnimation { duration: speed } }
     }
@@ -642,8 +643,8 @@ Item {
       PropertyChanges { target: deck_letter_color_overlay;  opacity: 0; height: 12}
       PropertyChanges { target: deck_letter_small;  opacity: 1 }
 
-      PropertyChanges { target: top_left_text;      font.pixelSize: fonts.middleFontSize; anchors.topMargin: -1; anchors.leftMargin: 5 }
-      PropertyChanges { target: top_warning_text;   font.pixelSize: fonts.middleFontSize; anchors.topMargin: -1 }
+      PropertyChanges { target: top_left_text;      font.pixelSize: fonts.middleFontSize; anchors.topMargin: -1; anchors.leftMargin: 1 }
+      PropertyChanges { target: top_warning_text;   font.pixelSize: fonts.middleFontSize; anchors.topMargin: -1; anchors.leftMargin: 1 }
 
 
       PropertyChanges { target: top_middle_text;    font.pixelSize: fonts.middleFontSize; anchors.topMargin: 1 }
@@ -660,13 +661,13 @@ Item {
       PropertyChanges { target: deck_letter_color_overlay;  opacity: 1; width: 28; height: 36}
       PropertyChanges { target: deck_letter_small;  opacity: 0 }
 
-      PropertyChanges { target: top_left_text;      font.pixelSize: fonts.largeFontSize;  anchors.topMargin: -2; anchors.leftMargin: (deckType.description === "Live Input" || directThru.value) ? -1 : 5}
-      PropertyChanges { target: top_warning_text;   font.pixelSize: fonts.largeFontSize; anchors.topMargin: -2 }
+      PropertyChanges { target: top_left_text;      font.pixelSize: fonts.largeFontSize;  anchors.topMargin: -2; anchors.leftMargin: (deckType == DeckType.Live || directThru.value) ? -1 : 5}
+      PropertyChanges { target: top_warning_text;   font.pixelSize: fonts.largeFontSize;  anchors.topMargin: -2; anchors.leftMargin: (deckType == DeckType.Live || directThru.value) ? -1 : 5}
 
       PropertyChanges { target: top_middle_text;    font.pixelSize: fonts.largeFontSize;  anchors.topMargin: 1 }
       PropertyChanges { target: top_right_text;     font.pixelSize: fonts.largeFontSize;  anchors.topMargin: 1 }
       PropertyChanges { target: bottom_middle_text; opacity: 1; }
-      PropertyChanges { target: bottom_left_text;   opacity: 1;                                                  anchors.leftMargin: (deckType.description === "Live Input" || directThru.value) ? -1 : 5}
+      PropertyChanges { target: bottom_left_text;   opacity: 1;                                                  anchors.leftMargin: (deckType == DeckType.Live || directThru.value) ? -1 : 5}
 
       PropertyChanges { target: bottom_right_text;  opacity: 1; }
     }

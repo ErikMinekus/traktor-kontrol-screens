@@ -17,8 +17,8 @@ Rectangle {
   property bool  isContentList:    qmlBrowser.isContentList
   
   // the given numbers are determined by the EContentListColumns in Traktor
-  readonly property variant sortIds:          [0 ,  2     ,   3     ,  5   ,  28  ,  22     ,  27          ]
-  readonly property variant sortNames:        ["Sort By #", "Title", "Artist", "BPM", "Key", "Rating", "Import Date"]
+  readonly property variant sortIds:          [0 ,  2     ,   3     ,  7   ,  9   ,  5   ,  28  ,  22     ,  27          ]
+  readonly property variant sortNames:        ["Sort By #", "Title", "Artist", "Release", "Genre", "BPM", "Key", "Rating", "Import Date"]
   readonly property int     selectedFooterId: (selectedFooterItem.value === undefined) ? 0 : ( ( selectedFooterItem.value % 2 === 1 ) ? 1 : 4 ) // selectedFooterItem.value takes values from 1 to 4.
   
   property          real    preSortingKnobValue: 0.0
