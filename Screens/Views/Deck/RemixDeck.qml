@@ -19,10 +19,8 @@ Item {
   property int rowShift: 1           // rowShift specifies which rows of samples are currently displayed in the remix deck 
   property int lastRowShift: 1
   property bool showLoopSize
-  /* #ifdef ENABLE_STEP_SEQUENCER */
   AppProperty { id: sequencerOn;   path: "app.traktor.decks." + (deckId + 1) + ".remix.sequencer.on" }
   readonly property bool showStepSequencer: sequencerOn.value && (screen.flavor != ScreenFlavor.S5)
-  /* #endif */
   onRowShiftChanged: {
     remixDeckColumns.sampleRowChangeState = "Unchanged"
     if (rowShift > lastRowShift) {
@@ -58,9 +56,7 @@ Item {
       model: 4
 
       RemixDeckColumn {
-        /* #ifdef ENABLE_STEP_SEQUENCER */
         sequencerMode: remixDeck.showStepSequencer
-        /* #endif */
         deckId: remixDeck.deckId
         height: parent.height; 
         width: 111; 
