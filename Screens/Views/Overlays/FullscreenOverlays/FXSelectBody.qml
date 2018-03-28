@@ -24,6 +24,7 @@ Item {
 
   clip:                 true
   anchors.margins:      5
+  anchors.topMargin:    10
   anchors.bottomMargin: 10
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -54,8 +55,8 @@ Item {
     anchors.top:       parent.top
     anchors.left:      parent.left
     anchors.right:     parent.right
-    anchors.topMargin: 33
-    height:            189
+    anchors.topMargin: 19
+    height:            216
     clip:              true
 
     preferredHighlightBegin:     3*delegateHeight //- 6

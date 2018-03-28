@@ -5,6 +5,7 @@
   - Added minute markers
   - Camelot keys
   - FX overlay is always large
+  - Improved FX select
   - Improved spacing
   - Improved waveform zooming so that more beats are visible
   - Spectrum waveform colors
