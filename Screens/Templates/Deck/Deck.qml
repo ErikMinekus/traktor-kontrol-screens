@@ -193,17 +193,14 @@ Item {
     State {
       name: "small";
       PropertyChanges { target: deckHeader; headerState: "small"; }
-      PropertyChanges { target: flipable;    anchors.topMargin: -3; }
     },
     State {
       name: "medium";
       PropertyChanges { target: deckHeader; headerState: "large"; }
-      PropertyChanges { target: flipable;    anchors.topMargin: 0; }
     },
     State {
       name: "large";
       PropertyChanges { target: deckHeader; headerState: "large"; }
-      PropertyChanges { target: flipable;    anchors.topMargin: 0; }
     }
   ]
 }

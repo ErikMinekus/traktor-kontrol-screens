@@ -70,6 +70,21 @@ Traktor.Stripe {
   //--------------------------------------------------------------------------------------------------------------------
 
   Repeater {
+    id: minuteMarkers
+    model: Math.floor(trackLength.value / 60)
+
+    Rectangle {
+      anchors.bottom: parent.bottom
+      x:      sampleToStripe(60 * (index + 1))
+      width:  1
+      height: 3
+      color:  colors.colorWhite
+    }
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+
+  Repeater {
     id: hotcues
     model: 8
     Widgets.Hotcue {
@@ -179,21 +194,6 @@ Traktor.Stripe {
       width: 3
       height: fluxPosIndicator.height + 2
       color: colors.colorBlack50
-    }
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-
-  Repeater {
-    id: minuteMarkers
-    model: Math.floor(trackLength.value / 60)
-
-    Rectangle {
-      anchors.bottom:  parent.bottom
-      x:               sampleToStripe(60 * (index + 1))
-      width:           1
-      height:          3
-      color:           colors.colorWhite
     }
   }
 

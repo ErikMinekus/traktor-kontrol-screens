@@ -596,6 +596,7 @@ Item {
 
       anchors.top:        parent.top
       anchors.left:       parent.left
+      anchors.right:      parent.right
       anchors.topMargin:  18
       anchors.leftMargin: 5
       Behavior on anchors.leftMargin { NumberAnimation { duration: speed } }
