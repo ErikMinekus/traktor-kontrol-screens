@@ -166,7 +166,7 @@ Item {
       font.pixelSize: fonts.middleFontSize
       font.family: "Pragmatica"
 
-      function getRemainingTimeDecimalString() {
+      text: {
         var seconds = propTrackLength.value - propElapsedTime.value;
         if (seconds < 0) seconds = 0;
 
@@ -178,7 +178,6 @@ Item {
 
         return "." + msStr;
       }
-      text: getRemainingTimeDecimalString()
     }
     // Minutes and Seconds Value
     Text {
@@ -189,7 +188,7 @@ Item {
       font.pixelSize: fonts.largeValueFontSize
       font.family: "Pragmatica"
 
-      function getRemainingTimeString() {
+      text: {
         var seconds = propTrackLength.value - propElapsedTime.value;
         if (seconds < 0) seconds = 0;
 
@@ -204,7 +203,6 @@ Item {
 
         return minStr + ":" + secStr;
       }
-      text: getRemainingTimeString()
     }
 
     // Quantize
@@ -258,11 +256,10 @@ Item {
       font.pixelSize: fonts.largeValueFontSize
       font.family: "Pragmatica"
 
-      function getTempoString() {
+      text: {
         var tempo = propTempo.value - 1;
         return ((tempo <= 0) ? "" : "+") + (tempo * 100).toFixed(2).toString();
       }
-      text: getTempoString()
     }
 
     // Key Lock
@@ -316,7 +313,7 @@ Item {
       font.pixelSize: fonts.middleFontSize
       font.family: "Pragmatica"
 
-      function getBpmDecimalString() {
+      text: {
         var bpm = propMixerBpm.value * propTempo.value;
         var dec = Math.round((bpm % 1) * 100);
         if (dec == 100) dec = 0;
@@ -326,7 +323,6 @@ Item {
 
         return "." + decStr;
       }
-      text: getBpmDecimalString()
     }
     // Whole Number Value
     Text {
@@ -337,10 +333,9 @@ Item {
       font.pixelSize: fonts.largeValueFontSize
       font.family: "Pragmatica"
 
-      function getBpmString() {
+      text: {
         return Math.floor((propMixerBpm.value * propTempo.value).toFixed(2)).toString();
       }
-      text: getBpmString()
     }
 
     // Synced BPM

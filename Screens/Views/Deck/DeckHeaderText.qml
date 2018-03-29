@@ -335,10 +335,10 @@ Text {
   function computeBeatsToCueColor() {
     if (propNextCuePoint.value < 0) return parent.textColors[deckId];
 
-    var beats = parseInt(((propNextCuePoint.value - propElapsedTime.value * 1000) * propMixerBpm.value) / 60000.0);
-    if (beats < 0 || beats > 255) return parent.textColors[deckId];
+    var beats = ((propNextCuePoint.value - propElapsedTime.value * 1000) * propMixerBpm.value) / 60000.0;
+    if (beats < 0 || beats > 256) return parent.textColors[deckId];
 
-    var bars = parseInt(beats / 4);
+    var bars = Math.floor(beats / 4);
     if (bars < 4) return "red";
 
     return parent.textColors[deckId];
@@ -348,19 +348,18 @@ Text {
   function computeBeatsToCueString() {
     if (propNextCuePoint.value < 0) return "——.—";
 
-    var beats = parseInt(((propNextCuePoint.value - propElapsedTime.value * 1000) * propMixerBpm.value) / 60000.0);
-    if (beats < 0 || beats > 255) return "——.—";
+    var beats = ((propNextCuePoint.value - propElapsedTime.value * 1000) * propMixerBpm.value) / 60000.0;
+    if (beats < 0 || beats > 256) return "——.—";
 
-    var bars = parseInt(beats / 4);
-    var beat = parseInt(beats % 4) + 1;
-    if (bars < 0) bars = 0;
-    if (beat < 1) beat = 1;
+    var bars = Math.floor(beats / 4);
+    var beat = Math.floor(beats % 4) + 1;
 
     var barsStr = bars.toString();
     if (bars < 10) barsStr = "0" + barsStr;
 
     return barsStr + "." + beat.toString();
   }
+
 
   function getMasterKey() {
     switch (propSyncMasterDeck.value) {
@@ -372,6 +371,7 @@ Text {
 
     return "";
   }
+
 
   function getTrackKeyColor(trackKey) {
     if (isMaster) {

@@ -66,19 +66,19 @@ Item {
     model: 4
 
     Rectangle {
-      width:           36
-      height:          parent.height
-      y:               0
-      x:               index * 40
-      border.color:    (index % 4 == 0) ? "red" : "orange"
-      border.width:    1
-      radius:          2
+      width:        36
+      height:       parent.height
+      y:            0
+      x:            index * 40
+      border.color: (index % 4 == 0) ? "red" : "orange"
+      border.width: 1
+      radius:       2
 
-      function getBeatColor(index) {
+      color: {
         if (propSyncMasterDeck.value == -1 || isMaster) return "transparent";
 
         var beats = getBeats(propSyncMasterDeck.value);
-        var beat  = parseInt(Math.abs(beats) % 4);
+        var beat  = Math.floor(Math.abs(beats) % 4);
         if (beats < 0.0) beat = 3 - beat;
 
         if (beat != index) return "transparent";
@@ -86,7 +86,6 @@ Item {
 
         return "orange";
       }
-      color:           getBeatColor(index)
     }
   }
 
@@ -99,34 +98,32 @@ Item {
     font.family: "Pragmatica"
     horizontalAlignment: Text.AlignRight
 
-    function getBeatsToCueColor() {
+    color: {
       if (propSyncMasterDeck.value == -1 || isMaster) return "orange";
 
-      var beats = parseInt(getBeatsToCue(propSyncMasterDeck.value));
-      if (beats < 0 || beats > 255) return "orange";
+      var beats = getBeatsToCue(propSyncMasterDeck.value);
+      if (beats < 0 || beats > 256) return "orange";
 
-      var bars = parseInt(beats / 4);
+      var bars = Math.floor(beats / 4);
       if (bars < 4) return "red";
 
       return "orange";
     }
-    color: getBeatsToCueColor()
 
-    function getBeatsToCueString() {
+    text: {
       if (propSyncMasterDeck.value == -1 || isMaster) return "——.—";
 
-      var beats = parseInt(getBeatsToCue(propSyncMasterDeck.value));
-      if (beats < 0 || beats > 255) return "——.—";
+      var beats = getBeatsToCue(propSyncMasterDeck.value);
+      if (beats < 0 || beats > 256) return "——.—";
 
-      var bars = parseInt(beats / 4);
-      var beat = parseInt(beats % 4) + 1;
+      var bars = Math.floor(beats / 4);
+      var beat = Math.floor(beats % 4) + 1;
 
       var barsStr = bars.toString();
       if (bars < 10) barsStr = "0" + barsStr;
 
       return barsStr + "." + beat.toString();
     }
-    text: getBeatsToCueString()
   }
 
 
