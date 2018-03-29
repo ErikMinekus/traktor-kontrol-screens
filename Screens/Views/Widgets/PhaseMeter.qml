@@ -48,18 +48,17 @@ Item {
       y:      0
       x:      index * 38
 
-      function getBeatColor(index) {
+      color: {
         if (propSyncMasterDeck.value == -1 || isMaster) return colors.colorGrey72;
 
         var beats = getBeats(propSyncMasterDeck.value);
-        var beat  = parseInt(Math.abs(beats) % 4);
+        var beat  = Math.floor(Math.abs(beats) % 4);
         if (beats < 0.0) beat = 3 - beat;
 
         if (beat != index) return colors.colorGrey72;
 
         return colors.colorGrey232;
       }
-      color:  getBeatColor(index)
     }
   }
 
@@ -74,16 +73,15 @@ Item {
       y:      10
       x:      index * 38
 
-      function getBeatColor(index) {
+      color: {
         var beats = getBeats(deckId);
-        var beat  = parseInt(Math.abs(beats) % 4);
+        var beat  = Math.floor(Math.abs(beats) % 4);
         if (beats < 0.0) beat = 3 - beat;
 
         if (beat != index) return colors.colorGreenInactive;
 
         return colors.colorGreenActive;
       }
-      color:  getBeatColor(index)
     }
   }
 
@@ -98,13 +96,12 @@ Item {
     color: colors.colorGrey72
     visible: (propSyncMasterDeck.value > -1 && !isMaster)
 
-    function getMasterBeatsString() {
+    text: {
       var beats = getBeats(propSyncMasterDeck.value);
-      var bars  = parseInt(Math.abs(beats) / 4) + 1;
+      var bars  = Math.floor(Math.abs(beats) / 4) + 1;
 
       return ((beats < 0.0) ? "-" : "") + bars.toString() + " BARS";
     }
-    text: getMasterBeatsString()
   }
 
   // BARS
@@ -117,13 +114,12 @@ Item {
     horizontalAlignment: Text.AlignRight
     color: colors.colorGreenActive
 
-    function getBeatsString() {
+    text: {
       var beats = getBeats(deckId);
-      var bars  = parseInt(Math.abs(beats) / 4) + 1;
+      var bars  = Math.floor(Math.abs(beats) / 4) + 1;
 
       return ((beats < 0.0) ? "-" : "") + bars.toString() + " BARS";
     }
-    text: getBeatsString()
   }
 
 
