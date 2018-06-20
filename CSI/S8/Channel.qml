@@ -13,14 +13,14 @@ Module
   property string app_prefix:      "app.traktor.mixer.channels." + channel.number + "."
 
   // channel strip
-  Wire { from: surface_prefix + "volume";     to: DirectPropertyAdapter { path: app_prefix + "volume"    } }
-  Wire { from: surface_prefix + "gain";       to: DirectPropertyAdapter { path: app_prefix + "gain"      } }
-  Wire { from: surface_prefix + "eq.high";    to: DirectPropertyAdapter { path: app_prefix + "eq.high"   } }
-  Wire { from: surface_prefix + "eq.mid";     to: DirectPropertyAdapter { path: app_prefix + "eq.mid"    } }
-  Wire { from: surface_prefix + "eq.low";     to: DirectPropertyAdapter { path: app_prefix + "eq.low"    } }
-  Wire { from: surface_prefix + "filter";     to: DirectPropertyAdapter { path: app_prefix + "filter"    } }
-  Wire { from: surface_prefix + "filter_on";  to: DirectPropertyAdapter { path: app_prefix + "filter_on" } }
-  Wire { from: surface_prefix + "cue";        to: DirectPropertyAdapter { path: app_prefix + "cue"       } }
+  Wire { from: surface_prefix + "volume";     to: DirectPropertyAdapter { path: app_prefix + "volume"            } }
+  Wire { from: surface_prefix + "gain";       to: DirectPropertyAdapter { path: app_prefix + "gain"              } }
+  Wire { from: surface_prefix + "eq.high";    to: DirectPropertyAdapter { path: app_prefix + "eq.high"           } }
+  Wire { from: surface_prefix + "eq.mid";     to: DirectPropertyAdapter { path: app_prefix + "eq.mid"            } }
+  Wire { from: surface_prefix + "eq.low";     to: DirectPropertyAdapter { path: app_prefix + "eq.low"            } }
+  Wire { from: surface_prefix + "filter";     to: DirectPropertyAdapter { path: app_prefix + "fx.adjust"         } }
+  Wire { from: surface_prefix + "filter_on";  to: DirectPropertyAdapter { path: app_prefix + "fx.on"             } }
+  Wire { from: surface_prefix + "cue";        to: DirectPropertyAdapter { path: app_prefix + "cue"               } }
 
   // level meter
 	LEDLevelMeter { name: "meter"; dBThresholds: [-30,-20,-10,-6,-4,-2,0,2,4,6,8] }

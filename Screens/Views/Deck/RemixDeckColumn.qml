@@ -12,9 +12,7 @@ import './../Definitions' as Definitions
 
 Item {  
   id: root
-  /* #ifdef ENABLE_STEP_SEQUENCER */
   property bool   sequencerMode: false
-  /* #endif */
   property int    deckId
   property int    rowShift:              1
   property string deck_position: (deckId < 2) ? ".top" : ".bottom"
@@ -42,13 +40,9 @@ Item {
   AppProperty { id: sampleName;         path: activeSamplePath + ".name"     }
   AppProperty { id: playingState;       path: activeSamplePath + ".state"    }
 
-  /* #ifdef ENABLE_STEP_SEQUENCER */
   MappingProperty { id: sequencer_slot; path: propertiesPath + deck_position + ".sequencer_deck_slot";  }
   MappingProperty { id: sequencer_page; path: propertiesPath + deck_position + ".sequencer_deck_page";  }
-  /* #endif */
-
-
-
+  
   //--------------------------------------------------------------------------------------------------------------------
 
   // Sample Deck Container
@@ -61,9 +55,7 @@ Item {
     anchors.bottom: parent.bottom
     anchors.topMargin: 7
     anchors.bottomMargin: 3
-    /* #ifdef ENABLE_STEP_SEQUENCER */
     visible: !sequencerMode
-    /* #endif */
     Behavior on anchors.topMargin { NumberAnimation { duration: durations.deckTransition  } }
 
     Column { // the two samples shown in one column of the remix deck view
@@ -80,9 +72,7 @@ Item {
         model: 2
         RemixSample {
           id: sample1;
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           visible: !sequencerMode
-          /* #endif */
           height: remixSampleContainer.height/2 - remixDeckSamples.spacing;
           anchors.topMargin: 0;
           samplePropertyPath: columnPropertyPath + ".rows." +  (rowShift + index);
@@ -91,7 +81,6 @@ Item {
     }
   }
 
-  /* #ifdef ENABLE_STEP_SEQUENCER */
   StepSequencer {
     anchors.top:           remixDeckWaveform.bottom
     anchors.left:          parent.left
@@ -109,7 +98,6 @@ Item {
 
     remixDeckPropertyPath: root.remixPath
   }
-  /* #endif */
 
   //--------------------------------------------------------------------------------------------------------------------
 
@@ -136,12 +124,7 @@ Item {
     border.color:             colors.colorBlack
 
     antialiasing:             false
-    /* #ifdef ENABLE_STEP_SEQUENCER */
     visible:                  !sequencerMode && ((rowShift - 1 > activeSampleYPosition) && (playingState.description == "Playing")) ? true : false
-    /* #endif */
-    /* #ifndef ENABLE_STEP_SEQUENCER
-    visible:                  ((rowShift - 1 > activeSampleYPosition) && (playingState.description == "Playing")) ? true : false
-    #endif */
     rotation:                 180
   }
 
@@ -156,12 +139,7 @@ Item {
     border.width:             3
     border.color:             colors.colorBlack
     antialiasing:             false
-    /* #ifdef ENABLE_STEP_SEQUENCER */
     visible:                  !sequencerMode && ((rowShift < activeSampleYPosition) && (playingState.description == "Playing")) ? true : false
-    /* #endif */
-    /* #ifndef ENABLE_STEP_SEQUENCER
-    visible:                  ((rowShift < activeSampleYPosition) && (playingState.description == "Playing")) ? true : false
-    #endif */
   }
 
 
@@ -248,7 +226,6 @@ Item {
     ]
   }
 
-  /* #ifdef ENABLE_STEP_SEQUENCER */
   Rectangle
   {
     id: sequencerFrame
@@ -260,7 +237,6 @@ Item {
     border.color: brightColor
     visible: sequencerMode && (sequencer_slot.value - 1 == index)
   }
-  /* #endif */
 
   //--------------------------------------------------------------------------------------------------------------------
 

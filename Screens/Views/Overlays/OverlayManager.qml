@@ -54,12 +54,10 @@ Item {
     deckId: overlay.deckId
   }
 
-  /* #ifdef ENABLE_STEP_SEQUENCER */
   CenterOverlays.SwingAdjust {
     id: swing
     deckId: overlay.deckId
   }
-  /* #endif */
 
   CenterOverlays.SliceSize {
     id: sliceSize
@@ -100,9 +98,7 @@ Item {
     tempo.visible       = false;
     keylock.visible     = false;
     quantize.visible    = false;
-/* #ifdef ENABLE_STEP_SEQUENCER */
     swing.visible       = false;
-/* #endif */
     fxSelect.visible    = false;
     sliceSize.visible   = false;
     browserSorting.visible = false;
@@ -137,13 +133,11 @@ Item {
       PropertyChanges { target: overlay;     visible: true;  }
       PropertyChanges { target: quantize;    visible: true;  }
     },
-/* #ifdef ENABLE_STEP_SEQUENCER */
     State {
       name: Overlay.states[Overlay.swing]
       PropertyChanges { target: overlay;     visible: true;  }
       PropertyChanges { target: swing;       visible: true;  }
     },
-/* #endif */
     State {
       name: Overlay.states[Overlay.slice]
       PropertyChanges { target: overlay;     visible: true;  }

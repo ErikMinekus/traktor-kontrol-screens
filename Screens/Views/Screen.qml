@@ -63,11 +63,9 @@ Item {
   MappingProperty { id: beatgridEditMode;   path: propertiesPath + ".edit_mode"; onValueChanged: { updateButtonArea(); } }
   AppProperty   { id: isTrackLocked;      path: "app.traktor.decks." + (focusDeckId+1) + ".track.grid.lock_bpm" }
   AppProperty   { id: isTrackTick;        path: "app.traktor.decks." + (focusDeckId+1) + ".track.grid.enable_tick" }
-  /* #ifdef ENABLE_STEP_SEQUENCER */
   AppProperty   { id: isSequencerOn;      path: "app.traktor.decks." + (focusDeckId+1) + ".remix.sequencer.on" }
   readonly property bool showStepSequencer: isSequencerOn.value && (screen.flavor != ScreenFlavor.S5)
   onShowStepSequencerChanged: { updateButtonArea(); }
-  /* #endif */
 
   //--------------------------------------------------------------------------------------------------------------------
 
@@ -221,12 +219,7 @@ Item {
     anchors.leftMargin:  -6 //hides left glow & border
     scrollPosition:      (deckView.isUpperDeck) ? upperRemixDeckRowShift - 1 : lowerRemixDeckRowShift - 1
     topButtonText:       beatgridEditMode.value ? "LOCK" : "BPM"
-  /* #ifdef ENABLE_STEP_SEQUENCER */
     bottomButtonText:    beatgridEditMode.value ? "TICK" : (focusDeckContentState == "Remix Deck" ? (showStepSequencer ? "SWING" : "QUANTIZE") : "KEY")
-  /* #endif */
-  /* #ifndef ENABLE_STEP_SEQUENCER
-    bottomButtonText:    beatgridEditMode.value ? "TICK" : (focusDeckContentState == "Remix Deck" ? "QUANTIZE" : "KEY")
-  #endif */
     isTopHighlighted:    (beatgridEditMode.value && isTrackLocked.value)
     isBottomHighlighted: (beatgridEditMode.value && isTrackTick.value)
   }
@@ -236,14 +229,8 @@ Item {
     id: buttonArea2
     state:               "hide"
     showHideState:      showButtonArea.value ? "show" : "hide"
-  /* #ifdef ENABLE_STEP_SEQUENCER */
     topButtonText:       screenState.state == "BrowserView" ? "PREP +" : (beatgridEditMode.value ? "TAP" : (focusDeckContentState == "Remix Deck" && showStepSequencer ? "1-8" : "VIEW"))
     bottomButtonText:    screenState.state == "BrowserView" ? "TO PREP" : (beatgridEditMode.value ? "RST" : (focusDeckContentState == "Remix Deck" && showStepSequencer ? "9-16" : "ZOOM"))
-  /* #endif */
-  /* #ifndef ENABLE_STEP_SEQUENCER
-    topButtonText:       screenState.state == "BrowserView" ? "PREP +" : (beatgridEditMode.value ? "TAP" : "VIEW")
-    bottomButtonText:    screenState.state == "BrowserView" ? "TO PREP" : (beatgridEditMode.value ? "RST" : "ZOOM")
-  #endif */
     textAngle:           90
     anchors.right:       parent.right
     anchors.rightMargin: -6 // hides right glow & border
@@ -271,12 +258,7 @@ Item {
 
         buttonArea1.visible         = true
         buttonArea1.contentState    = "TextArea"
-  /* #ifdef ENABLE_STEP_SEQUENCER */
         buttonArea2.contentState    = showStepSequencer ? "TextArea" : "ScrollBar"
-  /* #endif */
-  /* #ifndef ENABLE_STEP_SEQUENCER
-        buttonArea2.contentState    = "ScrollBar"
-  #endif */
       }
     } else if (screenState.state == "BrowserView") {
       buttonArea1.visible         = false
@@ -288,12 +270,7 @@ Item {
   {
     if (screen.focusDeckContentState == "Remix Deck") {
       buttonArea1.contentState        = "TextArea"
-  /* #ifdef ENABLE_STEP_SEQUENCER */
       buttonArea2.contentState    = showStepSequencer ? "TextArea" : "ScrollBar"
-  /* #endif */
-  /* #ifndef ENABLE_STEP_SEQUENCER
-      buttonArea2.contentState        = "ScrollBar"
-  #endif */
       deckView.remixUpperDeckRowShift = 1 + ((upperRemixDeckRowShift - 1) * 2)
       deckView.remixLowerDeckRowShift = 1 + ((lowerRemixDeckRowShift - 1) * 2)
     }

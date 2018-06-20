@@ -235,9 +235,7 @@ Module
   function hasPitchPage      (deckType, remixMode) { return (deckType == DeckType.Remix && !remixMode); }
   function hasFilterPage     (deckType, remixMode) { return (deckType == DeckType.Remix && !remixMode) || deckType == DeckType.Stem; }
   function hasFxSendPage     (deckType, remixMode) { return (deckType == DeckType.Remix && !remixMode) || deckType == DeckType.Stem; }
-  /* #ifdef ENABLE_STEP_SEQUENCER */
   function hasSlotPages      (deckType, remixMode) { return (deckType == DeckType.Remix && remixMode); }
-  /* #endif */
 
   function hasRemixMode      (deckType) { return deckType == DeckType.Remix; }
 
@@ -471,12 +469,10 @@ Module
       {
         footerPage.value = FooterPage.filter;
       }
-      /* #ifdef ENABLE_STEP_SEQUENCER */
       else if (hasSlotPages(deckType, deckRemixMode))
       {
           footerPage.value = FooterPage.slot1;
       }
-      /* #endif */
       else if (fxMode.value == FxMode.FourFxUnits)
       {
         footerPage.value = FooterPage.fx;
@@ -535,8 +531,6 @@ Module
   // REMIX DECK STYLE (Remixdeck style)
   //------------------------------------------------------------------------------------------------------------------
 
-/* #ifdef ENABLE_STEP_SEQUENCER */
-
   AppProperty { id: deckASequencerOn;   path: "app.traktor.decks.1.remix.sequencer.on" }
   AppProperty { id: deckBSequencerOn;   path: "app.traktor.decks.2.remix.sequencer.on" }
   AppProperty { id: deckCSequencerOn;   path: "app.traktor.decks.3.remix.sequencer.on" }
@@ -593,12 +587,6 @@ Module
 
   DirectPropertyAdapter { name: "topSequencerPage";    path: propertiesPath + ".top.sequencer_deck_page"    }
   DirectPropertyAdapter { name: "bottomSequencerPage"; path: propertiesPath + ".bottom.sequencer_deck_page" }
-/* #endif */
-
-/* #ifndef ENABLE_STEP_SEQUENCER
-  property bool topDeckRemixMode:    false
-  property bool bottomDeckRemixMode: false
-#endif */
 
   //------------------------------------------------------------------------------------------------------------------
   // SHOW/HIDE LOOP PREVIEW
@@ -1156,7 +1144,7 @@ Module
   SwitchTimer
   {
     name: "BrowserLeaveTimer"
-    resetTimeout: 3000
+    resetTimeout: 2000
 
     onSet:
     {
@@ -1322,9 +1310,7 @@ Module
           Loop { name: "loop";  channel: 1; numberOfLeds: 4; color: Color.Blue }
 
           RemixDeck   { name: "remix"; channel: 1; size: RemixDeck.Small }
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           RemixDeckStepSequencer   { name: "remix_sequencer"; channel: 1; size: RemixDeck.Small }
-          /* #endif */
           RemixDeckSlots { name: "remix_slots"; channel: 1 }
 
           StemDeckStreams { name: "stems"; channel: 1 }
@@ -1350,9 +1336,7 @@ Module
           Loop { name: "loop";  channel: 2; numberOfLeds: 4; color: Color.Blue }
 
           RemixDeck   { name: "remix"; channel: 2; size: RemixDeck.Small }
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           RemixDeckStepSequencer   { name: "remix_sequencer"; channel: 2; size: RemixDeck.Small }
-          /* #endif */
 
           RemixDeckSlots { name: "remix_slots"; channel: 2 }
 
@@ -1379,9 +1363,7 @@ Module
           Loop { name: "loop";  channel: 3; numberOfLeds: 4; color: Color.White }
 
           RemixDeck   { name: "remix"; channel: 3; size: RemixDeck.Small }
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           RemixDeckStepSequencer   { name: "remix_sequencer"; channel: 3; size: RemixDeck.Small }
-          /* #endif */
 
           RemixDeckSlots { name: "remix_slots"; channel: 3 }
 
@@ -1408,10 +1390,7 @@ Module
           Loop { name: "loop";  channel: 4; numberOfLeds: 4; color: Color.White }
 
           RemixDeck   { name: "remix"; channel: 4; size: RemixDeck.Small }
-
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           RemixDeckStepSequencer   { name: "remix_sequencer"; channel: 4; size: RemixDeck.Small }
-          /* #endif */
 
           RemixDeckSlots { name: "remix_slots"; channel: 4 }
 
@@ -1531,7 +1510,6 @@ Module
         Wire { from: "%surface%.browse"; to: "decks.4.quantize_control"; enabled: focusedDeckId == 4 }
       }
 
-      /* #ifdef ENABLE_STEP_SEQUENCER */
       //------------------------------------------------------------------------------------------------------------------
       // Swing Overlay
       //------------------------------------------------------------------------------------------------------------------
@@ -1545,7 +1523,6 @@ Module
         Wire { from: "%surface%.browse"; to: RelativePropertyAdapter { path: "app.traktor.decks.3.remix.sequencer.swing"; step: 0.01; mode: RelativeMode.Stepped } enabled: focusedDeckId == 3 }
         Wire { from: "%surface%.browse"; to: RelativePropertyAdapter { path: "app.traktor.decks.4.remix.sequencer.swing"; step: 0.01; mode: RelativeMode.Stepped } enabled: focusedDeckId == 4 }
       }
-      /* #endif */
 
       //------------------------------------------------------------------------------------------------------------------
       //  PERFORMANCE CONTROLS PAGES
@@ -1570,13 +1547,11 @@ Module
           case FooterPage.midi:
             return module.useMIDIControls;
 
-/* #ifdef ENABLE_STEP_SEQUENCER */
           case FooterPage.slot1:
           case FooterPage.slot2:
           case FooterPage.slot3:
           case FooterPage.slot4:
             return hasSlotPages(footerFocusDeckType, footerFocusRemixMode);
-/* #endif */
 
           default:
             return !hasBottomControls(footerFocusDeckType) && (fxMode.value != FxMode.FourFxUnits) && !module.useMIDIControls;
@@ -1601,15 +1576,11 @@ Module
               case FooterPage.pitch:
                 tempPage = FooterPage.fxSend;
               break;
+
               case FooterPage.fxSend:
-/* #ifdef ENABLE_STEP_SEQUENCER */
                 tempPage = FooterPage.slot1;
-/* #endif */
-/* #ifndef ENABLE_STEP_SEQUENCER
-                tempPage = FooterPage.fx;
-#endif */
               break;
-/* #ifdef ENABLE_STEP_SEQUENCER */
+
               case FooterPage.slot1:
                 tempPage = FooterPage.slot2;
               break;
@@ -1625,7 +1596,7 @@ Module
               case FooterPage.slot4:
                 tempPage = FooterPage.fx;
               break;
-/* #endif */
+
               case FooterPage.fx:
                 tempPage = FooterPage.midi;
               break;
@@ -1671,7 +1642,7 @@ Module
               case FooterPage.fxSend:
                 tempPage = FooterPage.pitch;
               break;
-/* #ifdef ENABLE_STEP_SEQUENCER */
+
               case FooterPage.slot1:
                 tempPage = FooterPage.fxSend;
               break;
@@ -1687,19 +1658,14 @@ Module
               case FooterPage.slot4:
                 tempPage = FooterPage.slot3;
               break;
-/* #endif */
 
               case FooterPage.fx:
-/* #ifdef ENABLE_STEP_SEQUENCER */
                 tempPage = FooterPage.slot4;
-/* #endif */
-/* #ifndef ENABLE_STEP_SEQUENCER
-                tempPage = FooterPage.fxSend;
-#endif */
               break;
+
               case FooterPage.midi:
                 tempPage = FooterPage.fx;
-                break;
+              break;
           }
 
             // Validate the page and eventually switch to it!
@@ -1730,7 +1696,6 @@ Module
               var footerPage = (footerFocus.value ? bottomDeckFooterPage : topDeckFooterPage);
               footerPageInc(footerFocus.value ? bottomDeckType : topDeckType, footerFocus.value ? bottomDeckRemixMode : topDeckRemixMode, /*out*/ footerPage);
 
-/* #ifdef ENABLE_STEP_SEQUENCER */
               var sequencerSlot = (footerFocus.value ? bottomSequencerSlot : topSequencerSlot);
 
               switch (footerPage.value)
@@ -1751,7 +1716,6 @@ Module
                   sequencerSlot.value = 4;
                   break;
               }
-/* #endif */
             }
             brightness: onBrightness
           }
@@ -1767,7 +1731,6 @@ Module
               var footerPage = (footerFocus.value ? bottomDeckFooterPage : topDeckFooterPage);
               footerPageDec(footerFocus.value ? bottomDeckType : topDeckType, footerFocus.value ? bottomDeckRemixMode : topDeckRemixMode, /*out*/ footerPage);
 
-/* #ifdef ENABLE_STEP_SEQUENCER */
               var sequencerSlot = (footerFocus.value ? bottomSequencerSlot : topSequencerSlot);
 
               switch (footerPage.value)
@@ -1788,7 +1751,6 @@ Module
                   sequencerSlot.value = 4;
                   break;
               }
-/* #endif */
             }
             brightness: onBrightness
           }
@@ -2003,9 +1965,7 @@ Module
 
           WiresGroup
           {
-            /* #ifdef ENABLE_STEP_SEQUENCER */
             enabled: !deckASequencerOn.value
-            /* #endif */
 
             Wire { from: "decks.1.remix.capture_mode.input";  to: DirectPropertyAdapter { path: propertiesPath + ".capture"; input: false } }
 
@@ -2050,7 +2010,6 @@ Module
             }
           }
 
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           WiresGroup
           {
             enabled: deckASequencerOn.value
@@ -2090,7 +2049,6 @@ Module
               Wire { from:  "%surface%.edit";  to: "decks.1.remix_sequencer.clear_selected_slot";  }
             }
           }
-          /* #endif */
         }
       }
 
@@ -2176,9 +2134,7 @@ Module
 
           WiresGroup
           {
-            /* #ifdef ENABLE_STEP_SEQUENCER */
             enabled: !deckCSequencerOn.value
-            /* #endif */
 
             Wire { from: "decks.3.remix.capture_mode.input";  to: DirectPropertyAdapter { path: propertiesPath + ".capture"; input: false } }
 
@@ -2223,7 +2179,6 @@ Module
             }
           }
 
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           WiresGroup
           {
             enabled: deckCSequencerOn.value
@@ -2263,7 +2218,6 @@ Module
               Wire { from:  "%surface%.edit";  to: "decks.3.remix_sequencer.clear_selected_slot";  }
             }
           }
-          /* #endif */
         }
       }
 
@@ -2348,9 +2302,7 @@ Module
 
           WiresGroup
           {
-            /* #ifdef ENABLE_STEP_SEQUENCER */
             enabled: !deckBSequencerOn.value
-            /* #endif */
 
             Wire { from: "decks.2.remix.capture_mode.input";  to: DirectPropertyAdapter { path: propertiesPath + ".capture"; input: false } }
 
@@ -2395,7 +2347,6 @@ Module
             }
           }
 
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           WiresGroup
           {
             enabled: deckBSequencerOn.value
@@ -2435,7 +2386,6 @@ Module
               Wire { from: "%surface%.edit";   to: "decks.2.remix_sequencer.clear_selected_slot";  }
             }
           }
-          /* #endif */
         }
       }
 
@@ -2521,9 +2471,7 @@ Module
 
           WiresGroup
           {
-            /* #ifdef ENABLE_STEP_SEQUENCER */
             enabled: !deckDSequencerOn.value
-            /* #endif */
 
             Wire { from: "decks.4.remix.capture_mode.input";  to: DirectPropertyAdapter { path: propertiesPath + ".capture"; input: false } }
 
@@ -2568,7 +2516,6 @@ Module
             }
           }
 
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           WiresGroup
           {
             enabled: deckDSequencerOn.value
@@ -2608,7 +2555,6 @@ Module
               Wire { from: "%surface%.edit"  ; to: "decks.4.remix_sequencer.clear_selected_slot";  }
             }
           }
-          /* #endif */
         }
       }
 
@@ -2664,10 +2610,7 @@ Module
         // Loop and Freeze modes
         WiresGroup
         {
-          enabled: hasLoopMode(deckAType)
-          /* #ifdef ENABLE_STEP_SEQUENCER */
-                   && !(deckAType == DeckType.Remix && deckASequencerOn.value)
-          /* #endif */
+          enabled: hasLoopMode(deckAType) && !(deckAType == DeckType.Remix && deckASequencerOn.value)
 
           WiresGroup
           {
@@ -2719,22 +2662,17 @@ Module
           }
         }
 
-        /* #ifdef ENABLE_STEP_SEQUENCER */
         WiresGroup
         {
           enabled: (deckAType == DeckType.Remix) && deckASequencerOn.value && (encoderMode.value == encoderLoopMode)
           Wire { from: "%surface%.encoder.turn"; to: "decks.1.remix_sequencer.selected_slot_pattern_length"; enabled: !module.shift }
           Wire { from: "%surface%.encoder.turn"; to: "decks.1.remix_sequencer.all_slots_pattern_length";     enabled:  module.shift }
         }
-        /* #endif */
 
         // Remix pages scrolling
         WiresGroup
         {
-          enabled: (deckAType == DeckType.Remix) && (encoderMode.value == encoderRemixMode)
-          /* #ifdef ENABLE_STEP_SEQUENCER */
-                   && !deckASequencerOn.value
-          /* #endif */
+          enabled: (deckAType == DeckType.Remix) && (encoderMode.value == encoderRemixMode) && !deckASequencerOn.value
 
           Wire { from: "%surface%.encoder";         to: "decks.1.remix.page" }
           Wire { from: "%surface%.encoder";         to: "ShowDisplayButtonArea_EncoderAdapter"; enabled: !deckFocus }
@@ -2761,10 +2699,7 @@ Module
         // Loop and Freeze modes
         WiresGroup
         {
-          enabled: hasLoopMode(deckCType)
-          /* #ifdef ENABLE_STEP_SEQUENCER */
-                   && !(deckCType == DeckType.Remix && deckCSequencerOn.value)
-          /* #endif */
+          enabled: hasLoopMode(deckCType) && !(deckCType == DeckType.Remix && deckCSequencerOn.value)
 
           WiresGroup
           {
@@ -2815,22 +2750,17 @@ Module
           }
         }
 
-        /* #ifdef ENABLE_STEP_SEQUENCER */
         WiresGroup
         {
           enabled: (deckCType == DeckType.Remix) && deckCSequencerOn.value && (encoderMode.value == encoderLoopMode)
           Wire { from: "%surface%.encoder.turn"; to: "decks.3.remix_sequencer.selected_slot_pattern_length"; enabled: !module.shift }
           Wire { from: "%surface%.encoder.turn"; to: "decks.3.remix_sequencer.all_slots_pattern_length";     enabled:  module.shift }
         }
-        /* #endif */
 
         // Remix pages scrolling
         WiresGroup
         {
-          enabled: (deckCType == DeckType.Remix) && (encoderMode.value == encoderRemixMode)
-          /* #ifdef ENABLE_STEP_SEQUENCER */
-                   && !deckCSequencerOn.value
-          /* #endif */
+          enabled: (deckCType == DeckType.Remix) && (encoderMode.value == encoderRemixMode) && !deckCSequencerOn.value
 
           Wire { from: "%surface%.encoder";          to: "decks.3.remix.page" }
           Wire { from: "%surface%.encoder";          to: "ShowDisplayButtonArea_EncoderAdapter"; enabled: deckFocus }
@@ -2857,10 +2787,7 @@ Module
         // Loop and Freeze modes
         WiresGroup
         {
-          enabled: hasLoopMode(deckBType)
-          /* #ifdef ENABLE_STEP_SEQUENCER */
-                   && !(deckBType == DeckType.Remix && deckBSequencerOn.value)
-          /* #endif */
+          enabled: hasLoopMode(deckBType) && !(deckBType == DeckType.Remix && deckBSequencerOn.value)
 
           WiresGroup
           {
@@ -2911,22 +2838,17 @@ Module
           }
         }
 
-        /* #ifdef ENABLE_STEP_SEQUENCER */
         WiresGroup
         {
           enabled: (deckBType == DeckType.Remix) && deckBSequencerOn.value && (encoderMode.value == encoderLoopMode)
           Wire { from: "%surface%.encoder.turn"; to: "decks.2.remix_sequencer.selected_slot_pattern_length"; enabled: !module.shift }
           Wire { from: "%surface%.encoder.turn"; to: "decks.2.remix_sequencer.all_slots_pattern_length";     enabled:  module.shift }
         }
-        /* #endif */
 
         // Remix pages scrolling
         WiresGroup
         {
-          enabled: (deckBType == DeckType.Remix) && (encoderMode.value == encoderRemixMode)
-          /* #ifdef ENABLE_STEP_SEQUENCER */
-                   && !deckBSequencerOn.value
-          /* #endif */
+          enabled: (deckBType == DeckType.Remix) && (encoderMode.value == encoderRemixMode) && !deckBSequencerOn.value
 
           Wire { from: "%surface%.encoder";         to: "decks.2.remix.page" }
           Wire { from: "%surface%.encoder";         to: "ShowDisplayButtonArea_EncoderAdapter"; enabled: !deckFocus }
@@ -2953,10 +2875,7 @@ Module
         // Loop and Freeze modes
         WiresGroup
         {
-          enabled: hasLoopMode(deckDType)
-          /* #ifdef ENABLE_STEP_SEQUENCER */
-                   && !(deckDType == DeckType.Remix && deckDSequencerOn.value)
-          /* #endif */
+          enabled: hasLoopMode(deckDType) && !(deckDType == DeckType.Remix && deckDSequencerOn.value)
 
           WiresGroup
           {
@@ -3007,22 +2926,17 @@ Module
           }
         }
 
-        /* #ifdef ENABLE_STEP_SEQUENCER */
         WiresGroup
         {
           enabled: (deckDType == DeckType.Remix) && deckDSequencerOn.value && (encoderMode.value == encoderLoopMode)
           Wire { from: "%surface%.encoder.turn"; to: "decks.4.remix_sequencer.selected_slot_pattern_length"; enabled: !module.shift }
           Wire { from: "%surface%.encoder.turn"; to: "decks.4.remix_sequencer.all_slots_pattern_length";     enabled:  module.shift }
         }
-        /* #endif */
 
         // Remix pages scrolling
         WiresGroup
         {
-          enabled:  (deckDType == DeckType.Remix) && (encoderMode.value == encoderRemixMode)
-          /* #ifdef ENABLE_STEP_SEQUENCER */
-                   && !deckDSequencerOn.value
-          /* #endif */
+          enabled:  (deckDType == DeckType.Remix) && (encoderMode.value == encoderRemixMode) && !deckDSequencerOn.value
 
           Wire { from: "%surface%.encoder";          to: "decks.4.remix.page" }
           Wire { from: "%surface%.encoder";          to: "ShowDisplayButtonArea_EncoderAdapter"; enabled: deckFocus }
@@ -3439,7 +3353,6 @@ Module
             Wire { from: "%surface%.buttons.4"; to: "decks.1.remix_slots.4.key_lock"      }
           }
 
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           WiresGroup
           {
             enabled: footerPage.value == FooterPage.slot1
@@ -3499,7 +3412,6 @@ Module
             Wire { from: "%surface%.buttons.3"; to: "decks.1.remix_slots.4.key_lock"      }
             Wire { from: "%surface%.buttons.4"; to: "decks.1.remix_slots.4.fx_send_on"    }
           }
-          /* #endif */
         }
       }
 
@@ -3566,7 +3478,6 @@ Module
             Wire { from: "%surface%.buttons.4"; to: "decks.2.remix_slots.4.key_lock"      }
           }
 
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           WiresGroup
           {
             enabled: footerPage.value == FooterPage.slot1
@@ -3626,7 +3537,6 @@ Module
             Wire { from: "%surface%.buttons.3"; to: "decks.2.remix_slots.4.key_lock"      }
             Wire { from: "%surface%.buttons.4"; to: "decks.2.remix_slots.4.fx_send_on"    }
           }
-          /* #endif */
         }
       }
 
@@ -3693,7 +3603,6 @@ Module
             Wire { from: "%surface%.buttons.4"; to: "decks.3.remix_slots.4.key_lock"      }
           }
 
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           WiresGroup
           {
             enabled: footerPage.value == FooterPage.slot1
@@ -3753,7 +3662,6 @@ Module
             Wire { from: "%surface%.buttons.3"; to: "decks.3.remix_slots.4.key_lock"      }
             Wire { from: "%surface%.buttons.4"; to: "decks.3.remix_slots.4.fx_send_on"    }
           }
-          /* #endif */
         }
       }
 
@@ -3820,7 +3728,6 @@ Module
             Wire { from: "%surface%.buttons.4"; to: "decks.4.remix_slots.4.key_lock" }
           }
 
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           WiresGroup
           {
             enabled: footerPage.value == FooterPage.slot1
@@ -3880,7 +3787,6 @@ Module
             Wire { from: "%surface%.buttons.3"; to: "decks.4.remix_slots.4.key_lock"      }
             Wire { from: "%surface%.buttons.4"; to: "decks.4.remix_slots.4.fx_send_on"    }
           }
-          /* #endif */
         }
       }
 
@@ -3985,16 +3891,13 @@ Module
 
         WiresGroup
         {
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           enabled: !deckASequencerOn.value
-          /* #endif */
 
           Wire { from: "%surface%.display.buttons.3"; to: TogglePropertyAdapter { path: propertiesPath + ".overlay"; value: Overlay.quantize } }
           Wire { from: "%surface%.display.buttons.6"; to: "decks.1.remix.decrement_page" }
           Wire { from: "%surface%.display.buttons.7"; to: "decks.1.remix.increment_page" }
         }
 
-        /* #ifdef ENABLE_STEP_SEQUENCER */
         WiresGroup
         {
           enabled: deckASequencerOn.value
@@ -4010,7 +3913,6 @@ Module
 
           Wire { from: "%surface%.remix.value";  to: TogglePropertyAdapter { path: "app.traktor.decks.1.remix.sequencer.on"} }
         }
-        /* #endif */
       }
 
       //Stem Style selection
@@ -4045,16 +3947,13 @@ Module
 
         WiresGroup
         {
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           enabled: !deckBSequencerOn.value
-          /* #endif */
 
           Wire { from: "%surface%.display.buttons.3"; to: TogglePropertyAdapter { path: propertiesPath + ".overlay"; value: Overlay.quantize } }
           Wire { from: "%surface%.display.buttons.6"; to: "decks.2.remix.decrement_page" }
           Wire { from: "%surface%.display.buttons.7"; to: "decks.2.remix.increment_page" }
         }
 
-        /* #ifdef ENABLE_STEP_SEQUENCER */
         WiresGroup
         {
           enabled: deckBSequencerOn.value
@@ -4070,7 +3969,6 @@ Module
 
           Wire { from: "%surface%.remix.value";  to: TogglePropertyAdapter { path: "app.traktor.decks.2.remix.sequencer.on"} }
         }
-        /* #endif */
       }
 
       //Stem Style selection
@@ -4105,16 +4003,13 @@ Module
 
         WiresGroup
         {
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           enabled: !deckCSequencerOn.value
-          /* #endif */
 
           Wire { from: "%surface%.display.buttons.3"; to: TogglePropertyAdapter { path: propertiesPath + ".overlay"; value: Overlay.quantize } }
           Wire { from: "%surface%.display.buttons.6"; to: "decks.3.remix.decrement_page" }
           Wire { from: "%surface%.display.buttons.7"; to: "decks.3.remix.increment_page" }
         }
 
-        /* #ifdef ENABLE_STEP_SEQUENCER */
         WiresGroup
         {
           enabled: deckCSequencerOn.value
@@ -4130,7 +4025,6 @@ Module
 
           Wire { from: "%surface%.remix.value";  to: TogglePropertyAdapter { path: "app.traktor.decks.3.remix.sequencer.on"} }
         }
-        /* #endif */
       }
 
       //Stem Style selection
@@ -4165,16 +4059,13 @@ Module
 
         WiresGroup
         {
-          /* #ifdef ENABLE_STEP_SEQUENCER */
           enabled: !deckDSequencerOn.value
-          /* #endif */
 
           Wire { from: "%surface%.display.buttons.3"; to: TogglePropertyAdapter { path: propertiesPath + ".overlay"; value: Overlay.quantize } }
           Wire { from: "%surface%.display.buttons.6"; to: "decks.4.remix.decrement_page" }
           Wire { from: "%surface%.display.buttons.7"; to: "decks.4.remix.increment_page" }
         }
 
-        /* #ifdef ENABLE_STEP_SEQUENCER */
         WiresGroup
         {
           enabled: deckDSequencerOn.value
@@ -4190,7 +4081,6 @@ Module
 
           Wire { from: "%surface%.remix.value";  to: TogglePropertyAdapter { path: "app.traktor.decks.4.remix.sequencer.on"} }
         }
-        /* #endif */
       }
 
       //Stem Style selection
@@ -4476,12 +4366,10 @@ Module
     Wire { from: "decks.1.remix.page"; to: "screen.upper_remix_deck_page" }
     Wire { from: "decks.3.remix.page"; to: "screen.lower_remix_deck_page" }
 
-  /* #ifdef ENABLE_STEP_SEQUENCER */
     Wire { from: "decks.1.remix_sequencer.slot.write"; to: "topSequencerSlot.read" }
     Wire { from: "decks.1.remix_sequencer.page.write"; to: "topSequencerPage.read" }
     Wire { from: "decks.3.remix_sequencer.slot.write"; to: "bottomSequencerSlot.read" }
     Wire { from: "decks.3.remix_sequencer.page.write"; to: "bottomSequencerPage.read" }
-  /* #endif */
   }
 
   WiresGroup
@@ -4491,12 +4379,10 @@ Module
     Wire { from: "decks.2.remix.page"; to: "screen.upper_remix_deck_page" }
     Wire { from: "decks.4.remix.page"; to: "screen.lower_remix_deck_page" }
 
-  /* #ifdef ENABLE_STEP_SEQUENCER */
     Wire { from: "decks.2.remix_sequencer.slot.write"; to: "topSequencerSlot.read" }
     Wire { from: "decks.2.remix_sequencer.page.write"; to: "topSequencerPage.read" }
     Wire { from: "decks.4.remix_sequencer.slot.write"; to: "bottomSequencerSlot.read" }
     Wire { from: "decks.4.remix_sequencer.page.write"; to: "bottomSequencerPage.read" }
-  /* #endif */
   }
 
   //------------------------------------------------------------------------------------------------------------------

@@ -121,8 +121,7 @@ Mapping
     } 
     onRelease:
     {
-      if (deck.shift) decksAssignment.value = (decksAssignment.value == DecksAssignment.AC) ? DecksAssignment.BD : DecksAssignment.AC;
-      else if (triggerDeckFocusSwitch) deck.deckFocus = !deck.deckFocus;
+      if (triggerDeckFocusSwitch) deck.deckFocus = !deck.deckFocus;
       isInDecksAssignmentMode = false;
     }
     brightness: 1.0; 
@@ -249,17 +248,5 @@ Mapping
         Wire { from: "surface.fx.assign.4"; to: TogglePropertyAdapter { path: "app.traktor.mixer.channels.4.fx.assign.4"; } }
       }
     }
-  }
-
-  //------------------------------------------------------------------------------------------------------------------
-  // Snap / Quantize
-  //------------------------------------------------------------------------------------------------------------------
-
-  WiresGroup
-  {
-    enabled: deck.shift
-
-    Wire { from: "surface.display.buttons.6"; to: TogglePropertyAdapter { path: "app.traktor.snap" } }
-    Wire { from: "surface.display.buttons.7"; to: TogglePropertyAdapter { path: "app.traktor.quant" } }
   }
 } //Mapping

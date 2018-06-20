@@ -21,6 +21,8 @@ CenterOverlay {
       case 0:   return "#"
       case 2:   return "TITLE"
       case 3:   return "ARTIST"
+      case 7:   return "RELEASE"
+      case 9:   return "GENRE"
       case 5:   return "BPM"
       case 28:  return "KEY"
       case 22:  return "RATING"
