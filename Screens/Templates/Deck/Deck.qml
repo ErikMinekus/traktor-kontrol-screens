@@ -205,19 +205,16 @@ Item {
       name: "small";
       PropertyChanges { target: deckHeader; headerState: "small"; }
       PropertyChanges { target: deckFooter; footerState: "small"; }
-      PropertyChanges { target: flipable;    anchors.topMargin: -3; }
     },
     State {
       name: "medium";
       PropertyChanges { target: deckHeader; headerState: "medium"; }
       PropertyChanges { target: deckFooter; footerState: "medium"; }
-      PropertyChanges { target: flipable;    anchors.topMargin: 0; }
     },
     State {
       name: "large";
       PropertyChanges { target: deckHeader; headerState: "large"; }
       PropertyChanges { target: deckFooter; footerState: "large"; }
-      PropertyChanges { target: flipable;    anchors.topMargin: 0; }
     }
   ]
 }

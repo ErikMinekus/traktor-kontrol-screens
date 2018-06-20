@@ -229,7 +229,7 @@ Text {
     State { 
       name: "tempo"; 
       PropertyChanges { target: header_text; font.family: fontForNumber; 
-                        text:   (!isLoaded)?"":((propTempo.value-1 < 0)?"":"+") + ((propTempo.value-1)*100).toFixed(1).toString() + "%"; }
+                        text:   (!isLoaded)?"":((propTempo.value-1 <= 0)?"":"+") + ((propTempo.value-1)*100).toFixed(1).toString() + "%"; }
     },
     State { 
       name: "tempoStable"; 
@@ -314,7 +314,7 @@ Text {
 
   function getStableTempoString() {
     var tempo = propMixerStableTempo.value - 1;
-    return   ((tempo < 0) ? "" : "+") + (tempo * 100).toFixed(1).toString() + "%";
+    return   ((tempo <= 0) ? "" : "+") + (tempo * 100).toFixed(1).toString() + "%";
   }
 
 

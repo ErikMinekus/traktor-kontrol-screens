@@ -28,9 +28,9 @@ Item {
 
   // these variables can not be changed from outside
   readonly property int speed: 40  // Transition speed
-  readonly property int smallHeaderHeight: 17
+  readonly property int smallHeaderHeight: 20
   readonly property int mediumHeaderHeight: 24
-  readonly property int largeHeaderHeight: 45
+  readonly property int largeHeaderHeight: 40
 
   readonly property bool   isLoaded:    top_left_text.isLoaded
   readonly property int    deckType:    deckTypeProperty.value

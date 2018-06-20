@@ -9,10 +9,12 @@ Item {
   property          string  fxUnitName:  "FX UNIT " + (fxUnitId + 1)   // used to compose the selcted fxunit name for header tab
   readonly property variant headerNames: [fxUnitName, fxSelectProp1.description, fxSelectProp2.description, fxSelectProp3.description]
   readonly property int macroEffectChar:  0x00B6
+  readonly property bool    hasFocus:    (fxUnitId == fxSelect.fxUnitId)
 
   AppProperty { id: fxSelectProp1;    path: "app.traktor.fx." + (fxUnitId + 1) + ".select.1" }
   AppProperty { id: fxSelectProp2;    path: "app.traktor.fx." + (fxUnitId + 1) + ".select.2" }
   AppProperty { id: fxSelectProp3;    path: "app.traktor.fx." + (fxUnitId + 1) + ".select.3" }
+  AppProperty { id: fxViewSelectProp; path: "app.traktor.fx." + (fxUnitId + 1) + ".type"     }
 
 
   Row {
@@ -24,7 +26,7 @@ Item {
       Rectangle {
         width: ( index == 0 ) ? 120 : 119 // 1st tab 1px wider
         height: 19
-        color: (index==fxSelect.activeTab) ? colors.colorOrange : colors.colorFxHeaderBg
+        color: (hasFocus && index==fxSelect.activeTab) ? colors.colorOrange : colors.colorFxHeaderBg
         
         readonly property bool isMacroFx: (headerNames[index].charCodeAt(0) == macroEffectChar)
 
@@ -37,7 +39,7 @@ Item {
           height: 11
           radius: 1
           visible: isMacroFx && ( (index<2) || (fxViewSelectProp.value==FxType.Group) )
-          color: (index == fxSelect.activeTab) ? colors.colorBlack85 : colors.colorGrey80
+          color: (hasFocus && index == fxSelect.activeTab) ? colors.colorBlack85 : colors.colorGrey80
 
           Text {
             anchors.fill: parent
@@ -45,7 +47,7 @@ Item {
             anchors.leftMargin: 1
             text: "M"
             font.pixelSize: fonts.miniFontSize
-            color: (index == fxSelect.activeTab) ? colors.colorOrange : colors.colorBlack
+            color: (hasFocus && index == fxSelect.activeTab) ? colors.colorOrange : colors.colorBlack
             visible: isMacroFx && ( (index<2) || (fxViewSelectProp.value==FxType.Group) )
 
           }
@@ -60,7 +62,7 @@ Item {
             anchors.rightMargin: 3
             font.pixelSize: fonts.smallFontSize
             font.capitalization: Font.AllUppercase
-            color: (index==fxSelect.activeTab) ? colors.colorBlack : colors.colorFontBrowserHeader
+            color: (hasFocus && index==fxSelect.activeTab) ? colors.colorBlack : colors.colorFontBrowserHeader
             text: isMacroFx? headerNames[index].substr(1) : headerNames[index]
             clip: true
             elide: Text.ElideRight

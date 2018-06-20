@@ -15,14 +15,9 @@ Rectangle {
   property int    midiId: 0
   property bool showSampleName: true
 
-  /* #ifndef ENABLE_STEP_SEQUENCER
-  property string samplePath: remixDeckPropertyPath + "cell.columns."   + (column + 1) + ".rows." + (activePlayerRow.value + 1)
-  #endif */
-  /* #ifdef ENABLE_STEP_SEQUENCER */
   AppProperty { id: sequencerOn;  path: "app.traktor.decks." + (deckId + 1) + ".remix.sequencer.on" }
   AppProperty { id: sequencerPlayerRow;  path: "app.traktor.decks." + (deckId + 1) + ".remix.players." + (column + 1) + ".sequencer.selected_cell" }
   property string samplePath: remixDeckPropertyPath + "cell.columns."   + (column + 1) + ".rows." + (sequencerOn.value && screen.flavor != ScreenFlavor.S5 ? sequencerPlayerRow.value + 1 : activePlayerRow.value + 1)
-  /* #endif */
 
   property string stemDeckPropertyPath : "app.traktor.decks." + (deckId + 1) + ".stems."
   property string playerPath: isStemDeck ? stemDeckPropertyPath + (column + 1) : remixDeckPropertyPath + "players." + (column + 1)
@@ -231,7 +226,6 @@ Rectangle {
     drawAsEnabled: indicatorEnabled
   }
 
-  /* #ifdef ENABLE_STEP_SEQUENCER */
   MappingProperty { id: selectedCellLock; path: screen.propertiesPath + ".sequencer_sample_lock" }
 
   // locked button
@@ -259,7 +253,6 @@ Rectangle {
       visible: (sizeState == "large")
     }
   }
-  /* #endif */
 
   state: "EMPTY"
   states: [
@@ -340,7 +333,6 @@ Rectangle {
       PropertyChanges { target: bottomInfoFilterButtonText; text:      ""                                            }
       PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")                      }
     }
-    /* #ifdef ENABLE_STEP_SEQUENCER */
     , State {
       name: "SAMPLE"
       PropertyChanges { target: parameter;                  path:      playerPath + ".sequencer.selected_cell"       }
@@ -352,7 +344,6 @@ Rectangle {
       PropertyChanges { target: bottomInfoFilterButtonText; text:      ""                                            }
       PropertyChanges { target: bottomInfoDetails;          isEnabled: (name.description != "")                      }
     }
-    /* #endif */
   ]
 }
 

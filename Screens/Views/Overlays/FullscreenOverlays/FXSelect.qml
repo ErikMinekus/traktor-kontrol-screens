@@ -42,8 +42,17 @@ Rectangle {
   FXSelectHeader {
     id: header
     width:    overlay.width
-    height:   30
-    fxUnitId: fxSelect.fxUnitId
+    height:   19
+    fxUnitId: (isLeftScreen ? 0 : 1)
+  }
+
+  FXSelectHeader {
+    id: footer
+    anchors.bottom: parent.bottom
+    width:    overlay.width
+    height:   19
+    visible:  (fx4Mode.value == FxMode.FourFxUnits)
+    fxUnitId: (isLeftScreen ? 2 : 3)
   }
 
   //--------------------------------------------------------------------------------------------------------------------

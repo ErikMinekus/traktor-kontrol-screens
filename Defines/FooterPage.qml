@@ -11,12 +11,10 @@ QtObject {
   	readonly property int fx:              	4
   	readonly property int midi:           	5
     readonly property int volume:           6
-    /* #ifdef ENABLE_STEP_SEQUENCER */
     readonly property int slot1:            7
     readonly property int slot2:            8
     readonly property int slot3:            9
     readonly property int slot4:            10
-    /* #endif */
 
     readonly property variant states:       [ "EMPTY"
         , "FILTER"
@@ -25,12 +23,10 @@ QtObject {
         , "FX"
         , "MIDI"
         , "VOLUME"
-        /* #ifdef ENABLE_STEP_SEQUENCER */
         , "SLOT 1"
         , "SLOT 2"
         , "SLOT 3"
         , "SLOT 4"
-        /* #endif */
                                             ]
 }
 
