@@ -3,3 +3,4 @@ singleton FxOverlay   FxOverlay.qml
 singleton FooterPage  FooterPage.qml
 singleton StemStyle   StemStyle.qml
 singleton ScreenView  ScreenView.qml
+singleton PadsMode    PadsMode.qml
