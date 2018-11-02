@@ -44,6 +44,9 @@ Module
       }
     }
   }
+  
+  MappingPropertyDescriptor { path: propertiesPath + ".top_info_show"; type: MappingPropertyDescriptor.Boolean; value: false }
+  MappingPropertyDescriptor { path: propertiesPath + ".bottom_info_show"; type: MappingPropertyDescriptor.Boolean; value: false }
 
   AppProperty { id: masterDeckIdProp; path: "app.traktor.masterclock.source_id" }
   AppProperty { id: isTempoSynced;    path: "app.traktor.decks." + (focusedDeckId) + ".sync.enabled" }
@@ -3815,7 +3818,7 @@ Module
       to: "TopInfoOverlay.input"
     }
 
-    Wire { from: "TopInfoOverlay.output"; to: "screen.top_info_shown" }
+    Wire { from: "TopInfoOverlay.output"; to: DirectPropertyAdapter{ path: propertiesPath + ".top_info_show" } }
   }
 
   WiresGroup
@@ -3858,7 +3861,7 @@ Module
       to: "BottomInfoOverlay.input"
     }
          
-    Wire { from: "BottomInfoOverlay.output"; to: "screen.bottom_info_shown" }
+    Wire { from: "BottomInfoOverlay.output"; to: DirectPropertyAdapter{ path: propertiesPath + ".bottom_info_show" } }
   }
 
   //------------------------------------------------------------------------------------------------------------------  
