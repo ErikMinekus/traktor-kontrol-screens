@@ -284,14 +284,11 @@ Text {
 
   function computeBeatCounterStringFromPosition(beat) {
     var phraseLen = 4;
-    var curBeat  = parseInt(beat);
+    var curBeat  = Math.abs(beat);
 
-    if (beat < 0.0)
-      curBeat = curBeat*-1;
-
-    var value1 = parseInt(((curBeat/4)/phraseLen)+1);
-    var value2 = parseInt(((curBeat/4)%phraseLen)+1);
-    var value3 = parseInt( (curBeat%4)+1);
+    var value1 = Math.floor(((curBeat/4)/phraseLen)+1);
+    var value2 = Math.floor(((curBeat/4)%phraseLen)+1);
+    var value3 = Math.floor( (curBeat%4)+1);
 
     if (beat < 0.0)
       return "- " + value1.toString() + "." + value2.toString() + "." + value3.toString();

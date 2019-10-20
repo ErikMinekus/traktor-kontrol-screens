@@ -84,6 +84,7 @@ Item {
     Text {
       id: firstFieldFolder
       anchors.left: parent.left
+      anchors.right: parent.right
       anchors.top: parent.top
       anchors.topMargin: contactDelegate.textTopMargin
       anchors.leftMargin: 37
@@ -93,7 +94,6 @@ Item {
       font.pixelSize: fonts.middleFontSize
       elide: Text.ElideRight
       visible: (model.dataType != BrowserDataType.Track)
-      width: 190
     }
     
 
