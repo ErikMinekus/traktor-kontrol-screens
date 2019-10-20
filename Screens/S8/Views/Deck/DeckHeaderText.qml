@@ -75,7 +75,7 @@ Text {
   AppProperty { id: propTempo;            path: "app.traktor.decks." + (deckId+1) + ".tempo.tempo_for_display" } 
   AppProperty { id: propMixerTotalGain;   path: "app.traktor.decks." + (deckId+1) + ".content.total_gain" }
   
-  AppProperty { id: propKeyDisplay;     path: "app.traktor.decks." + (deckId+1) + ".track.key.key_for_display" }
+  AppProperty { id: propKeyDisplay;     path: "app.traktor.decks." + (deckId+1) + ".track.key.resulting.precise" }
   AppProperty { id: propIsInSync;       path: "app.traktor.decks." + (deckId+1) + ".sync.enabled"; }  
   AppProperty { id: propSyncMasterDeck; path: "app.traktor.masterclock.source_id" }
 
@@ -85,10 +85,10 @@ Text {
   AppProperty { id: propRemixIsQuantize;  path: "app.traktor.decks." + (deckId+1) + ".remix.quant"; }
   //property string propRemixQuantize: "1/4"
 
-  AppProperty { id: deckAKeyDisplay; path: "app.traktor.decks.1.track.key.key_for_display" }
-  AppProperty { id: deckBKeyDisplay; path: "app.traktor.decks.2.track.key.key_for_display" }
-  AppProperty { id: deckCKeyDisplay; path: "app.traktor.decks.3.track.key.key_for_display" }
-  AppProperty { id: deckDKeyDisplay; path: "app.traktor.decks.4.track.key.key_for_display" }
+  AppProperty { id: deckAKeyDisplay; path: "app.traktor.decks.1.track.key.resulting.precise" }
+  AppProperty { id: deckBKeyDisplay; path: "app.traktor.decks.2.track.key.resulting.precise" }
+  AppProperty { id: deckCKeyDisplay; path: "app.traktor.decks.3.track.key.resulting.precise" }
+  AppProperty { id: deckDKeyDisplay; path: "app.traktor.decks.4.track.key.resulting.precise" }
 
   //--------------------------------------------------------------------------------------------------------------------
   //  MAPPING FROM TRAKTOR ENUM TO QML-STATE!
@@ -199,7 +199,7 @@ Text {
       name: "key"; 
       PropertyChanges { target: header_text; font.family: fontForNumber;
                         color:  getTrackKeyColor(propKeyDisplay.value);
-                        text:   (!isLoaded)?"":"♪"+keyText[propKeyDisplay.value]; }
+                        text:   (!isLoaded)?"":"♪"+getTrackKeyText(propKeyDisplay.value); }
     },
     State { 
       name: "keyText"; 
@@ -296,14 +296,11 @@ Text {
 
   function computeBeatCounterStringFromPosition(beat) {
     var phraseLen = 4;
-    var curBeat  = parseInt(beat);
+    var curBeat  = Math.abs(beat);
 
-    if (beat < 0.0)
-      curBeat = curBeat*-1;
-
-    var value1 = parseInt(((curBeat/4)/phraseLen)+1);
-    var value2 = parseInt(((curBeat/4)%phraseLen)+1);
-    var value3 = parseInt( (curBeat%4)+1);
+    var value1 = Math.floor(((curBeat/4)/phraseLen)+1);
+    var value2 = Math.floor(((curBeat/4)%phraseLen)+1);
+    var value3 = Math.floor( (curBeat%4)+1);
 
     if (beat < 0.0)
       return "- " + value1.toString() + "." + value2.toString() + "." + value3.toString();
@@ -393,5 +390,14 @@ Text {
     }
 
     return parent.textColors[deckId];
+  }
+
+  function getTrackKeyText(trackKey) {
+    return trackKey.replace(
+      /(~ )?(\d+(d|m))/,
+      function (match, prefix, key) {
+        return keyText[key] || key;
+      }
+    );
   }
 }

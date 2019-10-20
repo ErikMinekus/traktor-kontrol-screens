@@ -10,7 +10,7 @@ Item {
   property int              deckId:        0
 
   readonly property variant deckLetters:   ["A", "B", "C", "D"]
-  readonly property int     isMaster:      (propSyncMasterDeck.value == deckId) ? 1 : 0
+  readonly property bool    isMaster:      (propSyncMasterDeck.value == deckId)
 
   AppProperty { id: propSyncMasterDeck;    path: "app.traktor.masterclock.source_id" }
   AppProperty { id: propDeckAGridOffset;   path: "app.traktor.decks.1.content.grid_offset" }
