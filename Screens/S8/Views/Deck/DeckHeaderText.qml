@@ -24,10 +24,6 @@ Text {
 
   readonly property string  fontForNumber: "Pragmatica"
   readonly property string  fontForString: "Pragmatica MediumTT"
-  readonly property variant keyIndex:      {"1d": 0, "8d": 1, "3d": 2, "10d": 3, "5d": 4, "12d": 5,
-                                            "7d": 6, "2d": 7, "9d": 8, "4d": 9, "11d": 10, "6d": 11,
-                                            "10m": 12, "5m": 13, "12m": 14, "7m": 15, "2m": 16, "9m": 17,
-                                            "4m": 18, "11m": 19, "6m": 20, "1m": 21, "8m": 22, "3m": 23}
   readonly property variant keyText:       {"1d": "8B", "8d": "3B", "3d": "10B", "10d": "5B", "5d": "12B", "12d": "7B",
                                             "7d": "2B", "2d": "9B", "9d": "4B", "4d": "11B", "11d": "6B", "6d": "1B",
                                             "10m": "5A", "5m": "12A", "12m": "7A", "7m": "2A", "2m": "9A", "9m": "4A",
@@ -75,7 +71,8 @@ Text {
   AppProperty { id: propTempo;            path: "app.traktor.decks." + (deckId+1) + ".tempo.tempo_for_display" } 
   AppProperty { id: propMixerTotalGain;   path: "app.traktor.decks." + (deckId+1) + ".content.total_gain" }
   
-  AppProperty { id: propKeyDisplay;     path: "app.traktor.decks." + (deckId+1) + ".track.key.key_for_display" }
+  AppProperty { id: propKeyDisplay;     path: "app.traktor.decks." + (deckId+1) + ".track.key.resulting.precise" }
+  AppProperty { id: propKeyIndex;       path: "app.traktor.decks." + (deckId+1) + ".track.key.final_id" }
   AppProperty { id: propIsInSync;       path: "app.traktor.decks." + (deckId+1) + ".sync.enabled"; }  
   AppProperty { id: propSyncMasterDeck; path: "app.traktor.masterclock.source_id" }
 
@@ -193,8 +190,8 @@ Text {
     State { 
       name: "key"; 
       PropertyChanges { target: header_text; font.family: fontForNumber;
-                        color:  colors.musicalKeyColors[keyIndex[propKeyDisplay.value]];
-                        text:   (!isLoaded)?"":keyText[propKeyDisplay.value]; }
+                        color:  getTrackKeyColor(propKeyIndex.value);
+                        text:   (!isLoaded)?"":getTrackKeyText(propKeyDisplay.value); }
     },
     State { 
       name: "keyText"; 
@@ -290,14 +287,11 @@ Text {
 
   function computeBeatCounterStringFromPosition(beat) {
     var phraseLen = 4;
-    var curBeat  = parseInt(beat);
+    var curBeat  = Math.abs(beat);
 
-    if (beat < 0.0)
-      curBeat = curBeat*-1;
-
-    var value1 = parseInt(((curBeat/4)/phraseLen)+1);
-    var value2 = parseInt(((curBeat/4)%phraseLen)+1);
-    var value3 = parseInt( (curBeat%4)+1);
+    var value1 = Math.floor(((curBeat/4)/phraseLen)+1);
+    var value2 = Math.floor(((curBeat/4)%phraseLen)+1);
+    var value3 = Math.floor( (curBeat%4)+1);
 
     if (beat < 0.0)
       return "- " + value1.toString() + "." + value2.toString() + "." + value3.toString();
@@ -325,4 +319,20 @@ Text {
     return getStableTempoString();
   }
 
+  function getTrackKeyColor(keyIndex) {
+    if (propKeyIndex.value < 0) {
+      return colors.colorGrey232;
+    }
+
+    return colors.musicalKeyColors[propKeyIndex.value];
+  }
+
+  function getTrackKeyText(trackKey) {
+    return trackKey.replace(
+      /(~ )?(\d+(d|m))/,
+      function (match, prefix, key) {
+        return keyText[key] || key;
+      }
+    );
+  }
 }
