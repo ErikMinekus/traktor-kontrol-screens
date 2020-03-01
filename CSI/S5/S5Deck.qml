@@ -1308,7 +1308,7 @@ Module
           TransportSection { name: "transport"; channel: 1 }
           Scratch     { name: "scratch";    channel: 1; ledBarSize: touchstripLedBarSize }
           TempoBend   { name: "tempo_bend"; channel: 1; ledBarSize: touchstripLedBarSize }
-          TrackSeek   { name: "track_seek"; channel: 1; ledBarSize: touchstripLedBarSize }
+          TouchstripTrackSeek   { name: "track_seek"; channel: 1; ledBarSize: touchstripLedBarSize }
 
           Loop { name: "loop";  channel: 1; numberOfLeds: 1; color: Color.Blue }
 
@@ -1374,7 +1374,7 @@ Module
           TransportSection { name: "transport"; channel: 2 }
           Scratch     { name: "scratch";    channel: 2; ledBarSize: touchstripLedBarSize }
           TempoBend   { name: "tempo_bend"; channel: 2; ledBarSize: touchstripLedBarSize }
-          TrackSeek   { name: "track_seek"; channel: 2; ledBarSize: touchstripLedBarSize }
+          TouchstripTrackSeek   { name: "track_seek"; channel: 2; ledBarSize: touchstripLedBarSize }
 
           Loop { name: "loop";  channel: 2; numberOfLeds: 1; color: Color.Blue }
 
@@ -1440,7 +1440,7 @@ Module
           TransportSection { name: "transport"; channel: 3 }
           Scratch     { name: "scratch";    channel: 3; ledBarSize: touchstripLedBarSize }
           TempoBend   { name: "tempo_bend"; channel: 3; ledBarSize: touchstripLedBarSize }
-          TrackSeek   { name: "track_seek"; channel: 3; ledBarSize: touchstripLedBarSize }
+          TouchstripTrackSeek   { name: "track_seek"; channel: 3; ledBarSize: touchstripLedBarSize }
 
           Loop { name: "loop";  channel: 3; numberOfLeds: 1; color: Color.White }
 
@@ -1506,7 +1506,7 @@ Module
           TransportSection { name: "transport"; channel: 4 }
           Scratch     { name: "scratch";    channel: 4; ledBarSize: touchstripLedBarSize }
           TempoBend   { name: "tempo_bend"; channel: 4; ledBarSize: touchstripLedBarSize }
-          TrackSeek   { name: "track_seek"; channel: 4; ledBarSize: touchstripLedBarSize }
+          TouchstripTrackSeek   { name: "track_seek"; channel: 4; ledBarSize: touchstripLedBarSize }
 
           Loop { name: "loop";  channel: 4; numberOfLeds: 1; color: Color.White }
 

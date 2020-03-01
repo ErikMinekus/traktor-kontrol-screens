@@ -46,7 +46,7 @@ Text {
   //  DECK PROPERTIES
   //--------------------------------------------------------------------------------------------------------------------
   AppProperty { id: propDeckType;       path: "app.traktor.decks." + (deckId+1) + ".type" }
-  AppProperty { id: primaryKey;         path: "app.traktor.decks." + (deckId+1) + ".track.content.primary_key" }
+  AppProperty { id: primaryKey;         path: "app.traktor.decks." + (deckId+1) + ".track.content.entry_key" }
   
   AppProperty { id: propTitle;          path: "app.traktor.decks." + (deckId+1) + ".content.title" }
   AppProperty { id: propArtist;         path: "app.traktor.decks." + (deckId+1) + ".content.artist" }
@@ -67,7 +67,7 @@ Text {
 
   AppProperty { id: propMusicalKey;       path: "app.traktor.decks." + (deckId+1) + ".content.musical_key" }
   AppProperty { id: propLegacyKey;        path: "app.traktor.decks." + (deckId+1) + ".content.legacy_key" }
-  AppProperty { id: propPitchRange;       path: "app.traktor.decks." + (deckId+1) + ".tempo.range" }
+  AppProperty { id: propPitchRange;       path: "app.traktor.decks." + (deckId+1) + ".tempo.range_value" }
   AppProperty { id: propTempoAbsolute;    path: "app.traktor.decks." + (deckId+1) + ".tempo.absolute" }  
   AppProperty { id: propMixerBpm;         path: "app.traktor.decks." + (deckId+1) + ".tempo.base_bpm" }
   AppProperty { id: propMixerStableBpm;   path: "app.traktor.decks." + (deckId+1) + ".tempo.true_bpm" }

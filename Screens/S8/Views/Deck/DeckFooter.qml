@@ -48,7 +48,7 @@ Item {
   //--------------------------------------------------------------------------------------------------------------------
 
   AppProperty { id: propDeckType;               path: "app.traktor.decks." + (deck_Id+1) + ".type" }
-  AppProperty { id: primaryKey;                 path: "app.traktor.decks." + (deck_Id+1) + ".track.content.primary_key" }
+  AppProperty { id: primaryKey;                 path: "app.traktor.decks." + (deck_Id+1) + ".track.content.entry_key" }
   AppProperty { id: propIsInSync;               path: "app.traktor.decks." + (deck_Id+1) + ".sync.enabled"; }
   AppProperty { id: propSyncMasterDeck;         path: "app.traktor.masterclock.source_id" }
   AppProperty { id: propSnap;                   path: "app.traktor.snap" }
