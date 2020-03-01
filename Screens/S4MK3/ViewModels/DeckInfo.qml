@@ -62,7 +62,7 @@ Item
   AppProperty { id: propTrackLength;            path: "app.traktor.decks." + deckId + ".track.content.track_length"; }
   AppProperty { id: propElapsedTime;            path: "app.traktor.decks." + deckId + ".track.player.elapsed_time"; }
   AppProperty { id: propertyCover;              path: "app.traktor.decks." + deckId + ".content.cover_md5" }
-  AppProperty { id: propPrimaryKey;             path: "app.traktor.decks." + deckId + ".track.content.primary_key"; }
+  AppProperty { id: propPrimaryKey;             path: "app.traktor.decks." + deckId + ".track.content.entry_key"; }
   AppProperty { id: propTrackEndWarning;        path: "app.traktor.decks." + deckId + ".track.track_end_warning" }
 
   MappingProperty { id: propShift;     path: "mapping.state." + (isLeftScreen(deckId) ? "left" : "right") + ".shift" }
