@@ -1,0 +1,14 @@
+name: Close pull request
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  close-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: codelytv/no-pull-requests@v1
+        with:
+          GITHUB_TOKEN: ${{ github.token }}
+          message: We don't accept pull requests. To request a feature, please create an issue.
