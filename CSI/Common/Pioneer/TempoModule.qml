@@ -12,7 +12,7 @@ Module
         tempoRangeSwitch.enforceSupportedRange();
     }
 
-    XDJTempoRangeSwitch { id: tempoRangeSwitch; name: "tempo_range"; deck: module.deck; enabled: module.enabled }
+    TempoRangeSwitch { id: tempoRangeSwitch; name: "tempo_range"; deck: module.deck; enabled: module.enabled }
 
     MappingPropertyDescriptor
     {

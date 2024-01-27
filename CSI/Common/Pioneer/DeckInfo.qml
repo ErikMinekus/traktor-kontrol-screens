@@ -20,10 +20,9 @@ Module
       enabled: module.enabled
 
       Wire { from: "surface.display.time_enable"; to: ValuePropertyAdapter { path: "app.traktor.decks." + module.deck + ".is_loaded" } }
-      Wire { from: "surface.display.current_time"; to: DirectPropertyAdapter { path: "app.traktor.decks." + module.deck + ".track.player.elapsed_time" } }
       Wire { from: "surface.display.total_time"; to: DirectPropertyAdapter { path: "app.traktor.decks." + module.deck + ".track.content.track_length" } }
       Wire { from: "surface.display.bpm"; to: DirectPropertyAdapter { path: "app.traktor.decks." + module.deck + ".tempo.true_bpm" } }
-      Wire { from: "surface.display.tempo"; to: DirectPropertyAdapter { path: "app.traktor.decks." + module.deck + ".track.player.sync_factor" } }
+      Wire { from: "surface.display.tempo"; to: DirectPropertyAdapter { path: "app.traktor.decks." + module.deck + ".tempo.true_tempo" } }
       Wire { from: "surface.display.tempo_range"; to: DirectPropertyAdapter { path: "app.traktor.decks." + module.deck + ".tempo.range_select" } }
 
       Wire { from: "surface.track_info.title";  to: ValuePropertyAdapter { path: "app.traktor.decks." + module.deck + ".content.title"  } }

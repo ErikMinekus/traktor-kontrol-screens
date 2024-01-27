@@ -20,11 +20,17 @@
   - Switched BPM coarse and fine adjustment
   - Use the Browse knob to zoom in and out of the waveform
 
+## Editions
+
+[Kontrol Edition](https://github.com/ErikMinekus/traktor-kontrol-screens/tree/master)\
+[Nexus Edition](https://github.com/ErikMinekus/traktor-kontrol-screens/tree/nexus)\
+[Prime Edition](https://github.com/ErikMinekus/traktor-kontrol-screens/tree/prime)
+
 ## How to install
 
 **Mac:**
 
-  - Navigate to /Applications/Native Instruments/Traktor 2
+  - Navigate to /Applications/Native Instruments/Traktor Pro 3
   - Right click Traktor.app, then click Show Package Contents
   - Navigate to Contents/Resources/qml
   - Make a backup of this folder!
@@ -33,7 +39,7 @@
 
 **Windows:**
 
-  - Navigate to C:\Program Files\Native Instruments\Traktor 2\Resources64\qml
+  - Navigate to C:\Program Files\Native Instruments\Traktor Pro 3\Resources64\qml
   - Make a backup of this folder!
   - Replace the CSI, Defines and Screens folders
   - Restart Traktor
