@@ -2,7 +2,8 @@
 
 **Changes in appearance:**
 
-  - Added minute markers
+  - Added bar markers on large waveform
+  - Added minute markers on stripe waveform
   - Camelot keys
   - FX overlay is always large
   - Improved FX select
@@ -16,8 +17,12 @@
   - Added sorting by Genre and Release
   - Hold Sync to quickly adjust the BPM
   - Improved timings
+  - Press Shift+Flux to engage Flux Reverse
   - Switched BPM coarse and fine adjustment
-  - Use the Browse knob to zoom in and out of the waveform
+  - [Track Deck] Use the Browse knob to zoom in and out of the waveform
+  - [Remix Deck] Use the Browse knob to scroll through pages
+
+See `Defines/Prefs.qml` for preferences.
 
 ## Editions
 

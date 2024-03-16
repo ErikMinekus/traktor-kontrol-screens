@@ -24,10 +24,6 @@ Text {
 
   readonly property string  fontForNumber: "Pragmatica"
   readonly property string  fontForString: "Pragmatica MediumTT"
-  readonly property variant keyText:       {"1d": "8B", "8d": "3B", "3d": "10B", "10d": "5B", "5d": "12B", "12d": "7B",
-                                            "7d": "2B", "2d": "9B", "9d": "4B", "4d": "11B", "11d": "6B", "6d": "1B",
-                                            "10m": "5A", "5m": "12A", "12m": "7A", "7m": "2A", "2m": "9A", "9m": "4A",
-                                            "4m": "11A", "11m": "6A", "6m": "1A", "1m": "8A", "8m": "3A", "3m": "10A"}
 
 
   // Properties of the TextItem itself. Anchors are set from outside
@@ -188,7 +184,7 @@ Text {
     State { 
       name: "key"; 
       PropertyChanges { target: header_text; font.family: fontForNumber;
-                        text:   (!isLoaded)?"":keyText[propMusicalKey.value]; }
+                        text:   (!isLoaded)?"":utils.convertToCamelotKey(propMusicalKey.value); }
     },
     State { 
       name: "keyText"; 

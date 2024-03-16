@@ -1,5 +1,7 @@
 import QtQuick 2.0
 
+import '../../Defines'
+
 QtObject {
 
   function rgba(r,g,b,a) { return Qt.rgba(  neutralizer(r)/255. ,  neutralizer(g)/255. ,  neutralizer(b)/255. , neutralizer(a)/255. ) }
@@ -480,15 +482,35 @@ QtObject {
     { low1:  rgba (255,   0,  50, 150),  low2:  rgba (255,  30,  60, 170),
       mid1:  rgba (255, 110, 110, 130),  mid2:  rgba (255, 125, 125, 160),
       high1: rgba (255, 210, 220, 140),  high2: rgba (255, 220, 230, 160) },
-    // Spectrum
+    // Infrared - Red-Rose-BrightPink
+    { low1:  rgba (134,  15,  15, 125),  low2:  rgba (200,  24,   0, 210),
+      mid1:  rgba (209, 134, 182, 115),  mid2:  rgba (242, 155, 191, 190),
+      high1: rgba (255, 227, 233, 175),  high2: rgba (255, 245, 255, 250) },
+    // Ultraviolet - Blue-Plum-BrightMint
+    { low1:  rgba ( 20,  55, 135, 125),  low2:  rgba ( 55, 105, 200, 210),
+      mid1:  rgba (148, 148, 255, 115),  mid2:  rgba (185, 170, 255, 190),
+      high1: rgba (222, 255, 250, 175),  high2: rgba (235, 255, 250, 250) },
+    // X-Ray
+    { low1:  rgba ( 75,  89,  89, 100),  low2:  rgba (153, 153, 153, 175),
+      mid1:  rgba (155, 171, 171, 125),  mid2:  rgba (223, 239, 239, 200),
+      high1: rgba (223, 223, 239, 175),  high2: rgba (223, 223, 255, 250) },
+    // Nexus
+    { low1:  rgba (200,   0,   0, 100),  low2:  rgba (200, 100,   0, 250),
+      mid1:  rgba ( 60, 120, 240, 100),  mid2:  rgba ( 80, 160, 240, 250),
+      high1: rgba (100, 200, 240, 100),  high2: rgba (120, 240, 240, 250) },
+    // Prime
     { low1:  rgba ( 41, 113, 246, 100),  low2:  rgba ( 41, 113, 246, 250),
       mid1:  rgba ( 98, 234,  82, 100),  mid2:  rgba ( 98, 234,  82, 250),
-      high1: rgba (255, 255, 255, 100),  high2: rgba (255, 255, 255, 250) }
+      high1: rgba (255, 255, 255, 100),  high2: rgba (255, 255, 255, 250) },
+    // RB 3Band
+    { low1:  rgba ( 24,  48, 140, 200),  low2:  rgba (  0, 184, 232, 180),
+      mid1:  rgba (255, 110,   0, 255),  mid2:  rgba (245, 120,  10, 160),
+      high1: rgba (232, 232, 232, 255),  high2: rgba (152, 152, 152, 255) }
   ]
 
   function getDefaultWaveformColors()
   {
-    return waveformColorsMap[17];
+    return waveformColorsMap[Prefs.waveformColors];
   }
 
   function getWaveformColors(colorId)

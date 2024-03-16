@@ -2,6 +2,7 @@ import CSI 1.0
 import QtQuick 2.0
 import Traktor.Gui 1.0 as Traktor
 
+import '../../../../Defines'
 import '../Widgets' as Widgets
 
 Traktor.Stripe {
@@ -79,6 +80,7 @@ Traktor.Stripe {
       width:  1
       height: 3
       color:  colors.colorWhite
+      visible: Prefs.waveformMinuteMarkers
     }
   }
 

@@ -2,6 +2,8 @@ import QtQuick 2.0
 import CSI 1.0
 import Traktor.Gui 1.0 as Traktor
 
+import '../../../../Defines'
+
 Traktor.Beatgrid {
   id: view
   //-------------------------------------------------------------------------------------------------------------------- 
@@ -48,7 +50,7 @@ Traktor.Beatgrid {
   //--------------------------------------------------------------------------------------------------------------------
 
   onEditEnabledChanged: { resetScanControl(); updateEditMode(true); }
-  onBeatMarkersChanged: { updateEditMode(false);  }
+  onBeatMarkersChanged: { updateEditMode(false); updateBarMarkers(); }
 
   function updateEditMode(initialSetup) 
   { 
@@ -145,6 +147,26 @@ Traktor.Beatgrid {
   // Beat Grid
   //--------------------------------------------------------------------------------------------------------------------
 
+  property var barMarkers: []
+
+  function updateBarMarkers() {
+    if (!Prefs.waveformBarMarkers || gridMarkers.length == 0) {
+      barMarkers = [];
+      return;
+    }
+
+    var gridMarkerIndex = 0;
+    while (beatMarkers[gridMarkerIndex] < gridMarkers[0]) {
+      gridMarkerIndex++;
+    }
+
+    barMarkers = beatMarkers
+      .slice(gridMarkerIndex % 4)
+      .filter(function (beatMarker, index) {
+        return index % 4 == 0;
+      });
+  }
+
   Traktor.WaveformTranslator {
     x: 0
     y: 0
@@ -163,6 +185,17 @@ Traktor.Beatgrid {
       
       beatMarkerList: beatMarkers
       color:  colors.colorWhite09
+    }
+
+    Traktor.BeatgridLines
+    {
+      anchors.top:          parent.top
+      anchors.bottom:       parent.bottom
+      anchors.left:         parent.left
+      anchors.right:        parent.right
+
+      beatMarkerList: barMarkers
+      color:  colors.colorWhite50
     }
   }
 
