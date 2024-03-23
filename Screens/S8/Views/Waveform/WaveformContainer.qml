@@ -22,6 +22,9 @@ Item {
   property          int    stemStyle:       StemStyle.track
   readonly property bool   isStemDeck: (deckType.value == DeckType.Stem && stemStyle == StemStyle.daw && deckSizeState == "large")
 
+  readonly property int    playmarkerPosition: Prefs.playmarkerPositionLeft && !slicer.enabled && !beatgrid.editEnabled ? -240 : 0
+  readonly property double sampleWidthDiv:     Prefs.playmarkerPositionLeft ? 0.5 : 0.75
+
   //--------------------------------------------------------------------------------------------------------------------
 
   AppProperty     { id: primaryKey;        path: "app.traktor.decks."   + (deckId + 1) + ".track.content.entry_key"  }
@@ -57,7 +60,7 @@ Item {
     deckId: view.deckId
     followsPlayhead: !slicer.enabled && !beatgrid.editEnabled
     waveformPos:     beatgrid.editEnabled ? beatgrid.posOnEdit   : (slicer.enabled ? slicer_pos_to_waveform_pos() : (playheadPos -  0.5 * view.sampleWidth ))
-    sampleWidth:     beatgrid.editEnabled ? beatgrid.widthOnEdit : (slicer.enabled ? slicer_zoom_width()          : view.sampleWidth / 0.75)
+    sampleWidth:     beatgrid.editEnabled ? beatgrid.widthOnEdit : (slicer.enabled ? slicer_zoom_width()          : view.sampleWidth / sampleWidthDiv)
     viewWidth:       singleWaveform.width
 
     Behavior on sampleWidth { PropertyAnimation { duration: 150; easing.type: Easing.OutCubic } }
@@ -80,7 +83,7 @@ Item {
     anchors.left:  view.left
     anchors.right: view.right
 
-    anchors.leftMargin:   3
+    anchors.leftMargin:   3 + playmarkerPosition
     anchors.rightMargin:  3
     anchors.bottomMargin: (slicer.enabled) ? 11 : 0
 
@@ -104,7 +107,7 @@ Item {
     anchors.left:   view.left
     anchors.right:  view.right
     anchors.bottom: view.bottom
-    anchors.leftMargin:   3
+    anchors.leftMargin:   3 + playmarkerPosition
     anchors.rightMargin:  3
     anchors.bottomMargin: (isStemDeck & slicer.enabled) ? 15 : 0
     
@@ -118,7 +121,7 @@ Item {
   BeatgridView {
     id: beatgrid
     anchors.fill:  parent
-    anchors.leftMargin:  3
+    anchors.leftMargin:  3 + playmarkerPosition
     anchors.rightMargin: 3
 
     waveformPosition: wfPosition
@@ -131,13 +134,25 @@ Item {
   }
 
   //--------------------------------------------------------------------------------------------------------------------
+  // Fake waveform left margin when playermarker is positioned left
+  //--------------------------------------------------------------------------------------------------------------------
+  Rectangle {
+    anchors.top:    parent.top
+    anchors.bottom: parent.bottom
+    anchors.left:   parent.left
+    width:          3
+    visible:        Prefs.playmarkerPositionLeft
+    color:          colors.colorBlack
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
   //  CuePoints
   //--------------------------------------------------------------------------------------------------------------------
 
   WaveformCues {
     id: waveformCues
     anchors.fill: parent
-    anchors.leftMargin:  3
+    anchors.leftMargin:  3 + playmarkerPosition
     anchors.rightMargin: 3
 
     deckId:            view.deckId
@@ -165,7 +180,7 @@ Item {
   T.WaveformTranslator {
     Rectangle {
       id: flux_marker
-      x:     0; y:      -4
+      x:     playmarkerPosition; y:      -4
       width: 3; height: view.height
       color:        colors.colorBluePlaymarker
       border.color: colors.colorBlack31
@@ -192,7 +207,7 @@ Item {
 
     Rectangle {
       property int sliceModeHeight: (stemStyle == StemStyle.track) ? waveformContainer.height - 14 : waveformContainer.height - 10
-      
+      x:      playmarkerPosition
       y:     -1
       width:  3
       height: (slicer.enabled && !beatgrid.editEnabled ) ? sliceModeHeight : waveformContainer.height + 2
@@ -209,7 +224,9 @@ Item {
   StemColorIndicators {
     id: stemColorIndicators
     deckId:          view.deckId
-    anchors.fill:    stemWaveform
+    anchors.fill:    parent
+    anchors.leftMargin:  3
+    anchors.rightMargin: 3
     visible:         stemWaveform.visible
     indicatorHeight: (slicer.enabled && !beatgrid.editEnabled ) ? [35 , 36 , 36 , 36] : [40 , 40 , 39 , 39]
   }

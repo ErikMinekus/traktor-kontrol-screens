@@ -14,6 +14,8 @@ Traktor.Stripe {
   readonly property real warningOpacity:    0.45
   readonly property int  indicatorBoxWidth: (windowSampleWidth / Math.max(1, propTrackSampleLength.value)) * width
   readonly property var   waveformColors:   colors.getDefaultWaveformColors()
+  readonly property int  indicatorBoxMinWidth: Prefs.playmarkerPositionLeft ? 7 : 5
+  readonly property real indicatorPosition:    Prefs.playmarkerPositionLeft ? 0.25 : 0.5
   
   colorMatrix.high1: waveformColors.high1
   colorMatrix.high2: waveformColors.high2
@@ -44,10 +46,10 @@ Traktor.Stripe {
     anchors.top:         posIndicatorBox.top
     anchors.bottom:      posIndicatorBox.bottom
     anchors.left:        parent.left
-    anchors.right:       posIndicatorBox.horizontalCenter
+    anchors.right:       posIndicatorBox.left
     anchors.topMargin:    2
     anchors.bottomMargin: 2 
-    anchors.rightMargin:  2  
+    anchors.rightMargin:  2 - (indicatorPosition * posIndicatorBox.width)
 
     color:               colors.colorRed
     opacity:             0 // initial state
@@ -125,14 +127,14 @@ Traktor.Stripe {
   Rectangle {
     id: posIndicatorBox
 
-    property int roundedX:  (relativePlayPos * (parent.width - posIndicator.width) - 0.5*width)
+    property int roundedX:  (relativePlayPos * (parent.width - posIndicator.width) - indicatorPosition*width)
     readonly property real relativePlayPos: elapsedTime.value / trackLength.value
 
     AppProperty { id: elapsedTime; path: "app.traktor.decks." + (deckId+1) + ".track.player.elapsed_time" }
     x:                 roundedX            
     anchors.top:       parent.top
     height:            28
-    width:             Math.max (parent.indicatorBoxWidth - (1 - parent.indicatorBoxWidth%2) , 5) // 
+    width:             Math.max (parent.indicatorBoxWidth - (1 - parent.indicatorBoxWidth%2) , indicatorBoxMinWidth) // 
     
     radius:            1
     color:             colors.colorRedPlaymarker06 
@@ -151,9 +153,10 @@ Traktor.Stripe {
 
     Rectangle {
       id: posIndicator
-      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.left:             parent.left
       anchors.top:              parent.top
       anchors.bottom:           parent.bottom
+      anchors.leftMargin:       indicatorPosition * parent.width
       anchors.topMargin:        2
       anchors.bottomMargin:     2
       antialiasing:             false

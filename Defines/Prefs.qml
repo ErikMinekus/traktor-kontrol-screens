@@ -6,6 +6,9 @@ QtObject {
   // Display Open Key as Camelot Key
   readonly property bool camelotKey: true
 
+  // Move playmarker position to the left
+  readonly property bool playmarkerPositionLeft: true
+
   // Display bar markers on large waveform
   readonly property bool waveformBarMarkers: true
 
