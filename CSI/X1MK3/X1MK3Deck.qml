@@ -14,6 +14,10 @@ Module
   property string propertiesPath: ""
 
   property int fxSectionLayer: FXSectionLayer.fx_primary
+  property int leftPrimaryFxIdx: 0
+  property int rightPrimaryFxIdx: 0
+  property int leftSecondaryFxIdx: 0
+  property int rightSecondaryFxIdx: 0
 
   // Settings
   property int nudgePushAction: 0
@@ -311,9 +315,7 @@ Module
 
     WiresGroup
     {
-      enabled: (fxMode.value == FxMode.TwoFxUnits) ||
-               (!module.shift && (module.fxSectionLayer == FXSectionLayer.fx_primary)) ||
-               ( module.shift && (module.fxSectionLayer == FXSectionLayer.fx_secondary))
+      enabled: fxMode.value == FxMode.TwoFxUnits
 
       Wire { from: "%surface%.assign.left";  to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.1"; color: Color.LightOrange } }
       Wire { from: "%surface%.assign.right"; to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.2"; color: Color.LightOrange } }
@@ -321,13 +323,37 @@ Module
 
     WiresGroup
     {
-      enabled:  (fxMode.value == FxMode.FourFxUnits) &&
-                ((!module.shift && (module.fxSectionLayer == FXSectionLayer.fx_secondary)) ||
-                 (module.shift && (module.fxSectionLayer == FXSectionLayer.fx_primary)))
-                
+      enabled: fxMode.value == FxMode.FourFxUnits
 
-      Wire { from: "%surface%.assign.left";  to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.3"; color: Color.LightOrange } }
-      Wire { from: "%surface%.assign.right"; to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.4"; color: Color.LightOrange } }
+      WiresGroup
+      {
+        enabled: !module.shift
+
+        Wire { from: "%surface%.assign.left";  to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.1"; color: Color.LightOrange } enabled: module.leftPrimaryFxIdx == 1 }
+        Wire { from: "%surface%.assign.left";  to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.2"; color: Color.LightOrange } enabled: module.leftPrimaryFxIdx == 2 }
+        Wire { from: "%surface%.assign.left";  to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.3"; color: Color.LightOrange } enabled: module.leftPrimaryFxIdx == 3 }
+        Wire { from: "%surface%.assign.left";  to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.4"; color: Color.LightOrange } enabled: module.leftPrimaryFxIdx == 4 }
+
+        Wire { from: "%surface%.assign.right"; to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.1"; color: Color.LightOrange } enabled: module.rightPrimaryFxIdx == 1 }
+        Wire { from: "%surface%.assign.right"; to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.2"; color: Color.LightOrange } enabled: module.rightPrimaryFxIdx == 2 }
+        Wire { from: "%surface%.assign.right"; to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.3"; color: Color.LightOrange } enabled: module.rightPrimaryFxIdx == 3 }
+        Wire { from: "%surface%.assign.right"; to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.4"; color: Color.LightOrange } enabled: module.rightPrimaryFxIdx == 4 }
+      }
+
+      WiresGroup
+      {
+        enabled: module.shift
+
+        Wire { from: "%surface%.assign.left";  to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.1"; color: Color.LightOrange } enabled: module.leftSecondaryFxIdx == 1 }
+        Wire { from: "%surface%.assign.left";  to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.2"; color: Color.LightOrange } enabled: module.leftSecondaryFxIdx == 2 }
+        Wire { from: "%surface%.assign.left";  to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.3"; color: Color.LightOrange } enabled: module.leftSecondaryFxIdx == 3 }
+        Wire { from: "%surface%.assign.left";  to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.4"; color: Color.LightOrange } enabled: module.leftSecondaryFxIdx == 4 }
+
+        Wire { from: "%surface%.assign.right"; to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.1"; color: Color.LightOrange } enabled: module.rightSecondaryFxIdx == 1 }
+        Wire { from: "%surface%.assign.right"; to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.2"; color: Color.LightOrange } enabled: module.rightSecondaryFxIdx == 2 }
+        Wire { from: "%surface%.assign.right"; to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.3"; color: Color.LightOrange } enabled: module.rightSecondaryFxIdx == 3 }
+        Wire { from: "%surface%.assign.right"; to: TogglePropertyAdapter { path: "app.traktor.mixer.channels." + module.deckIdx + ".fx.assign.4"; color: Color.LightOrange } enabled: module.rightSecondaryFxIdx == 4 }
+      }
     }
   }
 

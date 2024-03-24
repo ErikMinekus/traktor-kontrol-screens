@@ -2,6 +2,8 @@ import QtQuick 2.0
 import CSI 1.0
 import Traktor.Gui 1.0 as Traktor
 
+import '../../../../Defines'
+
 Traktor.Beatgrid {
   id: view
   //-------------------------------------------------------------------------------------------------------------------- 
@@ -148,7 +150,7 @@ Traktor.Beatgrid {
   property var barMarkers: []
 
   function updateBarMarkers() {
-    if (gridMarkers.length == 0) {
+    if (!Prefs.waveformBarMarkers || gridMarkers.length == 0) {
       barMarkers = [];
       return;
     }

@@ -116,7 +116,12 @@ Mapping
 
     shift: shiftProp.value
     deckIdx: deviceSetup.leftDeckIdx
+
     fxSectionLayer: fxSection.layer
+    leftPrimaryFxIdx: deviceSetup.leftPrimaryFxIdx
+    rightPrimaryFxIdx: deviceSetup.rightPrimaryFxIdx
+    leftSecondaryFxIdx: deviceSetup.leftSecondaryFxIdx
+    rightSecondaryFxIdx: deviceSetup.rightSecondaryFxIdx
 
     nudgePushAction: nudgePushActionProp.value
     nudgeShiftPushAction: nudgeShiftPushActionProp.value
@@ -146,7 +151,12 @@ Mapping
 
     shift: shiftProp.value
     deckIdx: deviceSetup.rightDeckIdx
+
     fxSectionLayer: fxSection.layer
+    leftPrimaryFxIdx: deviceSetup.leftPrimaryFxIdx
+    rightPrimaryFxIdx: deviceSetup.rightPrimaryFxIdx
+    leftSecondaryFxIdx: deviceSetup.leftSecondaryFxIdx
+    rightSecondaryFxIdx: deviceSetup.rightSecondaryFxIdx
 
     nudgePushAction: nudgePushActionProp.value
     nudgeShiftPushAction: nudgeShiftPushActionProp.value

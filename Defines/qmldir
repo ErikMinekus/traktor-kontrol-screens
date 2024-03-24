@@ -8,3 +8,4 @@ singleton LoopSize          LoopSize.qml
 singleton MoveSize          MoveSize.qml
 singleton JumpSize          JumpSize.qml
 singleton NavigationMode    NavigationMode.qml
+singleton Prefs             Prefs.qml

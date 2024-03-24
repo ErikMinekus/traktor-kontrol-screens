@@ -1,5 +1,7 @@
 import QtQuick 2.0
 
+import '../../Defines'
+
 QtObject {
 
   function convertToTimeString(inSeconds)
@@ -27,6 +29,17 @@ QtObject {
   function computeRemainingTimeString(length, elapsed)
   {
     return ((elapsed > length) ? convertToTimeString(0) : convertToTimeString( Math.floor(elapsed) - Math.floor(length)));
+  }
+
+  function convertToCamelotKey(key)
+  {
+    if (!Prefs.camelotKey) {
+      return key;
+    }
+
+    return key.replace(/(\d+)(d|m)/, function (match, pitch, scale) {
+      return (+pitch + 6) % 12 + 1 + (scale == "d" ? "B" : "A");
+    });
   }
 
   function getKeyOffset(offset) {
