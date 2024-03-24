@@ -3630,6 +3630,8 @@ Module
       {
         enabled: (deckAType == DeckType.Remix)
 
+        Wire { from: "%surface%.browse.turn"; to: "decks.1.remix.page"; enabled: screenOverlay.value == Overlay.none }
+        Wire { from: "%surface%.browse.turn"; to: "ShowDisplayButtonArea_EncoderAdapter"; enabled: screenOverlay.value == Overlay.none }
         Wire { from: "%surface%.display.buttons.6"; to: "decks.1.remix.decrement_page" }
         Wire { from: "%surface%.display.buttons.7"; to: "decks.1.remix.increment_page" }
       }
@@ -3664,6 +3666,8 @@ Module
       {
         enabled: (deckBType == DeckType.Remix)
 
+        Wire { from: "%surface%.browse.turn"; to: "decks.2.remix.page"; enabled: screenOverlay.value == Overlay.none }
+        Wire { from: "%surface%.browse.turn"; to: "ShowDisplayButtonArea_EncoderAdapter"; enabled: screenOverlay.value == Overlay.none }
         Wire { from: "%surface%.display.buttons.6"; to: "decks.2.remix.decrement_page" }
         Wire { from: "%surface%.display.buttons.7"; to: "decks.2.remix.increment_page" }
       }
@@ -3698,6 +3702,8 @@ Module
       {
         enabled: (deckCType == DeckType.Remix)
 
+        Wire { from: "%surface%.browse.turn"; to: "decks.3.remix.page"; enabled: screenOverlay.value == Overlay.none }
+        Wire { from: "%surface%.browse.turn"; to: "ShowDisplayButtonArea_EncoderAdapter"; enabled: screenOverlay.value == Overlay.none }
         Wire { from: "%surface%.display.buttons.6"; to: "decks.3.remix.decrement_page" }
         Wire { from: "%surface%.display.buttons.7"; to: "decks.3.remix.increment_page" }
       }
@@ -3731,6 +3737,8 @@ Module
       {
         enabled: (deckDType == DeckType.Remix)
 
+        Wire { from: "%surface%.browse.turn"; to: "decks.4.remix.page"; enabled: screenOverlay.value == Overlay.none }
+        Wire { from: "%surface%.browse.turn"; to: "ShowDisplayButtonArea_EncoderAdapter"; enabled: screenOverlay.value == Overlay.none }
         Wire { from: "%surface%.display.buttons.6"; to: "decks.4.remix.decrement_page" }
         Wire { from: "%surface%.display.buttons.7"; to: "decks.4.remix.increment_page" }
       }
@@ -3773,11 +3781,11 @@ Module
 
     enabled: (focusedDeckId == 1) && (hasTransport(deckAType))
 
-    Wire { from: "%surface%.flux"; to: "decks.1.transport.flux" }
-
     WiresGroup
     {
       enabled: !module.shift
+
+      Wire { from: "%surface%.flux"; to: "decks.1.transport.flux" }
 
       Wire { from: "%surface%.play"; to: "decks.1.transport.play" }
       Wire { from: "%surface%.cue";  to: "decks.1.transport.cue"  }
@@ -3786,6 +3794,8 @@ Module
     WiresGroup
     {
       enabled: module.shift
+
+      Wire { from: "%surface%.flux"; to: "decks.1.transport.flux_reverse" }
 
       Wire { from: "%surface%.play"; to: "decks.1.transport.timecode"     }
       Wire { from: "%surface%.cue";  to: "decks.1.transport.return_to_zero" }
@@ -3829,11 +3839,11 @@ Module
 
     enabled: (focusedDeckId == 2) && (hasTransport(deckBType))
 
-    Wire { from: "%surface%.flux";  to: "decks.2.transport.flux" }
-
     WiresGroup
     {
       enabled: !module.shift
+
+      Wire { from: "%surface%.flux"; to: "decks.2.transport.flux" }
 
       Wire { from: "%surface%.play"; to: "decks.2.transport.play" }
       Wire { from: "%surface%.cue";  to: "decks.2.transport.cue"  }
@@ -3842,6 +3852,8 @@ Module
     WiresGroup
     {
       enabled: module.shift
+
+      Wire { from: "%surface%.flux"; to: "decks.2.transport.flux_reverse" }
 
       Wire { from: "%surface%.play"; to: "decks.2.transport.timecode"     }
       Wire { from: "%surface%.cue";  to: "decks.2.transport.return_to_zero" }
@@ -3885,11 +3897,11 @@ Module
 
     enabled: (focusedDeckId == 3) && (hasTransport(deckCType))
 
-    Wire { from: "%surface%.flux";  to: "decks.3.transport.flux" }
-
     WiresGroup
     {
       enabled: !module.shift
+
+      Wire { from: "%surface%.flux"; to: "decks.3.transport.flux" }
 
       Wire { from: "%surface%.play"; to: "decks.3.transport.play" }
       Wire { from: "%surface%.cue";  to: "decks.3.transport.cue"  }
@@ -3898,6 +3910,8 @@ Module
     WiresGroup
     {
       enabled: module.shift
+
+      Wire { from: "%surface%.flux"; to: "decks.3.transport.flux_reverse" }
 
       Wire { from: "%surface%.play"; to: "decks.3.transport.timecode"     }
       Wire { from: "%surface%.cue";  to: "decks.3.transport.return_to_zero" }
@@ -3941,11 +3955,11 @@ Module
 
     enabled: (focusedDeckId == 4) && (hasTransport(deckDType))
 
-    Wire { from: "%surface%.flux";  to: "decks.4.transport.flux" }
-
     WiresGroup
     {
       enabled: !module.shift
+
+      Wire { from: "%surface%.flux"; to: "decks.4.transport.flux" }
 
       Wire { from: "%surface%.play"; to: "decks.4.transport.play" }
       Wire { from: "%surface%.cue";  to: "decks.4.transport.cue"  }
@@ -3954,6 +3968,8 @@ Module
     WiresGroup
     {
       enabled: module.shift
+
+      Wire { from: "%surface%.flux"; to: "decks.4.transport.flux_reverse" }
 
       Wire { from: "%surface%.play"; to: "decks.4.transport.timecode"     }
       Wire { from: "%surface%.cue";  to: "decks.4.transport.return_to_zero" }

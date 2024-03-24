@@ -12,6 +12,10 @@ Module
   property string propertiesPath: ""
 
   property int fxSectionLayer: FXSectionLayer.fx_primary
+  property int leftPrimaryFxIdx: 0
+  property int rightPrimaryFxIdx: 0
+  property int leftSecondaryFxIdx: 0
+  property int rightSecondaryFxIdx: 0
 
   // Settings
   property int nudgePushAction: 0
@@ -43,7 +47,12 @@ Module
 
     shift: module.shift
     syncModifier: syncModifierProp.value
+
     fxSectionLayer: module.fxSectionLayer
+    leftPrimaryFxIdx: module.leftPrimaryFxIdx
+    rightPrimaryFxIdx: module.rightPrimaryFxIdx
+    leftSecondaryFxIdx: module.leftSecondaryFxIdx
+    rightSecondaryFxIdx: module.rightSecondaryFxIdx
 
     nudgePushAction: module.nudgePushAction
     nudgeShiftPushAction: module.nudgeShiftPushAction
@@ -74,7 +83,12 @@ Module
 
     shift: module.shift
     syncModifier: syncModifierProp.value
+
     fxSectionLayer: module.fxSectionLayer
+    leftPrimaryFxIdx: module.leftPrimaryFxIdx
+    rightPrimaryFxIdx: module.rightPrimaryFxIdx
+    leftSecondaryFxIdx: module.leftSecondaryFxIdx
+    rightSecondaryFxIdx: module.rightSecondaryFxIdx
 
     nudgePushAction: module.nudgePushAction
     nudgeShiftPushAction: module.nudgeShiftPushAction
@@ -105,7 +119,12 @@ Module
 
     shift: module.shift
     syncModifier: syncModifierProp.value
+
     fxSectionLayer: module.fxSectionLayer
+    leftPrimaryFxIdx: module.leftPrimaryFxIdx
+    rightPrimaryFxIdx: module.rightPrimaryFxIdx
+    leftSecondaryFxIdx: module.leftSecondaryFxIdx
+    rightSecondaryFxIdx: module.rightSecondaryFxIdx
 
     nudgePushAction: module.nudgePushAction
     nudgeShiftPushAction: module.nudgeShiftPushAction
@@ -136,7 +155,12 @@ Module
 
     shift: module.shift
     syncModifier: syncModifierProp.value
+
     fxSectionLayer: module.fxSectionLayer
+    leftPrimaryFxIdx: module.leftPrimaryFxIdx
+    rightPrimaryFxIdx: module.rightPrimaryFxIdx
+    leftSecondaryFxIdx: module.leftSecondaryFxIdx
+    rightSecondaryFxIdx: module.rightSecondaryFxIdx
 
     nudgePushAction: module.nudgePushAction
     nudgeShiftPushAction: module.nudgeShiftPushAction
