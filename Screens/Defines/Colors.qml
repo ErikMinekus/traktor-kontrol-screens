@@ -5,6 +5,7 @@ import '../../Defines'
 QtObject {
 
   function rgba(r,g,b,a) { return Qt.rgba(  neutralizer(r)/255. ,  neutralizer(g)/255. ,  neutralizer(b)/255. , neutralizer(a)/255. ) }
+  function opacity( c, factor ) { return Qt.rgba(c.r, c.g, c.b, factor * c.a); }
 
   // this categorizes any rgb value to multiples of 8 for each channel to avoid unbalanced colors on the display (r5-g6-b5 bit)
   // function neutralizer(value) { if(value%8 > 4) { return  value - value%8 + 8} else { return  value - value%8 }}

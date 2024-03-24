@@ -2,6 +2,7 @@ import CSI 1.0
 import QtQuick 2.0
 import Traktor.Gui 1.0 as Traktor
 
+import '../../../../Defines'
 import '../Widgets' as Widgets
 
 
@@ -111,6 +112,7 @@ Item {
         smallHead:         false
         hotcueLength:      samples_to_waveform_x(length.value* sampleRate.value)
         hotcueId:          index + 1
+        showName:          Prefs.waveformCueNames
       }
     }
   }

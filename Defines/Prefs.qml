@@ -12,6 +12,9 @@ QtObject {
   // Display bar markers on large waveform
   readonly property bool waveformBarMarkers: true
 
+  // Display cue names on large waveform
+  readonly property bool waveformCueNames: true
+
   // Display minute markers on stripe waveform
   readonly property bool waveformMinuteMarkers: true
 
