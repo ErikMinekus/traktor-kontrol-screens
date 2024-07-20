@@ -6,6 +6,23 @@ QtObject {
   // Display Open Key as Camelot Key
   readonly property bool camelotKey: true
 
+  // List of Mixer FX selected in Traktor Preferences > Mixer
+  // BRPL: Barber Pole
+  // CRSH: Crush
+  // DLDL: Dual Delay
+  // DTDL: Dotted Delay
+  // FLNG: Flanger
+  // FLTR: Filter
+  // NOISE: Noise
+  // RVRB: Reverb
+  // TIMG: Time Gater
+  readonly property var  mixerFxSlots: [
+    "RVRB",
+    "DLDL",
+    "NOISE",
+    "TIMG",
+  ]
+
   // Move playmarker position to the left
   readonly property bool playmarkerPositionLeft: true
 

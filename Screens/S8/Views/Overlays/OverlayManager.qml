@@ -75,6 +75,11 @@ Item {
     id: browserWarnings
     deckId: overlay.deckId
   }
+
+  CenterOverlays.MixerFx {
+    id: mixerFx
+    deckId: overlay.deckId
+  }
   
   // fullscreen overlays
 
@@ -101,6 +106,7 @@ Item {
     browserSorting.visible = false;
     captureSource.visible   = false;
     browserWarnings.visible = false;
+    mixerFx.visible     = false;
   }
   
   state: overlayState
@@ -154,6 +160,11 @@ Item {
       name: Overlay.states[Overlay.browserWarnings]
       PropertyChanges { target: overlay;         visible: true;  }
       PropertyChanges { target: browserWarnings; visible: true;  }
+    },
+    State {
+      name: Overlay.states[Overlay.mixerFx]
+      PropertyChanges { target: overlay;     visible: true;  }
+      PropertyChanges { target: mixerFx;     visible: true;  }
     }
   ]
 

@@ -14,6 +14,7 @@ QtObject {
     readonly property int capture:            7
     readonly property int browserWarnings:    8
     readonly property int swing:              9
+    readonly property int mixerFx:            10
 
 
     readonly property variant states:       [ "none"
@@ -26,6 +27,7 @@ QtObject {
                                             , "capture"
                                             , "browserWarnings"
                                             , "swing"
+                                            , "mixerFx"
                                             ]
 }
 
