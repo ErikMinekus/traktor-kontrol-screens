@@ -1,6 +1,8 @@
 import CSI 1.0
 import QtQuick 2.0
 
+import '../../../../Defines'
+
 //--------------------------------------------------------------------------------------------------------------------
 //  DECK HEADER TEXT
 //--------------------------------------------------------------------------------------------------------------------
@@ -279,7 +281,7 @@ Text {
 
 
   function computeBeatCounterStringFromPosition(beat) {
-    var phraseLen = 4;
+    var phraseLen = Prefs.barsPerPhrase;
     var curBeat  = Math.abs(beat);
 
     var value1 = Math.floor(((curBeat/4)/phraseLen)+1);

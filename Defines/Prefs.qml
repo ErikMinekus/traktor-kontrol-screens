@@ -3,6 +3,9 @@ pragma Singleton
 import QtQuick 2.0
 
 QtObject {
+  // Number of bars per phrase for the beat counter
+  readonly property int  barsPerPhrase: 4
+
   // Display Open Key as Camelot Key
   readonly property bool camelotKey: true
 
