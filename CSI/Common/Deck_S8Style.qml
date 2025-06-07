@@ -34,7 +34,7 @@ Module
     type: MappingPropertyDescriptor.Integer;
     value: Overlay.none;
     onValueChanged: {
-      keyOrBPMOverlay = screenOverlay.value == Overlay.bpm || screenOverlay.value == Overlay.key;
+      keyOrBPMOverlay = screenOverlay.value == Overlay.bpm || screenOverlay.value == Overlay.key || screenOverlay.value == Overlay.mixerFx;
       if (value == Overlay.fx) {
         editMode.value  = editModeNone;
       }
@@ -59,6 +59,7 @@ Module
   AppProperty { id: hotcue6Exists;    path: "app.traktor.decks." + (focusedDeckId) + ".track.cue.hotcues.6.exists"; }
   AppProperty { id: hotcue7Exists;    path: "app.traktor.decks." + (focusedDeckId) + ".track.cue.hotcues.7.exists"; }
   AppProperty { id: hotcue8Exists;    path: "app.traktor.decks." + (focusedDeckId) + ".track.cue.hotcues.8.exists"; }
+  AppProperty { id: mixerFxSelect;    path: "app.traktor.mixer.channels." + focusedDeckId + ".fx.select" }
 
   AppProperty { 
     path: "app.traktor.masterclock.tempo"; 
@@ -1263,6 +1264,7 @@ Module
         enabled: module.screenView.value == ScreenView.deck
 
         Wire { from: "%surface%.fx.select"; to: TogglePropertyAdapter { path: propertiesPath + ".overlay"; value: Overlay.fx } enabled: !module.shift }
+        Wire { from: "%surface%.fx.select"; to: TogglePropertyAdapter { path: propertiesPath + ".overlay"; value: Overlay.mixerFx } enabled: module.shift }
 
         WiresGroup
         {
@@ -1784,6 +1786,22 @@ Module
           Wire { from: "%surface%.buttons.2"; to: SetPropertyAdapter { path: propertiesPath + ".fx_button_selection"; value: FxOverlay.lower_button_2 } }
           Wire { from: "%surface%.buttons.3"; to: SetPropertyAdapter { path: propertiesPath + ".fx_button_selection"; value: FxOverlay.lower_button_3 } }
           Wire { from: "%surface%.buttons.4"; to: SetPropertyAdapter { path: propertiesPath + ".fx_button_selection"; value: FxOverlay.lower_button_4 } }
+        }
+      }
+
+      //------------------------------------------------------------------------------------------------------------------
+      // Mixer FX Overlay
+      //------------------------------------------------------------------------------------------------------------------
+
+      WiresGroup {
+        enabled: screenOverlay.value == Overlay.mixerFx
+
+        Wire {
+          from: "%surface%.browse.turn"
+          to: EncoderScriptAdapter {
+            onIncrement: mixerFxSelect.value = Math.min(mixerFxSelect.value + 1, 4)
+            onDecrement: mixerFxSelect.value = Math.max(mixerFxSelect.value - 1, 0)
+          }
         }
       }
 
