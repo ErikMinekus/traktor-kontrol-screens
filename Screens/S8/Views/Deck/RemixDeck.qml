@@ -47,7 +47,7 @@ Item {
     spacing:              6 // (sizeState == "small") ? 6 : 10
     anchors.leftMargin:   9 // (sizeState == "small") ? 9 : 3
     anchors.rightMargin:  9 // (sizeState == "small") ? 9 : 3
-    anchors.topMargin:    (sizeState == "small") ? 0 : 10
+    anchors.topMargin:    0 // (sizeState == "small") ? 0 : 10
 
     Repeater {  // this repeater creates the four columns of the remix deck
       id: remixDeckColumns

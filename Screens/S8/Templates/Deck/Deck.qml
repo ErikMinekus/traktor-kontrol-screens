@@ -196,7 +196,7 @@ Item {
     },
     State {
       name: "medium";
-      PropertyChanges { target: deckHeader; headerState: "medium"; }
+      PropertyChanges { target: deckHeader; headerState: "large"; }
     },
     State {
       name: "large";

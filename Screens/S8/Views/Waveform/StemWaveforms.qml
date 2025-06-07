@@ -31,7 +31,7 @@ Item {
     SingleWaveform { 
       y:      index * view.height/4 + (index > 1 ? 2 : 1)
       width:  view.width
-      height: 34
+      height: view.height / 4
       clip:   true
 
       deckId:           view.deckId

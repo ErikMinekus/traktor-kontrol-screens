@@ -13,7 +13,7 @@ Item {
   property color  deckColor:       colors.colorBgEmpty // transparent blue not possible for logo due to low bit depth of displays. was: // (deckId < 2) ? colors.colorDeckBlueBright12Full : colors.colorBgEmpty
   property bool   trackIsLoaded:   (primaryKey.value > 0)
   
-  readonly property int waveformHeight: (deckSizeState == "small") ? 0 : ( parent ? ( (deckSizeState == "medium") ? 0 : (parent.height-113) ) : 0 )
+  readonly property int waveformHeight: (deckSizeState == "small") ? 0 : ( parent ? ( (deckSizeState == "medium") ? (parent.height-50) : (parent.height-70) ) : 0 )
 
   property bool showLoopSize: false
   property int  zoomLevel:    1
@@ -49,11 +49,11 @@ Item {
     isInEditMode:         trackDeck.isInEditMode
     stemStyle:            trackDeck.stemStyle
 
-    anchors.topMargin:    70
+    anchors.topMargin:    10
 
     // the height of the waveform is defined as the remaining space of deckHeight - stripe.height - spacerWaveStripe.height
     height:  waveformHeight              
-    visible: (trackIsLoaded && deckSizeState == "large") ? 1 : 0
+    visible: (trackIsLoaded && deckSizeState != "small") ? 1 : 0
 
     Behavior on height { PropertyAnimation { duration: durations.deckTransition } }
   }
@@ -66,8 +66,8 @@ Item {
   Widgets.HotcueRow {
     anchors.left:   trackDeck.left
     anchors.bottom: stripe.top
-    anchors.bottomMargin: 10
-    opacity:        (trackDeck.trackIsLoaded && deckSizeState == "medium") ? 1 : 0
+    anchors.bottomMargin: 6
+    opacity:        (trackDeck.trackIsLoaded && deckSizeState == "large") ? 1 : 0
     Behavior on opacity { NumberAnimation { duration: durations.deckTransition } }
   }
 
@@ -83,7 +83,7 @@ Item {
     anchors.left:           trackDeck.left
     anchors.right:          trackDeck.right
     anchors.bottom:         trackDeck.bottom
-    anchors.bottomMargin:   5 // (deckSizeState == "large") ? largeDeckBottomMargin : smallDeckBottomMargin
+    anchors.bottomMargin:   3 // (deckSizeState == "large") ? largeDeckBottomMargin : smallDeckBottomMargin
     anchors.leftMargin:     9
     anchors.rightMargin:    9
     height:                 28
