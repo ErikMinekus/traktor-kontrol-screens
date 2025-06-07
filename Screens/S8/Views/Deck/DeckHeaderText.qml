@@ -204,7 +204,7 @@ Text {
     State { 
       name: "bpm"; 
       PropertyChanges { target: header_text; font.family: fontForNumber; 
-                        text:   (!isLoaded)?"":propMixerBpm.value.toFixed(0).toString(); }
+                        text:   (!isLoaded)?"":propMixerBpm.value.toFixed(2).toString(); }
     },
     State { 
       name: "bpmStable"; 
@@ -300,7 +300,7 @@ Text {
 
   function getStableTempoString() {
     var tempo = propMixerStableTempo.value - 1;
-    return   ((tempo <= 0) ? "" : "+") + (tempo * 100).toFixed(1).toString() + "%";
+    return   ((tempo <= 0) ? "" : "+") + (tempo * 100).toFixed(2).toString() + "%";
   }
 
 
@@ -318,11 +318,7 @@ Text {
   }
 
   function getTrackKeyColor(keyIndex) {
-    if (propKeyIndex.value < 0) {
-      return colors.colorGrey232;
-    }
-
-    return colors.musicalKeyColors[propKeyIndex.value];
+    return keyIndex < 0 ? colors.colorGrey232 : colors.musicalKeyColors[keyIndex];
   }
 
   function getTrackKeyText(trackKey) {

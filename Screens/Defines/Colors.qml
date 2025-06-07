@@ -95,7 +95,6 @@ QtObject {
 
   property variant colorGreenActive:            rgba( 82, 255, 148, 255)
   property variant colorGreenInactive:          rgba(  8,  56,  24, 255)
-  property variant colorGreyInactive:           rgba(139, 145, 139, 255)
 
 
   // Playmarker
