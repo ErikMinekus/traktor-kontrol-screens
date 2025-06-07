@@ -19,6 +19,7 @@
   - Hold Sync to quickly adjust the BPM
   - Improved timings
   - Press Shift+Flux to engage Flux Reverse
+  - Press Shift+FX Select to select Mixer FX
   - Switched BPM coarse and fine adjustment
   - [Track Deck] Use the Browse knob to zoom in and out of the waveform
   - [Remix Deck] Use the Browse knob to scroll through pages
