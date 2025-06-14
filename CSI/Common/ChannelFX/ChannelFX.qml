@@ -4,15 +4,16 @@ import "../../../Defines"
 Module
 {
   id: module
+  property bool active: false
+  property bool momentary: false
   property int index: 1
   property alias selectedFx: fxSelect
   property int channelFxSelectorVal: -1
-  property string surface: ""
+  property string surface_mixer_channel: ""
 
   signal fxChanged()
 
   // helpers
-  readonly property string surface_prefix: surface + ".mixer.channels." + module.index + "."
   readonly property string app_prefix: "app.traktor.mixer.channels." + module.index + "."
 
   AppProperty { id: fxSelect; path: app_prefix + "fx.select"; }
@@ -20,33 +21,46 @@ Module
 
   readonly property variant currentColor: colorScheme[fxSelect.value]
 
-  // Channel FX Knob + Enable
-  Wire { from: surface_prefix + "channel_fx.amount"; to: DirectPropertyAdapter { path: app_prefix + "fx.adjust" } }
-
-  Wire
+  WiresGroup
   {
-    enabled: module.channelFxSelectorVal == -1;
-    from: surface_prefix + "channel_fx.on";
-    to: TogglePropertyAdapter
-    {
-      path: app_prefix + "fx.on";
-      color: module.currentColor;
-    }
-  }
+    enabled: module.active
 
-  Wire
-  {
-    enabled: module.channelFxSelectorVal != -1;
-    from: surface_prefix + "channel_fx.on";
-    to: ButtonScriptAdapter
+    // Channel FX Enable
+    Wire
     {
-      onPress :
+      enabled: !module.momentary && (module.channelFxSelectorVal == -1);
+      from: module.surface_mixer_channel + ".channel_fx.on";
+      to: TogglePropertyAdapter
       {
-        module.selectedFx.value = module.channelFxSelectorVal;
-        fxChanged();
+        path: app_prefix + "fx.on";
+        color: module.currentColor;
       }
-      color: module.currentColor;
-      brightness: fxOn.value ? 1.0 : 0.5
+    }
+    Wire
+    {
+      enabled: module.momentary && (module.channelFxSelectorVal == -1);
+      from: module.surface_mixer_channel + ".channel_fx.on";
+      to: HoldPropertyAdapter
+      {
+        path: app_prefix + "fx.on";
+        color: module.currentColor;
+      }
+    }
+
+    Wire
+    {
+      enabled: module.channelFxSelectorVal != -1;
+      from: module.surface_mixer_channel + ".channel_fx.on";
+      to: ButtonScriptAdapter
+      {
+        onPress :
+        {
+          module.selectedFx.value = module.channelFxSelectorVal;
+          fxChanged();
+        }
+        color: module.currentColor;
+        brightness: fxOn.value ? 1.0 : 0.5
+      }
     }
   }
 }

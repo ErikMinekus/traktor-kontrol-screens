@@ -32,6 +32,7 @@ Module
     fullScreenColor: module.deckColor
     prepListColor: module.deckColor
   }
+  ButtonGestures { name: "browser_load_gestures" }
 
   AppProperty { id: loadPreviewProp;    path: "app.traktor.browser.preview_player.load" }
   AppProperty { id: unloadPreviewProp;  path: "app.traktor.browser.preview_player.unload" }
@@ -110,7 +111,9 @@ Module
     WiresGroup {
       enabled: module.encoderMode == module.listMode;
       Wire { from: "%surface%.browse.encoder"; to: "browser.list_navigation" }
-      Wire { from: "%surface%.browse.encoder.push"; to: TriggerPropertyAdapter { path: "app.traktor.decks." + deckIdx + ".load.selected" } }
+      Wire { from: "%surface%.browse.encoder.push"; to: "browser_load_gestures.input" }
+      Wire { from: "browser_load_gestures.single_click"; to: TriggerPropertyAdapter { path: "app.traktor.decks." + deckIdx + ".load.selected"; output: false } }
+      Wire { from: "browser_load_gestures.double_click"; to: TriggerPropertyAdapter { path: "app.traktor.decks." + deckIdx + ".load_secondary.selected"; output: false } }
     }
 
     // favourites mode

@@ -20,6 +20,4 @@ Module
   Wire { from: surface_prefix + "eq.mid";               to: DirectPropertyAdapter { path: app_prefix + "eq.mid"              } }
   Wire { from: surface_prefix + "eq.low";               to: DirectPropertyAdapter { path: app_prefix + "eq.low"              } }
   Wire { from: surface_prefix + "cue";                  to: TogglePropertyAdapter { path: app_prefix + "cue"                 } }
-
-  Wire { from: surface_prefix + "channel_fx.amount"; to: DirectPropertyAdapter { path: app_prefix + "fx.adjust"; }}
 }

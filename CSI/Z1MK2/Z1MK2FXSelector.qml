@@ -1,13 +1,23 @@
 import CSI 1.0
 
+import "Defines"
+import "../Common/ChannelFX"
+
 Module
 {
   id: module
   property bool cancelMultiSelection: false
   property int currentlySelectedFx: -1
   property string surface: ""
+  property int leftDeckIdx: 0
+  property int rightDeckIdx: 0
 
-  readonly property string surfacePrefix: surface + ".mixer.channel_fx"
+  property bool shift: false
+  property int filterPushAction: 0
+  property int channelFxPushAction: 0
+  property int channelFxShiftPushAction: 0
+
+  readonly property string fxSelectionPrefix: module.surface + ".center.channel_fx"
 
   // Mixer Effects Color Scheme
   readonly property variant colorScheme: [
@@ -18,13 +28,16 @@ Module
     Color.Yellow        // FX4
   ]
 
-   // Channel FX selection
+  readonly property bool toggleButtons: (!module.shift && module.channelFxPushAction == ButtonsActions.toggle_channel_fx) || (module.shift && module.channelFxShiftPushAction == ButtonsActions.toggle_channel_fx)
+  readonly property bool momentaryButtons: (!module.shift && module.channelFxPushAction == ButtonsActions.temporary_channel_fx) || (module.shift && module.channelFxShiftPushAction == ButtonsActions.temporary_channel_fx)
+
   ChannelFX
   {
     id: channel1
-    active: true
+    active: (module.toggleButtons || module.momentaryButtons) && (module.leftDeckIdx == 1)
+    momentary: module.momentaryButtons
     name: "channel1"
-    surface_mixer_channel: module.surface + ".mixer.channels.1"
+    surface_mixer_channel: module.surface + ".left"
     index: 1
     onFxChanged : { module.cancelMultiSelection = true; }
     channelFxSelectorVal: module.currentlySelectedFx
@@ -33,9 +46,10 @@ Module
   ChannelFX
   {
     id: channel2
-    active: true
+    active: (module.toggleButtons || module.momentaryButtons) && (module.rightDeckIdx == 2)
+    momentary: module.momentaryButtons
     name: "channel2"
-    surface_mixer_channel: module.surface + ".mixer.channels.2"
+    surface_mixer_channel: module.surface + ".right"
     index: 2
     onFxChanged : { module.cancelMultiSelection = true; }
     channelFxSelectorVal: module.currentlySelectedFx
@@ -44,9 +58,10 @@ Module
   ChannelFX
   {
     id: channel3
-    active: true
+    active: (module.toggleButtons || module.momentaryButtons) && (module.leftDeckIdx == 3)
+    momentary: module.momentaryButtons
     name: "channel3"
-    surface_mixer_channel: module.surface + ".mixer.channels.3"
+    surface_mixer_channel: module.surface + ".left"
     index: 3
     onFxChanged : { module.cancelMultiSelection = true; }
     channelFxSelectorVal: module.currentlySelectedFx
@@ -55,9 +70,10 @@ Module
   ChannelFX
   {
     id: channel4
-    active: true
+    active: (module.toggleButtons || module.momentaryButtons) && (module.rightDeckIdx == 4)
+    momentary: module.momentaryButtons
     name: "channel4"
-    surface_mixer_channel: module.surface + ".mixer.channels.4"
+    surface_mixer_channel: module.surface + ".right"
     index: 4
     onFxChanged : { module.cancelMultiSelection = true; }
     channelFxSelectorVal: module.currentlySelectedFx
@@ -90,100 +106,94 @@ Module
            channel4.selectedFx.value == index;
   }
 
-  function ledBrightness(on)
-  {
-    return on ? 1.0 : 0.0;
-  }
-
   Wire
   {
-    from: surfacePrefix + ".filter";
+    from: module.fxSelectionPrefix + ".filter";
     to: ButtonScriptAdapter
     {
-      onPress :
+      onPress:
       {
         onFxSelectPressed(0)
       }
-      onRelease :
+      onRelease:
       {
-        onFxSelectReleased(0);
+        onFxSelectReleased(0)
       }
       color: module.colorScheme[0]
-      brightness: ledBrightness(isFxUsed(0))
+      brightness: isFxUsed(0) ? 1.0 : 0.0
     }
+    enabled: module.filterPushAction == ButtonsActions.select_channel_fx_filter
   }
+
   Wire
   {
-    from: surfacePrefix + ".fx1";
+    from: module.fxSelectionPrefix + ".fx1";
     to: ButtonScriptAdapter
     {
-      onPress :
+      onPress:
       {
         onFxSelectPressed(1)
       }
-      onRelease :
+      onRelease:
       {
-        onFxSelectReleased(1);
+        onFxSelectReleased(1)
       }
       color: module.colorScheme[1]
-      brightness: ledBrightness(isFxUsed(1))
-    }
-  }
-  Wire
-  {
-    from: surfacePrefix + ".fx2";
-    to: ButtonScriptAdapter
-    {
-      onPress :
-      {
-        onFxSelectPressed(2)
-      }
-      onRelease :
-      {
-        onFxSelectReleased(2);
-      }
-      color: module.colorScheme[2]
-      brightness: ledBrightness(isFxUsed(2))
-    }
-  }
-  Wire
-  {
-    from: surfacePrefix + ".fx3";
-    to: ButtonScriptAdapter
-    {
-      onPress :
-      {
-        onFxSelectPressed(3)
-      }
-      onRelease :
-      {
-        onFxSelectReleased(3);
-      }
-      color: module.colorScheme[3]
-      brightness: ledBrightness(isFxUsed(3))
-    }
-  }
-  Wire
-  {
-    from: surfacePrefix + ".fx4";
-    to: ButtonScriptAdapter
-    {
-      onPress :
-      {
-        onFxSelectPressed(4)
-      }
-      onRelease :
-      {
-        onFxSelectReleased(4);
-      }
-      color: module.colorScheme[4]
-      brightness: ledBrightness(isFxUsed(4))
+      brightness: isFxUsed(1) ? 1.0 : 0.0
     }
   }
 
-  // Channel FX Amount
-  Wire { from: module.surface + ".mixer.channels.1.channel_fx.amount"; to: DirectPropertyAdapter { path: "app.traktor.mixer.channels.1.fx.adjust" } }
-  Wire { from: module.surface + ".mixer.channels.2.channel_fx.amount"; to: DirectPropertyAdapter { path: "app.traktor.mixer.channels.2.fx.adjust" } }
-  Wire { from: module.surface + ".mixer.channels.3.channel_fx.amount"; to: DirectPropertyAdapter { path: "app.traktor.mixer.channels.3.fx.adjust" } }
-  Wire { from: module.surface + ".mixer.channels.4.channel_fx.amount"; to: DirectPropertyAdapter { path: "app.traktor.mixer.channels.4.fx.adjust" } }
+  Wire
+  {
+    from: module.fxSelectionPrefix + ".fx2";
+    to: ButtonScriptAdapter
+    {
+      onPress:
+      {
+        onFxSelectPressed(2)
+      }
+      onRelease:
+      {
+        onFxSelectReleased(2)
+      }
+      color: module.colorScheme[2]
+      brightness: isFxUsed(2) ? 1.0 : 0.0
+    }
+  }
+
+  Wire
+  {
+    from: module.fxSelectionPrefix + ".fx3";
+    to: ButtonScriptAdapter
+    {
+      onPress:
+      {
+        onFxSelectPressed(3)
+      }
+      onRelease:
+      {
+        onFxSelectReleased(3)
+      }
+      color: module.colorScheme[3]
+      brightness: isFxUsed(3) ? 1.0 : 0.0
+    }
+  }
+
+  Wire
+  {
+    from: module.fxSelectionPrefix + ".fx4";
+    to: ButtonScriptAdapter
+    {
+      onPress:
+      {
+        onFxSelectPressed(4)
+      }
+      onRelease:
+      {
+        onFxSelectReleased(4)
+      }
+      color: module.colorScheme[4]
+      brightness: isFxUsed(4) ? 1.0 : 0.0
+    }
+  }
 }

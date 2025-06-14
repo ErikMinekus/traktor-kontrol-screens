@@ -306,6 +306,46 @@ Module
     }
   }
 
+  // Stem controls
+  StemDeckStreams { name: "stems"; channel: module.deckIdx }
+
+  WiresGroup
+  {
+    enabled: module.active
+
+    WiresGroup
+    {
+      enabled: (!module.shift && (hotcue12PushAction == HotcueAction.mute_stems_12)) || (module.shift && (hotcue12ShiftPushAction == HotcueAction.mute_stems_12))
+
+      Wire { from: "%surface%.hotcues.1"; to: "stems.1.muted" }
+      Wire { from: "%surface%.hotcues.2"; to: "stems.2.muted" }
+    }
+
+    WiresGroup
+    {
+      enabled: (!module.shift && (hotcue34PushAction == HotcueAction.mute_stems_12)) || (module.shift && (hotcue34ShiftPushAction == HotcueAction.mute_stems_12))
+
+      Wire { from: "%surface%.hotcues.3"; to: "stems.1.muted" }
+      Wire { from: "%surface%.hotcues.4"; to: "stems.2.muted" }
+    }
+
+    WiresGroup
+    {
+      enabled: (!module.shift && (hotcue12PushAction == HotcueAction.mute_stems_34)) || (module.shift && (hotcue12ShiftPushAction == HotcueAction.mute_stems_34))
+
+      Wire { from: "%surface%.hotcues.1"; to: "stems.3.muted" }
+      Wire { from: "%surface%.hotcues.2"; to: "stems.4.muted" }
+    }
+
+    WiresGroup
+    {
+      enabled: (!module.shift && (hotcue34PushAction == HotcueAction.mute_stems_34)) || (module.shift && (hotcue34ShiftPushAction == HotcueAction.mute_stems_34))
+
+      Wire { from: "%surface%.hotcues.3"; to: "stems.3.muted" }
+      Wire { from: "%surface%.hotcues.4"; to: "stems.4.muted" }
+    }
+  }
+
   // FX Assignment
   AppProperty { id: fxMode; path: "app.traktor.fx.4fx_units" }
 
@@ -359,6 +399,7 @@ Module
 
   // Browser
   Browser { name: "browser" }
+  ButtonGestures { name: "browser_load_gestures" }
 
   WiresGroup
   {
@@ -369,7 +410,9 @@ Module
       enabled: !module.shift
 
       Wire { from: "%surface%.browse"; to: "browser.list_navigation" }
-      Wire { from: "%surface%.browse.push"; to: TriggerPropertyAdapter { path: "app.traktor.decks." + module.deckIdx + ".load.selected" } }
+      Wire { from: "%surface%.browse.push"; to: "browser_load_gestures.input" }
+      Wire { from: "browser_load_gestures.single_click"; to: TriggerPropertyAdapter { path: "app.traktor.decks." + module.deckIdx + ".load.selected"; output: false } }
+      Wire { from: "browser_load_gestures.double_click"; to: TriggerPropertyAdapter { path: "app.traktor.decks." + module.deckIdx + ".load_secondary.selected"; output: false } }
     }
 
     WiresGroup

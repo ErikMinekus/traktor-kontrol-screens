@@ -48,10 +48,17 @@ Module
     to: SetPropertyAdapter  { path: propertiesPath + ".pads_mode"; value: PadsMode.hotcues }
   }
 
+  Wire
+  {
+    enabled: PadsMode.isPadsModeSupported(PadsMode.stems, topDeckTypeProp.value)
+    from: "%surface%.samples";
+    to: SetPropertyAdapter  { path: propertiesPath + ".pads_mode"; value: PadsMode.stems }
+  }
+
   Wire 
-  { 
-    enabled: PadsMode.isPadsModeSupported(PadsMode.remix, topDeckTypeProp.value) || PadsMode.isPadsModeSupported(PadsMode.remix, bottomDeckTypeProp.value)
-    from: "%surface%.samples"; 
+  {
+    enabled: !PadsMode.isPadsModeSupported(PadsMode.stems, topDeckTypeProp.value) && (PadsMode.isPadsModeSupported(PadsMode.remix, topDeckTypeProp.value) || PadsMode.isPadsModeSupported(PadsMode.remix, bottomDeckTypeProp.value))
+    from: "%surface%.samples";
     to: SetPropertyAdapter  { path: propertiesPath + ".pads_mode"; value: PadsMode.remix }
   }
 
@@ -145,6 +152,17 @@ Module
     shift: shiftProp.value
   }
 
+  S2MK3Stems
+  {  
+    id: stems
+    name: "stems"
+    surface: module.surface
+    deckIdx: module.deckIdx
+    deckPropertiesPath: module.propertiesPath
+    active: padsModeProp.value == PadsMode.stems
+    shift: shiftProp.value
+  }
+
   HotcuesModule
   {
     name: "hotcues"
@@ -176,8 +194,10 @@ Module
   
   // Loop move and size //
   Loop { name: "loop";  channel: module.deckIdx }
-  Wire { from: "%surface%.loop_size"; to: "loop.autoloop"}
-  Wire { from: "%surface%.loop_move"; to: "loop.move"; enabled: !module.shift}
-  Wire { from: "%surface%.loop_move"; to: "loop.one_beat_move"; enabled:  module.shift }
-
+  WiresGroup {
+    enabled: !stems.isStemSelected
+    Wire { from: "%surface%.loop_size"; to: "loop.autoloop"}
+    Wire { from: "%surface%.loop_move"; to: "loop.move"; enabled: !module.shift}
+    Wire { from: "%surface%.loop_move"; to: "loop.one_beat_move"; enabled:  module.shift }
+  }
 }
