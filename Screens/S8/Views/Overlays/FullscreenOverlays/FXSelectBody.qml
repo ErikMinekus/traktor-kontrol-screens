@@ -42,8 +42,6 @@ Item {
     onValueChanged: { updateFxSelection(); }
   }
 
-  AppProperty { id: patternPlayerEnabled; path: "app.traktor.settings.pro.plus.pattern_player" }
-
   MappingProperty{ id: screenOverlay;  path: propertiesPath + ".overlay" }
 
   onVisibleChanged: { updateFxSelection(); }
@@ -181,10 +179,10 @@ Item {
     property int currentIndex: setting.btnToIndexMap[ setting.currentBtn ]
 
     property var btnToProperty: [fxViewSelectProp, fxRoutingProp, fxStoreProp, fxViewSelectProp, fxRoutingProp, null, fxViewSelectProp, fxRoutingProp]
-    property var btnToValue: [FxType.Group, FxRouting.Send, true, FxType.Single, FxRouting.Insert, null, patternPlayerEnabled.value ? FxType.PatternPlayer : null, FxRouting.PostFader]
+    property var btnToValue: [FxType.Group, FxRouting.Send, true, FxType.Single, FxRouting.Insert, null, FxType.PatternPlayer, FxRouting.PostFader]
 
-    readonly property var btnNames: [ "Group" , "Send" , "Snapshot" , "Single" , "Insert" , "-" , patternPlayerEnabled.value ? "Pattern Player" : "-" , "Post Fader" , "-" ]
-    readonly property var btnToIndexMap: patternPlayerEnabled.value ? [ 0 , 3 , patternPlayerBtn , 1 , 4 , 7 , snapshotBtn ] : [ 0 , 3 , 1 , 4 , 7 , snapshotBtn ]
+    readonly property var btnNames: [ "Group" , "Send" , "Snapshot" , "Single" , "Insert" , "-" , "Pattern Player", "Post Fader" , "-" ]
+    readonly property var btnToIndexMap: [ 0 , 3 , patternPlayerBtn , 1 , 4 , 7 , snapshotBtn ]
     readonly property int snapshotBtn: 2
     readonly property int patternPlayerBtn: 6
     readonly property int buttonCount: btnToIndexMap.length

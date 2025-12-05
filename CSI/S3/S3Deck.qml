@@ -117,7 +117,7 @@ Module
 
   WiresGroup
   {
-    enabled: module.active
+    enabled: module.active && !stems.isStemSelected
     Wire { from: "%surface%.loop_size"; to: "loop.autoloop" }
     Wire { from: "%surface%.loop_move"; to: "loop.move"; enabled: !module.shift }
     Wire { from: "%surface%.loop_move"; to: "loop.one_beat_move"; enabled:  module.shift }
@@ -158,6 +158,17 @@ Module
     surface: module.surface
     deckIdx: module.deckIdx
     active: padsMode == PadsMode.remix && module.enablePads
+    shift: module.shift
+  }
+
+  S3Stems
+  {  
+    id: stems
+    name: "stems"
+    surface: module.surface
+    deckIdx: module.deckIdx
+    deckPropertiesPath: module.deckPropertiesPath
+    active: padsMode == PadsMode.stems && module.enablePads
     shift: module.shift
   }
 

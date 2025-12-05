@@ -35,8 +35,8 @@ See `Defines/Prefs.qml` for preferences.
 
 **Mac:**
 
-  - Navigate to /Applications/Native Instruments/Traktor Pro 3
-  - Right click Traktor.app, then click Show Package Contents
+  - Navigate to /Applications/Native Instruments/Traktor Pro 4
+  - Right click Traktor Pro 4.app, then click Show Package Contents
   - Navigate to Contents/Resources/qml
   - Make a backup of this folder!
   - Replace the CSI, Defines and Screens folders
@@ -44,7 +44,7 @@ See `Defines/Prefs.qml` for preferences.
 
 **Windows:**
 
-  - Navigate to C:\Program Files\Native Instruments\Traktor Pro 3\Resources64\qml
+  - Navigate to C:\Program Files\Native Instruments\Traktor Pro 4\Resources64\qml
   - Make a backup of this folder!
   - Replace the CSI, Defines and Screens folders
   - Restart Traktor

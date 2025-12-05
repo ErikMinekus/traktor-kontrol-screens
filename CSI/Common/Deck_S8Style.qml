@@ -4676,7 +4676,5 @@ Module
     }
   }
 
-  /* #ifdef DEVELOPMENT_MODE
-  Wire { from: "%surface%.fx.select"; to: TriggerPropertyAdapter  { path:"app.traktor.debug.take_screenshot" } enabled: module.shift }
-  #endif */
+  
 }

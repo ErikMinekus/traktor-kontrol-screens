@@ -9,13 +9,16 @@ Module
   property bool navigateFavoritesOnShift: true
 
   Browser { name: "browser" }
+  ButtonGestures { name: "browser_load_gestures" }
 
   WiresGroup
   {
     enabled: !shift
 
-    Wire { from: "%surface%.browse.encoder.push"; to: TriggerPropertyAdapter { path: "app.traktor.decks." + deckIdx + ".load.selected" } }
     Wire { from: "%surface%.browse.encoder"; to: "browser.list_navigation" }
+    Wire { from: "%surface%.browse.encoder.push"; to: "browser_load_gestures.input" }
+    Wire { from: "browser_load_gestures.single_click"; to: TriggerPropertyAdapter { path: "app.traktor.decks." + deckIdx + ".load.selected"; output: false } }
+    Wire { from: "browser_load_gestures.double_click"; to: TriggerPropertyAdapter { path: "app.traktor.decks." + deckIdx + ".load_secondary.selected"; output: false } }
     Wire { from: "%surface%.browse.back"; to: "browser.add_remove_from_prep_list" }
   }
 
