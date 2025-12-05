@@ -97,7 +97,14 @@ Module
 
     Wire
     {
-        enabled: PadsMode.isPadsModeSupported(PadsMode.remix, bottomDeck.deckType) || PadsMode.isPadsModeSupported(PadsMode.remix, topDeck.deckType);
+        enabled: PadsMode.isPadsModeSupported(PadsMode.stems, focusedDeck().deckType);
+        from: "%surface%.samples";
+        to: SetPropertyAdapter  { path: propertiesPath + ".pads_mode"; value: PadsMode.stem; color: Helpers.colorForDeck(focusedDeckIdx) }
+    }
+
+    Wire
+    {
+        enabled: !PadsMode.isPadsModeSupported(PadsMode.stems, focusedDeck().deckType) && (PadsMode.isPadsModeSupported(PadsMode.remix, bottomDeck.deckType) || PadsMode.isPadsModeSupported(PadsMode.remix, topDeck.deckType));
         from: "%surface%.samples";
         to: SetPropertyAdapter  { path: propertiesPath + ".pads_mode"; value: PadsMode.remix; color: Helpers.colorForDeck(focusedDeckIdx) }
     }

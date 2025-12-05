@@ -25,6 +25,7 @@ Module
     syncColor: Color.Blue
     fluxColor: Color.Blue
     masterColor: Color.Blue
+    reverseColor: Color.Blue
   }
 
   AppProperty { id: deckIsLoaded; path: "app.traktor.decks." + deckIdx + ".is_loaded" }

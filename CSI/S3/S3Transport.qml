@@ -16,6 +16,7 @@ Module
     channel: module.deckIdx
     masterColor: Color.White
     syncColor: module.deckColor
+    reverseColor: Color.White
     cueColor: module.deckColor
   }
 

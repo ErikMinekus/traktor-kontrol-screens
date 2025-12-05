@@ -19,4 +19,6 @@ QtObject {
     readonly property int stutter_14_12:   12
     readonly property int stutter_12_1:    13
     readonly property int tempo_bend:      14
+    readonly property int mute_stems_12:   15
+    readonly property int mute_stems_34:   16
 }
