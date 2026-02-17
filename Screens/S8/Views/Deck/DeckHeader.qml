@@ -29,8 +29,10 @@ Item {
   // these variables can not be changed from outside
   readonly property int speed: 40  // Transition speed
   readonly property int smallHeaderHeight: 20
-  readonly property int mediumHeaderHeight: 24
-  readonly property int largeHeaderHeight: 40
+  readonly property int largeHeaderHeight: 52
+
+  readonly property int rightMargin_middleText_large: 110
+  readonly property int rightMargin_rightText_large:  50
 
   readonly property bool   isLoaded:    top_left_text.isLoaded
   readonly property int    deckType:    deckTypeProperty.value
@@ -43,7 +45,7 @@ Item {
   // NOTE: For now, we set fix states in the DeckHeader! But we wanna be able to
   //       change the states.
   property int topLeftState:      0                                 // headerSettingTopLeft.value
-  property int topMiddleState:    hasTrackStyleHeader(deckType) ? 14 : 29 // headerSettingTopMid.value
+  property int topMiddleState:    15                                // headerSettingTopMid.value
   property int topRightState:     hasTrackStyleHeader(deckType) ? 17 : 30 // headerSettingTopRight.value
 
   height: largeHeaderHeight
@@ -108,7 +110,7 @@ Item {
     id: top_left_text
     deckId: deck_Id
     explicitName: ""
-    maxTextWidth : 276 // (deckType == DeckType.Stem) ? 200 - stem_text.width : 200
+    maxTextWidth : 300
     textState: topLeftState
     color:     textColors[deck_Id]
     elide:     Text.ElideRight
@@ -135,9 +137,9 @@ Item {
     font.pixelSize: fonts.scale(13)
     horizontalAlignment: Text.AlignRight
     anchors.top:          top_line.bottom
-    anchors.left:         parent.left
+    anchors.right:        parent.right
     anchors.topMargin:    1
-    anchors.leftMargin:   299
+    anchors.rightMargin:  rightMargin_middleText_large
     Behavior on anchors.topMargin   { NumberAnimation { duration: speed } }
     Behavior on anchors.rightMargin { NumberAnimation { duration: speed } }
   }
@@ -147,16 +149,17 @@ Item {
     id: top_right_text
     deckId: deck_Id
     explicitName: ""
-    maxTextWidth :  80
+    maxTextWidth :  50
     textState:  topRightState
     font.family: "Pragmatica" // is monospaced
     color:      textColors[deck_Id]
     elide:      Text.ElideRight
     font.pixelSize: fonts.scale(13)
+    horizontalAlignment: Text.AlignRight
     anchors.top:          top_line.bottom
-    anchors.left:         parent.left
+    anchors.right:        parent.right
     anchors.topMargin:    1
-    anchors.leftMargin:   393
+    anchors.rightMargin:  rightMargin_rightText_large
     Behavior on anchors.rightMargin { NumberAnimation { duration: speed } }
     Behavior on anchors.topMargin   { NumberAnimation { duration: speed } }
   }
@@ -212,7 +215,7 @@ Item {
     anchors.top: parent.top
     anchors.topMargin: 22
     anchors.left: parent.left
-    anchors.leftMargin: 161 // (deck_header.width - phaseMeter.width) / 2
+    anchors.leftMargin: 145 // (deck_header.width - phaseMeter.width) / 2
     opacity: (isLoaded && headerState == "large") ? 1 : 0
     deckId: deck_Id
     Behavior on opacity { NumberAnimation { duration: speed } }
@@ -301,7 +304,7 @@ Item {
     },
     State {
       name: "medium";
-      PropertyChanges { target: deck_header;        height: mediumHeaderHeight }
+      PropertyChanges { target: deck_header;        height: smallHeaderHeight }
     },
     State {
       name: "large"; //when: temporaryMouseArea.released

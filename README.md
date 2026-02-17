@@ -3,6 +3,12 @@
 **Changes in appearance:**
 
   - **[Browser]** Keys are only colored if they match the master deck
+    - **Yellow**: Perfect match
+    - **Orange**: Adjacent keys
+    - **Green**: Energy boost
+    - **Blue**: Energy drop
+  - **[Browser]** Loaded tracks are marked green
+  - **[Browser]** Played tracks are marked dark green
   - Added bar markers on large waveform
   - Added minute markers on stripe waveform
   - Camelot keys

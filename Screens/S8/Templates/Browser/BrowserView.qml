@@ -28,6 +28,8 @@ Templates.View {
   property int   fastScrollCenter:  4
 
   readonly property int  maxItemsOnScreen: 10
+  readonly property var    deckKey:   [deckAKeyDisplay.value, deckBKeyDisplay.value, deckCKeyDisplay.value, deckDKeyDisplay.value]
+  readonly property string masterKey: deckKey[masterDeckId.value] || ""
 
   // This is used by the footer to change/display the sorting!
   property alias sortingId:         browser.sorting
@@ -242,16 +244,5 @@ Templates.View {
     qmlBrowser.speed = defaultSpeed;
   }
   */
-
-  function getMasterKey() {
-    switch (masterDeckId.value) {
-      case 0: return deckAKeyDisplay.value;
-      case 1: return deckBKeyDisplay.value;
-      case 2: return deckCKeyDisplay.value;
-      case 3: return deckDKeyDisplay.value;
-    }
-
-    return "";
-  }
 }
 

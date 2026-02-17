@@ -69,7 +69,6 @@ Text {
   AppProperty { id: propTempo;            path: "app.traktor.decks." + (deckId+1) + ".tempo.tempo_for_display" } 
   AppProperty { id: propMixerTotalGain;   path: "app.traktor.decks." + (deckId+1) + ".content.total_gain" }
   
-  AppProperty { id: propKeyDisplay;     path: "app.traktor.decks." + (deckId+1) + ".track.key.resulting.precise" }
   AppProperty { id: propIsInSync;       path: "app.traktor.decks." + (deckId+1) + ".sync.enabled"; }  
   AppProperty { id: propSyncMasterDeck; path: "app.traktor.masterclock.source_id" }
 
@@ -78,11 +77,6 @@ Text {
   AppProperty { id: propRemixQuantize;    path: "app.traktor.decks." + (deckId+1) + ".remix.quant_index"; }
   AppProperty { id: propRemixIsQuantize;  path: "app.traktor.decks." + (deckId+1) + ".remix.quant"; }
   //property string propRemixQuantize: "1/4"
-
-  AppProperty { id: deckAKeyDisplay; path: "app.traktor.decks.1.track.key.resulting.precise" }
-  AppProperty { id: deckBKeyDisplay; path: "app.traktor.decks.2.track.key.resulting.precise" }
-  AppProperty { id: deckCKeyDisplay; path: "app.traktor.decks.3.track.key.resulting.precise" }
-  AppProperty { id: deckDKeyDisplay; path: "app.traktor.decks.4.track.key.resulting.precise" }
 
   //--------------------------------------------------------------------------------------------------------------------
   //  MAPPING FROM TRAKTOR ENUM TO QML-STATE!
@@ -192,8 +186,7 @@ Text {
     State { 
       name: "key"; 
       PropertyChanges { target: header_text; font.family: fontForNumber;
-                        color:  getTrackKeyColor(propKeyDisplay.value);
-                        text:   (!isLoaded)?"":"♪"+getTrackKeyText(propKeyDisplay.value); }
+                        text:   (!isLoaded)?"":utils.convertToCamelotKey(propMusicalKey.value); }
     },
     State { 
       name: "keyText"; 
@@ -244,8 +237,7 @@ Text {
     State { 
       name: "beatsToCue";
       PropertyChanges { target: header_text; font.family: fontForNumber; 
-                        color:  computeBeatsToCueColor();
-                        text:   (!isLoaded)?"":computeBeatsToCueString(); }
+                        text:   (!isLoaded)?"":computeBeatCounterStringFromPosition(((propElapsedTime.value*1000-cuePos)*propMixerBpm.value)/60000.0); }
     },
     State { 
       name: "bitrate"; 
@@ -322,71 +314,4 @@ Text {
     return getStableTempoString();
   }
 
-
-  function computeBeatsToCueColor() {
-    if (propNextCuePoint.value < 0) return parent.textColors[deckId];
-
-    var beats = ((propNextCuePoint.value - propElapsedTime.value * 1000) * propMixerBpm.value) / 60000.0;
-    if (beats < 0 || beats > 256) return parent.textColors[deckId];
-
-    var bars = Math.floor(beats / 4);
-    if (bars < 4) return "red";
-
-    return parent.textColors[deckId];
-  }
-
-
-  function computeBeatsToCueString() {
-    if (propNextCuePoint.value < 0) return "——.—";
-
-    var beats = ((propNextCuePoint.value - propElapsedTime.value * 1000) * propMixerBpm.value) / 60000.0;
-    if (beats < 0 || beats > 256) return "——.—";
-
-    var bars = Math.floor(beats / 4);
-    var beat = Math.floor(beats % 4) + 1;
-
-    var barsStr = bars.toString();
-    if (bars < 10) barsStr = "0" + barsStr;
-
-    return barsStr + "." + beat.toString();
-  }
-
-
-  function getMasterKey() {
-    switch (propSyncMasterDeck.value) {
-      case 0: return deckAKeyDisplay.value;
-      case 1: return deckBKeyDisplay.value;
-      case 2: return deckCKeyDisplay.value;
-      case 3: return deckDKeyDisplay.value;
-    }
-
-    return "";
-  }
-
-
-  function getTrackKeyColor(trackKey) {
-    if (isMaster) {
-      return parent.textColors[deckId];
-    }
-
-    var keyOffset = utils.getMasterKeyOffset(getMasterKey(), trackKey);
-    if (keyOffset == 0) {
-      return colors.color04MusicalKey; // Yellow
-    }
-    if (keyOffset == 1 || keyOffset == -1) {
-      return colors.color02MusicalKey; // Orange
-    }
-    if (keyOffset == 2 || keyOffset == 7) {
-      return colors.color07MusicalKey; // Green
-    }
-    if (keyOffset == -2 || keyOffset == -7) {
-      return colors.color10MusicalKey; // Blue
-    }
-
-    return parent.textColors[deckId];
-  }
-
-  function getTrackKeyText(trackKey) {
-    return utils.convertToCamelotKey(trackKey).replace(/~ /, "");
-  }
 }

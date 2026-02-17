@@ -42,13 +42,6 @@ QtObject {
     });
   }
 
-  function getKeyOffset(offset) {
-    if (offset <= 0) return offset + 12;
-    if (offset > 12) return offset - 12;
-
-    return offset;
-  }
-
   function getMasterKeyOffset(masterKey, trackKey) {
     var masterKeyMatches = masterKey.match(/(\d+)(d|m)/);
     var trackKeyMatches = trackKey.match(/(\d+)(d|m)/);
@@ -57,14 +50,11 @@ QtObject {
     if (masterKeyMatches[1] == trackKeyMatches[1]) return 0;
     if (masterKeyMatches[2] != trackKeyMatches[2]) return null;
 
-    switch (+trackKeyMatches[1]) {
-      case getKeyOffset(+masterKeyMatches[1] + 1): return 1;
-      case getKeyOffset(+masterKeyMatches[1] - 1): return -1;
-      case getKeyOffset(+masterKeyMatches[1] + 2): return 2;
-      case getKeyOffset(+masterKeyMatches[1] - 2): return -2;
-      case getKeyOffset(+masterKeyMatches[1] + 7): return 7;
-      case getKeyOffset(+masterKeyMatches[1] - 7): return -7;
-    }
+    var offset = (+trackKeyMatches[1] - +masterKeyMatches[1] + 12) % 12;
+    if (offset == 1 || offset == 2 || offset == 7) return offset;
+
+    offset -= 12;
+    if (offset == -1 || offset == -2 || offset == -7) return offset;
 
     return null;
   }

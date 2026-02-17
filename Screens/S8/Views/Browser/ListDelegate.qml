@@ -328,7 +328,7 @@ Item {
       return textColor;
     }
 
-    var keyOffset = utils.getMasterKeyOffset(qmlBrowser.getMasterKey(), model.key);
+    var keyOffset = utils.getMasterKeyOffset(qmlBrowser.masterKey, model.key);
     if (keyOffset == 0) {
       return colors.color04MusicalKey; // Yellow
     }

@@ -228,7 +228,7 @@ Item {
     anchors.leftMargin:  3
     anchors.rightMargin: 3
     visible:         stemWaveform.visible
-    indicatorHeight: (slicer.enabled && !beatgrid.editEnabled ) ? [34 , 33 , 33 , 33] : [36 , 36 , 36 , 36]
+    indicatorHeight: (slicer.enabled && !beatgrid.editEnabled ) ? [24 , 24 , 24 , 23] : [27 , 27 , 27 , 26]
   }
 
   //--------------------------------------------------------------------------------------------------------------------

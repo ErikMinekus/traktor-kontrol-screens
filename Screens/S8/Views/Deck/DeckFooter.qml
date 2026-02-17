@@ -32,16 +32,13 @@ Item {
   readonly property int    isInSync:    propIsInSync.value
   readonly property int    isMaster:    (propSyncMasterDeck.value == deck_Id) ? 1 : 0
   readonly property int    loopSizePos: footerPropertyLoopSize.value
+  readonly property var    deckKey:     [deckAKeyDisplay.value, deckBKeyDisplay.value, deckCKeyDisplay.value, deckDKeyDisplay.value]
 
   height: 40
   opacity: (primaryKey.value > 0 && footerState != "small") ? 1 : 0
   clip: false //true
   Behavior on opacity { NumberAnimation { duration: speed } }
   
-
-  //--------------------------------------------------------------------------------------------------------------------
-  // Helper function
-  function toInt(val) { return parseInt(val); }
 
   //--------------------------------------------------------------------------------------------------------------------
   //  DECK PROPERTIES
@@ -65,6 +62,11 @@ Item {
   AppProperty { id: propTempo;                  path: "app.traktor.decks." + (deck_Id+1) + ".tempo.tempo_for_display" }
   AppProperty { id: propKeyEnabled;             path: "app.traktor.decks." + (deck_Id+1) + ".track.key.lock_enabled" }
 
+  AppProperty { id: deckAKeyDisplay; path: "app.traktor.decks.1.track.key.resulting.precise" }
+  AppProperty { id: deckBKeyDisplay; path: "app.traktor.decks.2.track.key.resulting.precise" }
+  AppProperty { id: deckCKeyDisplay; path: "app.traktor.decks.3.track.key.resulting.precise" }
+  AppProperty { id: deckDKeyDisplay; path: "app.traktor.decks.4.track.key.resulting.precise" }
+
 
   //--------------------------------------------------------------------------------------------------------------------
   //  UPDATE VIEW
@@ -81,23 +83,84 @@ Item {
   }
 
 
-  
   //--------------------------------------------------------------------------------------------------------------------
   //  DECK FOOTER TEXT
   //--------------------------------------------------------------------------------------------------------------------
+
+  // KEY
+  Rectangle {
+    width: 44
+    height: 28
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.leftMargin: 57
+    color: "transparent"
+
+    Text {
+      anchors.top: parent.top
+      anchors.left: parent.left
+      color: "white"
+      font.pixelSize: fonts.scale(9)
+      font.family: "Pragmatica MediumTT"
+      text: "KEY"
+    }
+    Text {
+      anchors.top: parent.top
+      anchors.right: parent.right
+      color: "red"
+      font.pixelSize: fonts.scale(9)
+      font.family: "Pragmatica MediumTT"
+      text: "LOCK"
+      visible: propKeyEnabled.value
+    }
+    Text {
+      anchors.bottom: parent.bottom
+      anchors.bottomMargin: -3
+      anchors.left: parent.left
+      anchors.right: parent.right
+      font.pixelSize: fonts.largeValueFontSize
+      font.family: "Pragmatica"
+      horizontalAlignment: Text.AlignHCenter
+      verticalAlignment: Text.AlignVCenter
+
+      color: {
+        var masterKey = deckKey[propSyncMasterDeck.value] || "";
+        var trackKey = deckKey[deck_Id];
+
+        var keyOffset = utils.getMasterKeyOffset(masterKey, trackKey);
+        if (keyOffset == 0) {
+          return colors.color04MusicalKey; // Yellow
+        }
+        if (keyOffset == 1 || keyOffset == -1) {
+          return colors.color02MusicalKey; // Orange
+        }
+        if (keyOffset == 2 || keyOffset == 7) {
+          return colors.color07MusicalKey; // Green
+        }
+        if (keyOffset == -2 || keyOffset == -7) {
+          return colors.color10MusicalKey; // Blue
+        }
+
+        return "white";
+      }
+      text: {
+        var trackKey = deckKey[deck_Id];
+        return utils.convertToCamelotKey(trackKey).replace(/~ /, "");
+      }
+    }
+  }
 
   // LOOP SIZE
   Rectangle {
     width: 34
     height: 28
     anchors.bottom: parent.bottom
-    anchors.right: parent.right
-    anchors.rightMargin: 317
+    anchors.left: parent.left
+    anchors.leftMargin: 129
     color: "transparent"
 
     Text {
       anchors.top: parent.top
-      anchors.topMargin: -1
       anchors.left: parent.left
       color: footerPropertyLoopActive.value ? colors.colorGreen : "white"
       font.pixelSize: fonts.scale(9)
@@ -140,8 +203,8 @@ Item {
     width: 90
     height: 28
     anchors.bottom: parent.bottom
-    anchors.right: parent.right
-    anchors.rightMargin: 195
+    anchors.left: parent.left
+    anchors.leftMargin: 195
     color: "transparent"
 
     // Label
@@ -234,6 +297,25 @@ Item {
       font.family: "Pragmatica MediumTT"
       text: "TEMPO"
     }
+    // Sync
+    Rectangle {
+      anchors.top: parent.top
+      anchors.topMargin: 1
+      anchors.right: parent.right
+      width: 27
+      height: 9
+      color: "white"
+      radius: 2
+      visible: isInSync
+
+      Text {
+        anchors.centerIn: parent
+        color: "black"
+        font.pixelSize: fonts.scale(9)
+        font.family: "Pragmatica MediumTT"
+        text: "SYNC"
+      }
+    }
     // Percent Sign
     Text {
       id: tempo_anchor
@@ -259,18 +341,6 @@ Item {
         return ((tempo <= 0) ? "" : "+") + (tempo * 100).toFixed(2).toString();
       }
     }
-
-    // Key Lock
-    Text {
-      anchors.top: parent.top
-      anchors.right: parent.right
-      anchors.rightMargin: 1
-      color: "red"
-      font.pixelSize: fonts.scale(9)
-      font.family: "Pragmatica MediumTT"
-      text: "LOCK"
-      visible: propKeyEnabled.value
-    }
   }
 
   // BPM
@@ -291,7 +361,7 @@ Item {
       font.family: "Pragmatica MediumTT"
       text: "BPM"
     }
-    // Master BPM
+    // Master
     Text {
       anchors.top: parent.top
       anchors.right: parent.right
@@ -333,26 +403,6 @@ Item {
 
       text: {
         return Math.floor((propMixerBpm.value * propTempo.value).toFixed(2)).toString();
-      }
-    }
-
-    // Synced BPM
-    Rectangle {
-      anchors.top: parent.top
-      anchors.topMargin: 1
-      anchors.right: parent.right
-      width: 27
-      height: 9
-      color: "white"
-      radius: 2
-      visible: isInSync && !isMaster
-
-      Text {
-        anchors.centerIn: parent
-        color: "black"
-        font.pixelSize: fonts.scale(9)
-        font.family: "Pragmatica MediumTT"
-        text: "SYNC"
       }
     }
   }
@@ -400,8 +450,8 @@ Item {
     anchors.bottom: parent.bottom
     anchors.left: parent.left
     anchors.leftMargin: 1
-    width:  42
-    height: 42
+    width:  28
+    height: 28
 
     // if no cover can be found: blue / grey background (set in parent). Otherwise transparent
     opacity:  (footerPropertyCover.value == "") ? 1.0 : 0.0
